@@ -1,4 +1,4 @@
-# CptS321-HWs
+# CptS321-Spring2021
 
 This is the repository for CptS321 HW assignments.
 
