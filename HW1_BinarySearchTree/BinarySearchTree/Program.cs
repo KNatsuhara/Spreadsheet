@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace BinarySearchTree
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BinaryTree binaryTree = new BinaryTree();
+        }
+        public string GetStringFromUser()
+        {
+            return "tempString";
         }
     }
 }
