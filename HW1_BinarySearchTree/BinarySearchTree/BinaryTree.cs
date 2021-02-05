@@ -1,6 +1,7 @@
-﻿// <copyright file="BinaryTree.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="BinaryTree.cs" company="Koji Natsuhara">
+// Copyright (c) Koji Natsuhara. All rights reserved.
 // </copyright>
+
 namespace BinarySearchTree
 {
     /// <summary>
@@ -10,6 +11,9 @@ namespace BinarySearchTree
     /// </summary>
     public class BinaryTree
     {
+        /// <summary>
+        /// Integer variable that will keep track of the number of items in the tree.
+        /// </summary>
         private int count = 0;
 
         /// <summary>

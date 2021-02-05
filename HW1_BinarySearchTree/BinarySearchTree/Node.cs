@@ -1,6 +1,7 @@
-﻿// <copyright file="Node.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="Node.cs" company="Koji Natsuhara">
+// Copyright (c) Koji Natsuhara. All rights reserved.
 // </copyright>
+
 namespace BinarySearchTree
 {
     /// <summary>

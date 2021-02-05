@@ -1,5 +1,5 @@
-﻿// <copyright file="Program.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="Program.cs" company="Koji Natsuhara">
+// Copyright (c) Koji Natsuhara. All rights reserved.
 // </copyright>
 
 namespace BinarySearchTree
