@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿// <copyright file="BinaryTree.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 namespace BinarySearchTree
 {
     /// <summary>
@@ -11,6 +10,9 @@ namespace BinarySearchTree
     /// </summary>
     public class BinaryTree
     {
-
+        /// <summary>
+        /// Gets or Sets the root Node.
+        /// </summary>
+        public Node Root { get; set; }
     }
 }

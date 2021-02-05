@@ -1,18 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace BinarySearchTree
 {
-    class Program
+    /// <summary>
+    /// This program will ask the user to input a string with spaced
+    /// out integers and create a binary search tree with those integers.
+    /// </summary>
+    public class Program
     {
+        /// <summary>
+        /// Will ask the user to input a string with integers.
+        /// Creates a binary search tree and output the height
+        /// and theoretical height of the tree.
+        /// </summary>
+        /// <param name="args">args.</param>
         public static void Main(string[] args)
         {
             BinaryTree binaryTree = new BinaryTree();
+            string integerList = GetStringFromUser();
+            System.Console.WriteLine(integerList);
         }
-        public string GetStringFromUser()
+
+        /// <summary>
+        /// Will ask the user to input a string with spaced integers (1-100).
+        /// </summary>
+        /// <returns>Returns a string with integers.</returns>
+        public static string GetStringFromUser()
         {
-            return "tempString";
+            System.Console.WriteLine("Input a list of integers (1-100)");
+            string integerList = System.Console.ReadLine();
+            return integerList;
         }
     }
 }
