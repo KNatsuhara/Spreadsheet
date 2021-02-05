@@ -20,9 +20,9 @@ namespace BinarySearchTree
         {
             BinaryTree binaryTree = new BinaryTree();
             string integerList = GetStringFromUser();
-            System.Console.WriteLine(integerList);
             binaryTree.InsertIntegerList(integerList);
             binaryTree.PrintInOrder(binaryTree.Root);
+            System.Console.WriteLine("\nNumber of items in the tree: " + binaryTree.GetCount());
         }
 
         /// <summary>

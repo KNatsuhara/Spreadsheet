@@ -10,6 +10,8 @@ namespace BinarySearchTree
     /// </summary>
     public class BinaryTree
     {
+        private int count = 0;
+
         /// <summary>
         /// Gets or Sets the root Node.
         /// </summary>
@@ -45,6 +47,7 @@ namespace BinarySearchTree
 
             Node newNode = new Node();
             newNode.Data = value;
+            this.count++;
 
             if (this.Root == null)
             {
@@ -89,6 +92,15 @@ namespace BinarySearchTree
                 System.Console.Write(current.Data + " ");
                 this.PrintInOrder(current.RightNode);
             }
+        }
+
+        /// <summary>
+        /// Returns the number of items in the tree.
+        /// </summary>
+        /// <returns>Count variable.</returns>
+        public int GetCount()
+        {
+            return this.count;
         }
     }
 }
