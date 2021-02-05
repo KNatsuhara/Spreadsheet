@@ -21,10 +21,10 @@ namespace BinarySearchTree
             BinaryTree binaryTree = new BinaryTree();
             string integerList = GetStringFromUser();
             binaryTree.InsertIntegerList(integerList);
+            System.Console.Write("Tree Contents: ");
             binaryTree.PrintInOrder(binaryTree.Root);
-            System.Console.WriteLine("\nNumber of items in the tree: " + binaryTree.GetCount());
-            System.Console.WriteLine("Level of Tree: " + binaryTree.GetTreeLevel());
-            System.Console.WriteLine("Theoretical Level of Tree: " + binaryTree.GetTheoreticalLevel());
+            binaryTree.PrintTreeStatistics();
+            System.Console.WriteLine("Done");
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace BinarySearchTree
         /// <returns>Returns a string with integers.</returns>
         public static string GetStringFromUser()
         {
-            System.Console.WriteLine("Input a list of integers (1-100)");
+            System.Console.WriteLine("Enter a collection of numbers in the range [0, 100], separated by spaces:");
             string integerList = System.Console.ReadLine();
             return integerList;
         }

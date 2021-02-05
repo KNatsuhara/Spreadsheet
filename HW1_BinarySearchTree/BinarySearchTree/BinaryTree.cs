@@ -123,6 +123,16 @@ namespace BinarySearchTree
         }
 
         /// <summary>
+        /// Prints out the number of nodes in tree, number of levels, and minimum number of levels the tree could have.
+        /// </summary>
+        public void PrintTreeStatistics()
+        {
+            System.Console.WriteLine("\nTree statistics:\n\tNumber of nodes: " + this.GetCount());
+            System.Console.WriteLine("\tNumber of levels: " + this.GetTreeLevel());
+            System.Console.WriteLine("\tMinimum number of levels that a tree with " + this.GetCount() + " nodes could have = " + this.GetTheoreticalLevel());
+        }
+
+        /// <summary>
         /// Helper function to calculate the number of levels in the tree.
         /// </summary>
         /// <param name="current">Current Node.</param>
