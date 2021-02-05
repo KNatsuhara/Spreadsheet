@@ -19,15 +19,9 @@ namespace BinarySearchTree
         public static void Main(string[] args)
         {
             BinaryTree binaryTree = new BinaryTree();
-
-            // string integerList = GetStringFromUser();
-            // System.Console.WriteLine(integerList);
-            binaryTree.Insert(1);
-            binaryTree.Insert(12);
-            binaryTree.Insert(11);
-            binaryTree.Insert(4);
-            binaryTree.Insert(3);
-            binaryTree.Insert(1);
+            string integerList = GetStringFromUser();
+            System.Console.WriteLine(integerList);
+            binaryTree.InsertIntegerList(integerList);
             binaryTree.PrintInOrder(binaryTree.Root);
         }
 

@@ -64,6 +64,20 @@ namespace BinarySearchTree
         }
 
         /// <summary>
+        /// Takes in a string with spaced out integers and inserts them into the tree.
+        /// </summary>
+        /// <param name="list">String of spaced out integers.</param>
+        public void InsertIntegerList(string list)
+        {
+            string[] numList = list.Split(' ');
+            foreach (var num in numList)
+            {
+                int result = int.Parse(num);
+                this.Insert(result);
+            }
+        }
+
+        /// <summary>
         /// Prints out the entire Binary Search Tree from least to greatest.
         /// </summary>
         /// <param name="current">Accepts the root of the tree.</param>
