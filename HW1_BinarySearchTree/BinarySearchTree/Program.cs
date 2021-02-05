@@ -23,6 +23,8 @@ namespace BinarySearchTree
             binaryTree.InsertIntegerList(integerList);
             binaryTree.PrintInOrder(binaryTree.Root);
             System.Console.WriteLine("\nNumber of items in the tree: " + binaryTree.GetCount());
+            System.Console.WriteLine("Level of Tree: " + binaryTree.GetTreeLevel());
+            System.Console.WriteLine("Theoretical Level of Tree: " + binaryTree.GetTheoreticalLevel());
         }
 
         /// <summary>

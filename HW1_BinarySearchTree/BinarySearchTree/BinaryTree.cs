@@ -102,5 +102,41 @@ namespace BinarySearchTree
         {
             return this.count;
         }
+
+        /// <summary>
+        /// Returns the number of levels in the tree.
+        /// </summary>
+        /// <returns>Number of levels in the tree.</returns>
+        public int GetTreeLevel()
+        {
+            return this.GetTreeLevel(this.Root);
+        }
+
+        /// <summary>
+        /// Returns the theoretical level of the tree.
+        /// </summary>
+        /// <returns>Integer of the theoretical level of the tree.</returns>
+        public int GetTheoreticalLevel()
+        {
+            double tempCount = System.Math.Log2(this.count);
+            return (int)tempCount + 1;
+        }
+
+        /// <summary>
+        /// Helper function to calculate the number of levels in the tree.
+        /// </summary>
+        /// <param name="current">Current Node.</param>
+        /// <returns>Number of levels in tree.</returns>
+        private int GetTreeLevel(Node current)
+        {
+            if (current == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return System.Math.Max(this.GetTreeLevel(current.LeftNode), this.GetTreeLevel(current.RightNode)) + 1;
+            }
+        }
     }
 }
