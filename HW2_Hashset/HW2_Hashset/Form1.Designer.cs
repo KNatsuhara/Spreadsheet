@@ -48,7 +48,7 @@ namespace HW2_Hashset
             this.ClientSize = new System.Drawing.Size(833, 478);
             this.Controls.Add(this.textBoxResults);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Koji Natsuhara - 11666900";
             this.ResumeLayout(false);
             this.PerformLayout();
 

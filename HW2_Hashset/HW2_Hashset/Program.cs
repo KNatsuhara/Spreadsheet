@@ -23,11 +23,36 @@ namespace HW2_Hashset
             System.Collections.Generic.List<int> randomList = new System.Collections.Generic.List<int>(); // Creates an empty generic list.
             for (int i = 0; i < 10; i++)
             {
-                temp = rand.Next(50, 101); // Creating random number generator loop.
-                textForm.PrintResults(temp.ToString()); // Prints finished result to textBoxResult in textForm.
+                temp = rand.Next(0, 10); // Creating random integers from 0 to 20,000.
+                randomList.Add(temp); // Adding random integers to randomList.
+                textForm.PrintResults(temp.ToString());
             }
 
+            temp = FindDistinctHashSet(randomList);
+            string hashSetResult = "HashSet Method: " + temp + " unique numbers.";
+            textForm.PrintResults(hashSetResult); // Prints finished result to textBoxResult in textForm.
+
+
             System.Windows.Forms.Application.Run(textForm); // Runs updated textForm.
+        }
+
+        /// <summary>
+        /// Returns the number of distinct numbers in the list using a Hash Set.
+        /// </summary>
+        /// <param name="list">Reads through the random list of integers.</param>
+        /// <returns>The total distinct numbers in the list.</returns>
+        private static int FindDistinctHashSet(System.Collections.Generic.List<int> list)
+        {
+            System.Collections.Generic.HashSet<int> intHashSet = new System.Collections.Generic.HashSet<int>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (!intHashSet.Contains(list[i]))
+                {
+                    intHashSet.Add(list[i]); // If the value is distinct in the hash set, then add that element to the set.
+                }
+            }
+
+            return intHashSet.Count; // Returns size of the distinct integer hash set.
         }
     }
 }
