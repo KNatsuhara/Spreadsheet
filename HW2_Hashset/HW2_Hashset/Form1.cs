@@ -27,5 +27,15 @@ namespace HW2_Hashset
         {
             this.InitializeComponent();
         }
+
+        /// <summary>
+        /// Prints out string to text box.
+        /// </summary>
+        /// <param name="str">Prints out string parameter.</param>
+        public void PrintResults(string str)
+        {
+            this.textBoxResults.AppendText(str);
+            this.textBoxResults.AppendText(Environment.NewLine);
+        }
     }
 }
