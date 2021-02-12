@@ -33,5 +33,36 @@ namespace HW2_Hashset
 
             return intHashSet.Count; // Returns size of the distinct integer hash set.
         }
+
+        /// <summary>
+        /// Returns the number of distinct numbers in a list while keeping the storage complexity O(1).
+        /// </summary>
+        /// <param name="list">Reads through the random list of integers.</param>
+        /// <returns>The int containing the total number of distinct integers in the list.</returns>
+        public static int FindDistinctLimitStorage(System.Collections.Generic.List<int> list)
+        {
+            int totalDistinct = 0;
+            bool isDistinct = true;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                isDistinct = true;
+                for (int j = i + 1; j < list.Count; j++)
+                {
+                    if (list[i] == list[j])
+                    {
+                        isDistinct = false;
+                        break; // The element is not distinct, and isDistinct to False.
+                    }
+                }
+
+                if (isDistinct)
+                {
+                    totalDistinct++; // The element is distinct and we increment totalDistinct count;
+                }
+            }
+
+            return totalDistinct;
+        }
     }
 }

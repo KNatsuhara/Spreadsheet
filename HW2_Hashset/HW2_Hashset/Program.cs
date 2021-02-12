@@ -31,8 +31,12 @@ namespace HW2_Hashset
 
             temp = FindDistinctUsingHashSet(randomList);
             string hashSetResult = "HashSet Method: " + temp + " unique numbers.";
+            temp = FindDistinctLimitStorage(randomList);
+            string limitStorageResult = "O(1) storage complexity Method: " + temp + " unique numbers.";
             textForm.PrintResults(hashSetResult); // Prints finished result to textBoxResult in textForm.
+            textForm.PrintResults(limitStorageResult); // Prints finished result to textBoxResult in textForm.
             System.Windows.Forms.Application.Run(textForm); // Runs updated textForm.
+
         }
     }
 }
