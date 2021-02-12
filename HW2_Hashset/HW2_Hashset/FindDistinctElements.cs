@@ -46,7 +46,7 @@ namespace HW2_Hashset
 
             for (int i = 0; i < list.Count; i++)
             {
-                isDistinct = true;
+                isDistinct = true; // Resets isDistinct value to true.
                 for (int j = i + 1; j < list.Count; j++)
                 {
                     if (list[i] == list[j])
