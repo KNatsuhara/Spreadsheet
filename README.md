@@ -1,9 +1,8 @@
 # CptS321-HWs
 
-This console application is supposed to read a list of integers and insert those numbers into a binary search tree.
-The tree is then supposed to be able to sort the numbers from the least to greatest and traverse the nodes in order.
-The tree will have a count function, the number of levels in the tree and theoretical minimum number of levels that the
-tree could have.
+In this application will be doing simple computations which will fill a list with 10,000 integers ranging from 0 to 20,000.
+This application will use 3 methods which will find the total number of distinct numbers in the list and output the results
+to a form interface. This application will implement and perform tests on these methods.
 
 Name: Koji Natsuhara
 
