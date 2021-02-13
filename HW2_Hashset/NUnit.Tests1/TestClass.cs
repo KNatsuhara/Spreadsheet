@@ -45,5 +45,23 @@ namespace HW2_Hashset
             int guess = FindDistinctLimitStorage(numberList);
             Assert.That(answer, Is.EqualTo(guess), "Did not find the correct number of distinct numbers");
         }
+
+        [Test]
+        public void TestFindDistinctUsingSort()
+        {
+            List<int> numberList = new List<int>(); //There will be 11 distinct integers in this list.
+            for (int i = 0; i < 10; i++)
+            {
+                numberList.Add(i);
+            }
+            numberList.Add(1);
+            numberList.Add(2);
+            numberList.Add(3);
+            numberList.Add(4);
+            numberList.Add(11);
+            var answer = 11;
+            int guess = FindDistinctUsingSort(numberList);
+            Assert.That(answer, Is.EqualTo(guess), "Did not find the correct number of distinct numbers");
+        }
     }
 }

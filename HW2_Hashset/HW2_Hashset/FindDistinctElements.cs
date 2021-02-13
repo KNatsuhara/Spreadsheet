@@ -74,18 +74,18 @@ namespace HW2_Hashset
         {
             if (list.Count == 0)
             {
-                return 0;
+                return 0; // Returns 0 if the list is empty.
             }
 
             int totalDistinct = 1;
             list.Sort(); // Sorting the list.
-            int currentElement = list[0];
+            int currentElement = list[0]; // Sets currentElement to the first element in the list.
             for (int i = 0; i < list.Count; i++)
             {
                 if (currentElement != list[i])
                 {
-                    totalDistinct++;
-                    currentElement = list[i];
+                    totalDistinct++; // If the element at i index is not equal to the currentElement, then increment totalDistinct.
+                    currentElement = list[i]; // Sets currentElement to the new i element in the list.
                 }
             }
 
