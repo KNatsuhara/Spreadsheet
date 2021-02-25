@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace FibonacciTextReader
 {
     partial class Form1
@@ -29,81 +31,63 @@ namespace FibonacciTextReader
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.loadFromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadFromFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadFIbonacciNumbersfirst50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadFibonacciNumbersfirst100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.menuStrip1.SuspendLayout();
+            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 31);
+            this.textBox1.Location = new System.Drawing.Point(12, 2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(436, 407);
             this.textBox1.TabIndex = 0;
             // 
-            // menuStrip1
+            // mainMenu1
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadFromFileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(471, 28);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem1});
             // 
-            // loadFromFileToolStripMenuItem
+            // menuItem1
             // 
-            this.loadFromFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadFromFileToolStripMenuItem1,
-            this.loadFIbonacciNumbersfirst50ToolStripMenuItem,
-            this.loadFibonacciNumbersfirst100ToolStripMenuItem,
-            this.saveToFileToolStripMenuItem});
-            this.loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
-            this.loadFromFileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
-            this.loadFromFileToolStripMenuItem.Text = "File";
-            this.loadFromFileToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileToolStripMenuItem_Click);
+            this.menuItem1.Index = 0;
+            this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem2,
+            this.menuItem3,
+            this.menuItem4,
+            this.menuItem5});
+            this.menuItem1.Text = "File";
             // 
-            // loadFromFileToolStripMenuItem1
+            // menuItem2
             // 
-            this.loadFromFileToolStripMenuItem1.Name = "loadFromFileToolStripMenuItem1";
-            this.loadFromFileToolStripMenuItem1.Size = new System.Drawing.Size(320, 26);
-            this.loadFromFileToolStripMenuItem1.Text = "Load from file...";
+            this.menuItem2.Index = 0;
+            this.menuItem2.Text = "Load from file...";
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
-            // loadFIbonacciNumbersfirst50ToolStripMenuItem
+            // menuItem3
             // 
-            this.loadFIbonacciNumbersfirst50ToolStripMenuItem.Name = "loadFIbonacciNumbersfirst50ToolStripMenuItem";
-            this.loadFIbonacciNumbersfirst50ToolStripMenuItem.Size = new System.Drawing.Size(320, 26);
-            this.loadFIbonacciNumbersfirst50ToolStripMenuItem.Text = "Load FIbonacci numbers (first 50)";
+            this.menuItem3.Index = 1;
+            this.menuItem3.Text = "Load Fibonacci numbers (first 50)";
+            this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
             // 
-            // loadFibonacciNumbersfirst100ToolStripMenuItem
+            // menuItem4
             // 
-            this.loadFibonacciNumbersfirst100ToolStripMenuItem.Name = "loadFibonacciNumbersfirst100ToolStripMenuItem";
-            this.loadFibonacciNumbersfirst100ToolStripMenuItem.Size = new System.Drawing.Size(320, 26);
-            this.loadFibonacciNumbersfirst100ToolStripMenuItem.Text = "Load Fibonacci numbers (first 100)";
+            this.menuItem4.Index = 2;
+            this.menuItem4.Text = "Load Fibonacci numbers (first 100)";
+            this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
             // 
-            // saveToFileToolStripMenuItem
+            // menuItem5
             // 
-            this.saveToFileToolStripMenuItem.Name = "saveToFileToolStripMenuItem";
-            this.saveToFileToolStripMenuItem.Size = new System.Drawing.Size(320, 26);
-            this.saveToFileToolStripMenuItem.Text = "Save to file...";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.menuItem5.Index = 3;
+            this.menuItem5.Text = "Save to file...";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
             // 
             // Form1
             // 
@@ -111,12 +95,9 @@ namespace FibonacciTextReader
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(471, 450);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Menu = this.mainMenu1;
             this.Name = "Form1";
             this.Text = "322 NotePad";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,14 +106,12 @@ namespace FibonacciTextReader
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem loadFromFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadFromFileToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem loadFIbonacciNumbersfirst50ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadFibonacciNumbersfirst100ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToFileToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.MainMenu mainMenu1;
+        private System.Windows.Forms.MenuItem menuItem1;
+        private System.Windows.Forms.MenuItem menuItem2;
+        private System.Windows.Forms.MenuItem menuItem3;
+        private System.Windows.Forms.MenuItem menuItem4;
+        private System.Windows.Forms.MenuItem menuItem5;
     }
 }
 
