@@ -26,5 +26,15 @@ namespace FibonacciTextReader
         {
             this.InitializeComponent();
         }
+
+        private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
