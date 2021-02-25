@@ -28,44 +28,67 @@ namespace FibonacciTextReader
             this.InitializeComponent();
         }
 
-        private void menuItem2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// This function is if the Load from file button is clicked. This will read a text file a put the contents
+        /// into the text box interface.
+        /// </summary>
+        /// <param name="sender">Load from file button.</param>
+        /// <param name="e">Read file contents and put in text box.</param>
+        private void MenuItem2_Click(object sender, EventArgs e)
         {
-            try
+            // Create an instance of the open file dialog box.
+            // Call the ShowDialog method to show the dialog box.
+            // Process input if the user clicked OK.
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
             {
-                // Create an instance of StreamReader to read from a file.
-                // The using statement also closes the StreamReader.
-                using (StreamReader sr = new StreamReader("TestFile.txt"))
+                // Set filter options and filter index.
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
+                openFileDialog1.FilterIndex = 1;
+                openFileDialog1.Multiselect = true;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    this.LoadText(sr);
+                    try
+                    {
+                        // Create an instance of StreamReader to read from a file.
+                        // The using statement also closes the StreamReader.
+                        string filePath = openFileDialog1.FileName;
+                        using (StreamReader reader = File.OpenText(filePath))
+                        {
+                            this.LoadText(reader);
+                        }
+                    }
+                    catch (Exception f)
+                    {
+                        // Let the user know what went wrong.
+                        Console.WriteLine("The file could not be read:");
+                        Console.WriteLine(f.Message);
+                    }
                 }
             }
-            catch (Exception f)
-            {
-                // Let the user know what went wrong.
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(f.Message);
-            }
         }
 
-        private void menuItem3_Click(object sender, EventArgs e)
+        private void MenuItem3_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void menuItem4_Click(object sender, EventArgs e)
+        private void MenuItem4_Click(object sender, EventArgs e)
         {
 
         }
 
         /// <summary>
-        /// 
+        /// This function will read from the text box and save the text into a text file.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuItem5_Click(object sender, EventArgs e)
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
+        private void MenuItem5_Click(object sender, EventArgs e)
         {
-            Stream myStream;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            // saveFileDialog1.InitialDirectory = "c:\\";
 
             saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog1.FilterIndex = 2;
@@ -73,11 +96,10 @@ namespace FibonacciTextReader
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
-                    myStream.Close();
-                }
+                string streamFileName = saveFileDialog1.FileName;
+                StreamWriter myStream = new StreamWriter(streamFileName);
+                myStream.WriteLine(this.textBox1.Text);
+                myStream.Close();
             }
         }
 

@@ -69,25 +69,25 @@ namespace FibonacciTextReader
             // 
             this.menuItem2.Index = 0;
             this.menuItem2.Text = "Load from file...";
-            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+            this.menuItem2.Click += new System.EventHandler(this.MenuItem2_Click);
             // 
             // menuItem3
             // 
             this.menuItem3.Index = 1;
             this.menuItem3.Text = "Load Fibonacci numbers (first 50)";
-            this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
+            this.menuItem3.Click += new System.EventHandler(this.MenuItem3_Click);
             // 
             // menuItem4
             // 
             this.menuItem4.Index = 2;
             this.menuItem4.Text = "Load Fibonacci numbers (first 100)";
-            this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+            this.menuItem4.Click += new System.EventHandler(this.MenuItem4_Click);
             // 
             // menuItem5
             // 
             this.menuItem5.Index = 3;
             this.menuItem5.Text = "Save to file...";
-            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            this.menuItem5.Click += new System.EventHandler(this.MenuItem5_Click);
             // 
             // Form1
             // 

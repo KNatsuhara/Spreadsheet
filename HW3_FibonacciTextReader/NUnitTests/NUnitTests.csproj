@@ -48,9 +48,9 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FibonacciTextReader\FibonacciTextReader.csproj">
+    <ProjectReference Include="..\FibonacciTextReader\HW3_FibonacciTextReader.csproj">
       <Project>{32069852-99ae-4b82-8430-1905dead3b3c}</Project>
-      <Name>FibonacciTextReader</Name>
+      <Name>HW3_FibonacciTextReader</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
