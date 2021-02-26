@@ -56,7 +56,19 @@ namespace NUnitTests
         [Test]
         public void TestReadToEnd()
         {
+            FibonacciTextReader test1 = new FibonacciTextReader(0);
+            FibonacciTextReader test2 = new FibonacciTextReader(3);
+            FibonacciTextReader test3 = new FibonacciTextReader(4);
 
+            string test1String = test1.ReadToEnd();
+            string test2String = test2.ReadToEnd();
+            string test3String = test3.ReadToEnd();
+            string test2StringAnswer = "1: 0" + System.Environment.NewLine + "2: 1" + System.Environment.NewLine + "3: 1" + System.Environment.NewLine;
+            string test3StringAnswer = "1: 0" + System.Environment.NewLine + "2: 1" + System.Environment.NewLine + "3: 1" + System.Environment.NewLine + "4: 2" + System.Environment.NewLine;
+
+            Assert.That(string.Empty, Is.EqualTo(test1String), "Test1: Did not return the correct numbers in the Fibonacci Sequence!");
+            Assert.That(test2StringAnswer, Is.EqualTo(test2String), "Test2: Did not return the correct numbers in the Fibonacci Sequence!");
+            Assert.That(test3StringAnswer, Is.EqualTo(test3String), "Test3: Did not return the correct numbers in the Fibonacci Sequence!");
         }
     }
 }
