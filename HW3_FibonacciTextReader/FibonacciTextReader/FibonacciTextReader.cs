@@ -68,17 +68,20 @@ namespace HW3_FibonacciTextReader
         {
             if (this.currentNumLine == 1)
             {
+                this.currentNumLine++; // Increment the next line in the fibonacci sequence.
                 return "0" + System.Environment.NewLine;
             }
 
             if (this.currentNumLine == 2)
             {
+                this.currentNumLine++; // Increment the next line in the fibonacci sequence.
                 return "1" + System.Environment.NewLine;
             }
 
             BigInteger temp = this.position0;
             this.position0 = this.position1;
             this.position1 = this.position1 + temp;
+            this.currentNumLine++; // Increment the next line in the fibonacci sequence.
             return this.position1.ToString() + System.Environment.NewLine;
         }
 
@@ -94,7 +97,6 @@ namespace HW3_FibonacciTextReader
             {
                 sb.Append(this.currentNumLine.ToString() + ": " );
                 sb.Append(this.ReadLine());
-                this.currentNumLine++; // Increment the next line in the fibonacci sequence.
             }
 
             return sb.ToString(); // Returns fully appeneded string.
