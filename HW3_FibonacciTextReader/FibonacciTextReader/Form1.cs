@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FibonacciTextReader
+namespace HW3_FibonacciTextReader
 {
     /// <summary>
     /// This class creates the UI elements in the WinForm application.
@@ -69,14 +69,26 @@ namespace FibonacciTextReader
             }
         }
 
+        /// <summary>
+        /// This function will load the first 50 numbers in the Fibonacci Sequence.
+        /// </summary>
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
         private void MenuItem3_Click(object sender, EventArgs e)
         {
-
+            FibonacciTextReader first50 = new FibonacciTextReader(50);
+            this.LoadText(first50);
         }
 
+        /// <summary>
+        /// This function will load the first 100 numbers in the Fibonacci Sequence.
+        /// </summary>
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
         private void MenuItem4_Click(object sender, EventArgs e)
         {
-
+            FibonacciTextReader first100 = new FibonacciTextReader(100);
+            this.LoadText(first100);
         }
 
         /// <summary>
@@ -87,8 +99,6 @@ namespace FibonacciTextReader
         private void MenuItem5_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-            // saveFileDialog1.InitialDirectory = "c:\\";
 
             saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             saveFileDialog1.FilterIndex = 2;
@@ -109,8 +119,7 @@ namespace FibonacciTextReader
         /// <param name="sr">System.IO.TextReader object.</param>
         private void LoadText(TextReader sr)
         {
-            string line = sr.ReadToEnd();
-            this.textBox1.AppendText(line);
+            this.textBox1.AppendText(sr.ReadToEnd().ToString());
         }
     }
 }

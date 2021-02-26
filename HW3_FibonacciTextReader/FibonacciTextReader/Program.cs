@@ -2,7 +2,7 @@
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 
-namespace FibonacciTextReader
+namespace HW3_FibonacciTextReader
 {
     /// <summary>
     /// This program will run application.

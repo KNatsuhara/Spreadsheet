@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace FibonacciTextReader
+namespace HW3_FibonacciTextReader
 {
     partial class Form1
     {
