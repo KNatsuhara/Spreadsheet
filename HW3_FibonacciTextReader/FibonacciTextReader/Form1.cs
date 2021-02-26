@@ -119,6 +119,7 @@ namespace HW3_FibonacciTextReader
         /// <param name="sr">System.IO.TextReader object.</param>
         private void LoadText(TextReader sr)
         {
+            this.textBox1.Clear();
             this.textBox1.AppendText(sr.ReadToEnd().ToString());
         }
     }
