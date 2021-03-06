@@ -155,5 +155,36 @@ namespace CptS321
 
             this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
         }
+
+        /// <summary>
+        /// Demo for the button.
+        /// </summary>
+        public void Demo()
+        {
+            Random rnd = new Random();
+            int row = 0;
+            int col = 0;
+
+            for (int i = 0; i < 50; i++)
+            {
+                col = rnd.Next(0, 26);
+                row = rnd.Next(0, 50);
+
+                this.cellGrid[row, col].Text = "Yay! It worked!";
+            }
+
+            row = 1;
+            for (int i = 0; i < 50; i++)
+            {
+                this.cellGrid[i, 1].Text = "This is cell B " + row; // Setting cells in column B to "This is cell B #
+                row++;
+            }
+
+            row = 1;
+            for (int i = 0; i < 50; i++)
+            {
+                this.cellGrid[i, 0].Text = "=B" + row; // Setting the column A = to adjacent B cells.
+            }
+        }
     }
 }

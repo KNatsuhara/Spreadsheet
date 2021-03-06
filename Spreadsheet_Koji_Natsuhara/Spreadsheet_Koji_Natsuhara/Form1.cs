@@ -50,7 +50,7 @@ namespace Spreadsheet_Koji_Natsuhara
             {
                 SpreadsheetCell cell = (SpreadsheetCell)sender;
 
-                this.dataGridView1[cell.RowIndex, cell.ColumnIndex].Value = cell.Value;
+                this.dataGridView1[cell.ColumnIndex, cell.RowIndex].Value = cell.Value;
             }
         }
 
