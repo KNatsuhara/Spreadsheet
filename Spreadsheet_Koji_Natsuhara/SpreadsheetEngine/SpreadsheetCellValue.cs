@@ -22,17 +22,17 @@ namespace CptS321
         /// <param name="rowIndex">RowIndex.</param>
         /// <param name="columnIndex">ColumnIndex.</param>
         public SpreadsheetCellValue(int rowIndex, int columnIndex)
-            : base(rowIndex, columnIndex) 
+            : base(rowIndex, columnIndex)
         {
         }
 
         /// <summary>
         /// Declares the property changed event.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChangedValue;
 
         /// <summary>
-        /// Gets the value member in the cell class.
+        /// Gets or Sets the value member in the cell class.
         /// </summary>
         public string Value
         {
@@ -40,21 +40,28 @@ namespace CptS321
             {
                 return this.value;
             }
+
+            set
+            {
+                if (value == this.value)
+                {
+                    return;
+                }
+
+                this.value = value;
+                this.PropertyChangedValue(this, new PropertyChangedEventArgs("Value"));
+            }
         }
 
         /// <summary>
-        /// Sets the value member in cell class.
+        /// Creates SpreadsheetCellValue based on the parameters rowIndex and ColumnIndex.
         /// </summary>
-        /// <param name="value">Value.</param>
-        protected void SetValue(string value)
+        /// <param name="rowIndex">Row Index.</param>
+        /// <param name="columnIndex">Column Index.</param>
+        /// <returns>A new SpreadsheetCellValue object.</returns>
+        public static SpreadsheetCellValue CreateCell(int rowIndex, int columnIndex)
         {
-            if (value == this.value)
-            {
-                return;
-            }
-
-            this.value = value;
-            this.PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+            return new SpreadsheetCellValue(rowIndex, columnIndex);
         }
     }
 }
