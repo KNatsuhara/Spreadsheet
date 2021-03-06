@@ -32,7 +32,27 @@ namespace CptS321
         private int columnCount;
 
         /// <summary>
-        /// This will evaluate the text of the string and decide if it is a value or not.
+        /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
+        /// </summary>
+        /// <param name="numRows">Set number of rows in spreadsheet.</param>
+        /// <param name="numColumns">Set number of columns in spreadsheet.</param>
+        public Spreadsheet(int numRows, int numColumns)
+        {
+            this.cellGrid = new SpreadsheetCellValue[numRows, numColumns];
+
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    SpreadsheetCellValue newCell = SpreadsheetCellValue.CreateCell(i, j);
+                    this.cellGrid[i, j] = newCell;
+                    this.cellGrid[i, j].PropertyChanged += this.SpreadsheetCellValue_PropertyChanged;
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method will evaluate the text of the string and decide if it is a value or not.
         /// </summary>
         /// <param name="text">Text.</param>
         /// <returns>True if the text starts with "=" or false otherwise.</returns>
@@ -52,26 +72,6 @@ namespace CptS321
             else
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
-        /// </summary>
-        /// <param name="numRows">Set number of rows in spreadsheet.</param>
-        /// <param name="numColumns">Set number of columns in spreadsheet.</param>
-        public Spreadsheet(int numRows, int numColumns)
-        {
-            this.cellGrid = new SpreadsheetCellValue[numRows, numColumns];
-
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numColumns; j++)
-                {
-                    SpreadsheetCellValue newCell = SpreadsheetCellValue.CreateCell(i, j);
-                    this.cellGrid[i, j] = newCell;
-                    this.cellGrid[i, j].PropertyChanged += this.SpreadsheetCellValue_PropertyChanged;
-                }
             }
         }
 
@@ -112,14 +112,9 @@ namespace CptS321
         }
 
         /// <summary>
-        /// Test Function.
-        /// </summary>
-        public void Test()
-        {
-        }
-
-        /// <summary>
-        /// This will set the value for a particular cell if its text has just changed.
+        /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
+        /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
+        /// will be set equal to the text.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
@@ -128,7 +123,27 @@ namespace CptS321
             if (e.PropertyName == "Text")
             {
                 SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
-                cell.Value = cell.Text;
+                string evalutedText = cell.Text;
+
+                if (EvaluateText(evalutedText))
+                {
+                    if (evalutedText.Length == 3)
+                    {
+                        char rowSymbol = evalutedText[1];
+                        char colSymbol = evalutedText[2];
+                        int row = (int)rowSymbol - 65;
+                        int col = (int)colSymbol;
+                        cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
+                    }
+                    else
+                    {
+                        cell.Value = cell.Text; // When the string is greater than 3 characters.
+                    }
+                }
+                else
+                {
+                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
+                }
             }
         }
     }
