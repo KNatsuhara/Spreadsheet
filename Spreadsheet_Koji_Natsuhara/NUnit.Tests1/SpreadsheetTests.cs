@@ -2,9 +2,9 @@
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 
+using CptS321;
 using NUnit.Framework;
 using static CptS321.Spreadsheet;
-using CptS321;
 
 namespace NUnit.Tests1
 {
@@ -53,7 +53,14 @@ namespace NUnit.Tests1
         [Test]
         public void TestSetValue()
         {
+            Spreadsheet testSheet = new Spreadsheet(50, 26);
 
+            testSheet.TestForSetValue();
+
+            Assert.That("test", Is.EqualTo(testSheet.GetCell(0, 0).Value), "Did not get null");
+            Assert.That("=Test", Is.EqualTo(testSheet.GetCell(1, 1).Value), "Did not get =Test");
+            Assert.That("=A1", Is.EqualTo(testSheet.GetCell(3, 3).Value), "Did not get =A1");
+            Assert.That("=B33", Is.EqualTo(testSheet.GetCell(10, 10).Value), "Did not get =B33");
         }
     }
 }

@@ -152,6 +152,17 @@ namespace CptS321
         }
 
         /// <summary>
+        /// This method is for testing the get and setting function for value.
+        /// </summary>
+        public void TestForSetValue()
+        {
+            this.cellGrid[0, 0].Value = "test";
+            this.cellGrid[1, 1].Value = "=Test";
+            this.cellGrid[3, 3].Value = "=A1";
+            this.cellGrid[10, 10].Value = "=B33";
+        }
+
+        /// <summary>
         /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
         /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
         /// will be set equal to the text.
