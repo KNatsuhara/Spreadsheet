@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Spreadsheet.cs" />
     <Compile Include="SpreadsheetCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpreadsheetCellValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
