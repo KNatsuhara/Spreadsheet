@@ -57,7 +57,7 @@ namespace CptS321
         /// <summary>
         /// Declares the property changed event.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChangedValue = delegate { };
+        public event PropertyChangedEventHandler PropertyChangedValue = (sender, e) => { };
 
         /// <summary>
         /// This method will evaluate the text of the string and decide if it is a value or not.
@@ -120,43 +120,6 @@ namespace CptS321
         }
 
         /// <summary>
-        /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
-        /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
-        /// will be set equal to the text.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">E.</param>
-        private void SpreadsheetCellValue_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Text")
-            {
-                SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
-                string evalutedText = cell.Text;
-
-                if (EvaluateText(evalutedText))
-                {
-                    if (evalutedText.Length == 3)
-                    {
-                        char colSymbol = evalutedText[1];
-                        int row = int.Parse(evalutedText[2].ToString()) - 1;
-                        int col = (int)colSymbol - 'A';
-                        cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
-                    }
-                    else
-                    {
-                        cell.Value = cell.Text; // When the string is greater than 3 characters.
-                    }
-                }
-                else
-                {
-                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
-                }
-            }
-
-            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
-        }
-
-        /// <summary>
         /// Demo for the button.
         /// </summary>
         public void Demo()
@@ -184,7 +147,39 @@ namespace CptS321
             for (int i = 0; i < 50; i++)
             {
                 this.cellGrid[i, 0].Text = "=B" + row; // Setting the column A = to adjacent B cells.
+                row++;
             }
+        }
+
+        /// <summary>
+        /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
+        /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
+        /// will be set equal to the text.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void SpreadsheetCellValue_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Text")
+            {
+                SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
+                string evalutedText = cell.Text;
+
+                if (EvaluateText(evalutedText))
+                {
+                    string sub = evalutedText.Substring(2, evalutedText.Length - 2);
+                    char colSymbol = evalutedText[1];
+                    int row = int.Parse(sub) - 1;
+                    int col = (int)colSymbol - 'A';
+                    cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
+                }
+                else
+                {
+                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
+                }
+            }
+
+            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
         }
     }
 }

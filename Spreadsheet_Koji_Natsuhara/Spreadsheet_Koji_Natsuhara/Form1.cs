@@ -83,9 +83,13 @@ namespace Spreadsheet_Koji_Natsuhara
             }
         }
 
+        /// <summary>
+        /// Form1_Load Function.
+        /// </summary>
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
