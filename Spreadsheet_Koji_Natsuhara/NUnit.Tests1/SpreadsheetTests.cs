@@ -4,6 +4,7 @@
 
 using NUnit.Framework;
 using static CptS321.Spreadsheet;
+using CptS321;
 
 namespace NUnit.Tests1
 {
@@ -14,7 +15,7 @@ namespace NUnit.Tests1
     public class SpreadsheetTests
     {
         /// <summary>
-        /// Temporary test method.
+        /// Will test the EvaluateText and return true if the string begins with an "=" or false otherwise.
         /// </summary>
         [Test]
         public void TestEvaluateText()
@@ -25,6 +26,34 @@ namespace NUnit.Tests1
             Assert.That(false, Is.EqualTo(EvaluateText(string.Empty)), "Did not identify string.Empty");
             Assert.That(false, Is.EqualTo(EvaluateText(" ")), "Did not identify whitespace");
             Assert.That(false, Is.EqualTo(EvaluateText(" =A1")), "Did not identify ' '=A1");
+        }
+
+        /// <summary>
+        /// Will test the set and get Text function from the SpreadsheetCellValue class.
+        /// </summary>
+        [Test]
+        public void TestSetText()
+        {
+            Spreadsheet testSheet = new Spreadsheet(11, 11);
+
+            testSheet.GetCell(0, 0).Text = "(0,0)";
+            testSheet.GetCell(1, 1).Text = "(1,1)";
+            testSheet.GetCell(3, 3).Text = "(3,3)";
+            testSheet.GetCell(10, 10).Text = "(10,10)";
+
+            Assert.That("(0,0)", Is.EqualTo(testSheet.GetCell(0, 0).Text), "Did not set 0,0");
+            Assert.That("(1,1)", Is.EqualTo(testSheet.GetCell(1, 1).Text), "Did not set 1,1");
+            Assert.That("(3,3)", Is.EqualTo(testSheet.GetCell(3, 3).Text), "Did not set 3,3");
+            Assert.That("(10,10)", Is.EqualTo(testSheet.GetCell(10, 10).Text), "Did not set 10,10");
+        }
+
+        /// <summary>
+        /// Will test the set and get Value function from the SpreadsheetCellValue class.
+        /// </summary>
+        [Test]
+        public void TestSetValue()
+        {
+
         }
     }
 }
