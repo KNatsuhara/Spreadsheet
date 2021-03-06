@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CptS321;
 
 namespace Spreadsheet_Koji_Natsuhara
 {
@@ -20,13 +21,37 @@ namespace Spreadsheet_Koji_Natsuhara
     public partial class Form1 : Form
     {
         /// <summary>
+        /// Spreadsheet object as a member variable.
+        /// </summary>
+        private Spreadsheet mainSpreadSheet;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
         /// </summary>
         public Form1()
         {
             this.InitializeComponent();
+            this.mainSpreadSheet = new Spreadsheet(50, 26);
+
+            this.mainSpreadSheet.PropertyChangedValue += this.MainSpreadSheet_PropertyChangedValue;
+
             this.SetupGridColumns();
             this.SetupGridRows();
+        }
+
+        /// <summary>
+        /// Cells in UI grid values are set to the values of the logic engine cell.
+        /// </summary>
+        /// <param name="sender">sender.</param>
+        /// <param name="e">e.</param>
+        private void MainSpreadSheet_PropertyChangedValue(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Value")
+            {
+                SpreadsheetCell cell = (SpreadsheetCell)sender;
+
+                this.dataGridView1[cell.RowIndex, cell.ColumnIndex].Value = cell.Value;
+            }
         }
 
         /// <summary>
@@ -56,6 +81,21 @@ namespace Spreadsheet_Koji_Natsuhara
                 this.dataGridView1.Rows[i].HeaderCell.Value = j.ToString(); // Names the header cell values.
                 j++;
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// This button if clicked will perform a demo test.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void DemoButton_Click(object sender, EventArgs e)
+        {
+            this.mainSpreadSheet.Demo();
         }
     }
 }

@@ -38,6 +38,9 @@ namespace CptS321
         /// <param name="numColumns">Set number of columns in spreadsheet.</param>
         public Spreadsheet(int numRows, int numColumns)
         {
+            this.rowCount = numRows;
+            this.columnCount = numColumns;
+
             this.cellGrid = new SpreadsheetCellValue[numRows, numColumns];
 
             for (int i = 0; i < numRows; i++)
@@ -50,6 +53,11 @@ namespace CptS321
                 }
             }
         }
+
+        /// <summary>
+        /// Declares the property changed event.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChangedValue = delegate { };
 
         /// <summary>
         /// This method will evaluate the text of the string and decide if it is a value or not.
@@ -129,10 +137,9 @@ namespace CptS321
                 {
                     if (evalutedText.Length == 3)
                     {
-                        char rowSymbol = evalutedText[1];
-                        char colSymbol = evalutedText[2];
-                        int row = (int)rowSymbol - 65;
-                        int col = (int)colSymbol;
+                        char colSymbol = evalutedText[1];
+                        int row = int.Parse(evalutedText[2].ToString()) - 1;
+                        int col = (int)colSymbol - 'A';
                         cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
                     }
                     else
@@ -145,6 +152,8 @@ namespace CptS321
                     cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
                 }
             }
+
+            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
         }
     }
 }

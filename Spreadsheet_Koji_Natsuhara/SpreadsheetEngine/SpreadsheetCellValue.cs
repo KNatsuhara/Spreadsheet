@@ -29,7 +29,29 @@ namespace CptS321
         /// <summary>
         /// Declares the property changed event.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChangedValue;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+        /// <summary>
+        /// Gets or Sets the text member in the cell class.
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                return this.text;
+            }
+
+            set
+            {
+                if (value == this.text)
+                {
+                    return;
+                }
+
+                this.text = value;
+                this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+            }
+        }
 
         /// <summary>
         /// Gets or Sets the value member in the cell class.
@@ -49,7 +71,7 @@ namespace CptS321
                 }
 
                 this.value = value;
-                this.PropertyChangedValue(this, new PropertyChangedEventArgs("Value"));
+                this.PropertyChanged(this, new PropertyChangedEventArgs("Value"));
             }
         }
 

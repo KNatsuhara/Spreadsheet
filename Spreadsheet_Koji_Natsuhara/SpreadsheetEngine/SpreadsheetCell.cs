@@ -50,7 +50,7 @@ namespace CptS321
         /// <summary>
         /// Declares the property changed event.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         /// <summary>
         /// Gets the rowIndex of the cell.
@@ -87,6 +87,17 @@ namespace CptS321
 
                 this.text = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+            }
+        }
+
+        /// <summary>
+        /// Gets the value member in the cell class.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return this.value;
             }
         }
     }
