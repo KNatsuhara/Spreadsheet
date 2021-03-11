@@ -114,5 +114,34 @@ namespace HW5_ExpressionTreeTests
             Assert.That(5, Is.EqualTo(sub3.Evaluate()), "Failed on sub3");
             Assert.That(() => sub4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
         }
+
+        /// <summary>
+        /// Tests the get, set and evaluate methods in the DivideOperatorNode.
+        /// </summary>
+        [Test]
+        public void TestDivideOperatorNode()
+        {
+            Dictionary<string, double> reference = new Dictionary<string, double>();
+            VariableNode variable1 = new VariableNode("test1", ref reference);
+            VariableNode variable2 = new VariableNode("test2", ref reference);
+            ConstantNode constant1 = new ConstantNode(12);
+            ConstantNode constant2 = new ConstantNode(10);
+            reference.Add("test1", 3);
+            reference.Add("test2", 5);
+            DivideOperatorNode div1 = new DivideOperatorNode();
+            div1.Left = variable1;
+            div1.Right = variable2; // This should evaluate to 0.6
+            DivideOperatorNode div2 = new DivideOperatorNode();
+            div2.Left = variable1;
+            div2.Right = constant1; // This should evaluate to 0.25
+            DivideOperatorNode div3 = new DivideOperatorNode();
+            div3.Left = constant2;
+            div3.Right = variable2; // This should evaluate to 2
+            DivideOperatorNode div4 = new DivideOperatorNode();
+            Assert.That(0.6, Is.EqualTo(div1.Evaluate()), "Failed on div1");
+            Assert.That(0.25, Is.EqualTo(div2.Evaluate()), "Failed on div2");
+            Assert.That(2, Is.EqualTo(div3.Evaluate()), "Failed on div3");
+            Assert.That(() => div4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
+        }
     }
 }
