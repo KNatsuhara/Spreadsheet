@@ -37,10 +37,6 @@ namespace HW5_ExpressionTreeTests
         public void TestVariableNode()
         {
             Dictionary<string, double> reference = new Dictionary<string, double>();
-            reference.Add("test1", 3.4);
-            reference.Add("test2", -1.2);
-            reference.Add("max", double.MaxValue);
-            reference.Add("min", double.MinValue);
 
             VariableNode variable1 = new VariableNode("test1", ref reference);
             VariableNode variable2 = new VariableNode("test2", ref reference);
@@ -48,11 +44,46 @@ namespace HW5_ExpressionTreeTests
             VariableNode variable4 = new VariableNode("max", ref reference);
             VariableNode variable5 = new VariableNode("min", ref reference);
 
+            // Confirming that the VariableNodes are using the Dictionary as a reference and not a value type.
+            reference.Add("test1", 3.4);
+            reference.Add("test2", -1.2);
+            reference.Add("max", double.MaxValue);
+            reference.Add("min", double.MinValue);
+
             Assert.That(3.4, Is.EqualTo(variable1.Evaluate()), "Failed on variable1");
             Assert.That(-1.2, Is.EqualTo(variable2.Evaluate()), "Failed on variable2");
             Assert.That(0, Is.EqualTo(variable3.Evaluate()), "Failed on variable3");
             Assert.That(double.MaxValue, Is.EqualTo(variable4.Evaluate()), "Failed on variable4");
             Assert.That(double.MinValue, Is.EqualTo(variable5.Evaluate()), "Failed on variable5");
+        }
+
+        /// <summary>
+        /// Tests the get, set and evaluate methods in the PlusOperatorNode.
+        /// </summary>
+        [Test]
+        public void TestPlusOperatorNode()
+        {
+            Dictionary<string, double> reference = new Dictionary<string, double>();
+            VariableNode variable1 = new VariableNode("test1", ref reference);
+            VariableNode variable2 = new VariableNode("test2", ref reference);
+            ConstantNode constant1 = new ConstantNode(4);
+            ConstantNode constant2 = new ConstantNode(1);
+            reference.Add("test1", 3.4);
+            reference.Add("test2", 5);
+            PlusOperatorNode add1 = new PlusOperatorNode();
+            add1.Left = variable1;
+            add1.Right = variable2; // This should evaluate to 8.4
+            PlusOperatorNode add2 = new PlusOperatorNode();
+            add2.Left = variable1;
+            add2.Right = constant1; // This should evaluate to 7.4
+            PlusOperatorNode add3 = new PlusOperatorNode();
+            add3.Left = constant2;
+            add3.Right = variable2; // This should evaluate to 6
+            PlusOperatorNode add4 = new PlusOperatorNode();
+            Assert.That(8.4, Is.EqualTo(add1.Evaluate()), "Failed on add1");
+            Assert.That(7.4, Is.EqualTo(add2.Evaluate()), "Failed on add2");
+            Assert.That(6, Is.EqualTo(add3.Evaluate()), "Failed on add3");
+            Assert.That(() => add4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
         }
     }
 }
