@@ -85,5 +85,34 @@ namespace HW5_ExpressionTreeTests
             Assert.That(6, Is.EqualTo(add3.Evaluate()), "Failed on add3");
             Assert.That(() => add4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
         }
+
+        /// <summary>
+        /// Tests the get, set and evaluate methods in the MinusOperatorNode.
+        /// </summary>
+        [Test]
+        public void TestMinusOperatorNode()
+        {
+            Dictionary<string, double> reference = new Dictionary<string, double>();
+            VariableNode variable1 = new VariableNode("test1", ref reference);
+            VariableNode variable2 = new VariableNode("test2", ref reference);
+            ConstantNode constant1 = new ConstantNode(4);
+            ConstantNode constant2 = new ConstantNode(10);
+            reference.Add("test1", 3.4);
+            reference.Add("test2", 5);
+            MinusOperatorNode sub1 = new MinusOperatorNode();
+            sub1.Left = variable1;
+            sub1.Right = variable2; // This should evaluate to -1.6
+            MinusOperatorNode sub2 = new MinusOperatorNode();
+            sub2.Left = variable1;
+            sub2.Right = constant1; // This should evaluate to -0.6
+            MinusOperatorNode sub3 = new MinusOperatorNode();
+            sub3.Left = constant2;
+            sub3.Right = variable2; // This should evaluate to 5
+            MinusOperatorNode sub4 = new MinusOperatorNode();
+            Assert.That(-1.6, Is.EqualTo(sub1.Evaluate()), "Failed on sub1");
+            Assert.That(3.4 - 4, Is.EqualTo(sub2.Evaluate()), "Failed on sub2");
+            Assert.That(5, Is.EqualTo(sub3.Evaluate()), "Failed on sub3");
+            Assert.That(() => sub4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
+        }
     }
 }
