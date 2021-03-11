@@ -143,5 +143,34 @@ namespace HW5_ExpressionTreeTests
             Assert.That(2, Is.EqualTo(div3.Evaluate()), "Failed on div3");
             Assert.That(() => div4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
         }
+
+        /// <summary>
+        /// Tests the get, set and evaluate methods in the MultiplyOperatorNode.
+        /// </summary>
+        [Test]
+        public void TestMultiplyOperatorNode()
+        {
+            Dictionary<string, double> reference = new Dictionary<string, double>();
+            VariableNode variable1 = new VariableNode("test1", ref reference);
+            VariableNode variable2 = new VariableNode("test2", ref reference);
+            ConstantNode constant1 = new ConstantNode(12);
+            ConstantNode constant2 = new ConstantNode(-2);
+            reference.Add("test1", 3.5);
+            reference.Add("test2", 5.1);
+            MultiplyOperatorNode mul1 = new MultiplyOperatorNode();
+            mul1.Left = variable1;
+            mul1.Right = variable2; // This should evaluate to 17.85
+            MultiplyOperatorNode mul2 = new MultiplyOperatorNode();
+            mul2.Left = variable1;
+            mul2.Right = constant1; // This should evaluate to 42
+            MultiplyOperatorNode mul3 = new MultiplyOperatorNode();
+            mul3.Left = constant2;
+            mul3.Right = variable2; // This should evaluate to -10.2
+            MultiplyOperatorNode mul4 = new MultiplyOperatorNode();
+            Assert.That(3.5 * 5.1, Is.EqualTo(mul1.Evaluate()), "Failed on mul1");
+            Assert.That(42, Is.EqualTo(mul2.Evaluate()), "Failed on mul2");
+            Assert.That(-10.2, Is.EqualTo(mul3.Evaluate()), "Failed on mul3");
+            Assert.That(() => mul4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
+        }
     }
 }
