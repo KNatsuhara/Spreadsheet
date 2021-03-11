@@ -4,8 +4,7 @@
 
 namespace HW5_ExpressionTreeTests
 {
-    using System.Collections;
-    using System.Collections.Generic;
+    using CptS321;
     using NUnit.Framework;
 
     /// <summary>
@@ -15,14 +14,19 @@ namespace HW5_ExpressionTreeTests
     public class ExpressionTreeTests
     {
         /// <summary>
-        /// Basic test method.
+        /// Tests the constructor and evaluate method of the ConstantNode class.
         /// </summary>
         [Test]
-        public void TestMethod()
+        public void TestConstantNode()
         {
-            // TODO: Add your test code here
-            var answer = 42;
-            Assert.That(answer, Is.EqualTo(42), "Some useful error message");
+            ConstantNode constant1 = new ConstantNode(0.0);
+            ConstantNode constant2 = new ConstantNode(1.0000001);
+            ConstantNode constant3 = new ConstantNode(double.MaxValue);
+            ConstantNode constant4 = new ConstantNode(double.MinValue);
+            Assert.That(0, Is.EqualTo(constant1.Evaluate()), "Failed on constant1");
+            Assert.That(1.0000001, Is.EqualTo(constant2.Evaluate()), "Failed on constant2");
+            Assert.That(double.MaxValue, Is.EqualTo(constant3.Evaluate()), "Failed on constant3");
+            Assert.That(double.MinValue, Is.EqualTo(constant4.Evaluate()), "Failed on constant4");
         }
     }
 }
