@@ -165,9 +165,9 @@ namespace CptS321
         /// Will go through the postfix expression and create the ExpressionTree.
         /// </summary>
         /// <param name="expression">Expression string the user inputs.</param>
-        public void CreateExpressionTree()
+        public void CreateExpressionTree(string expression)
         {
-            List<string> postfix = ConvertExpressionToPostfix(this.expression);
+            List<string> postfix = ConvertExpressionToPostfix(expression);
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
             OperatorNode current;
