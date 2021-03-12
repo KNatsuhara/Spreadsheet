@@ -1,15 +1,15 @@
-﻿// <copyright file="ExpressionTreeTests.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="ExpressionTreeTests.cs" company="Koji Natsuhara (ID: 11666900)">
+// Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
+
+using System;
+using System.Collections.Generic;
+using CptS321;
+using NUnit.Framework;
+using static CptS321.ExpressionTree;
 
 namespace HW5_ExpressionTreeTests
 {
-    using System;
-    using System.Collections.Generic;
-    using CptS321;
-    using NUnit.Framework;
-    using static CptS321.ExpressionTree;
-
     /// <summary>
     /// This class will be responsible for testing the ExpressionTree class.
     /// </summary>
@@ -188,7 +188,7 @@ namespace HW5_ExpressionTreeTests
             List<string> postfix1 = new List<string> { "A1", "B1", "+", "C1", "+", "D1", "+" };
             List<string> postfix2 = new List<string> { "4", "2", "+", "4", "-", "A1", "-" };
             List<string> postfix3 = new List<string> { "A1", "4", "+" };
-            List<string> postfix4 = new List<string> { "A1"};
+            List<string> postfix4 = new List<string> { "A1" };
 
             Assert.That(postfix1, Is.EqualTo(ConvertExpressionToPostfix(expression1)), "Failed on postfix1");
             Assert.That(postfix2, Is.EqualTo(ConvertExpressionToPostfix(expression2)), "Failed on postfix1");
@@ -256,15 +256,15 @@ namespace HW5_ExpressionTreeTests
         {
             string expression1 = "A1+B1+12+12";
             ExpressionTree test1 = new ExpressionTree(expression1);
-            test1.CreateExpressionTree();
-            Assert.That(24, Is.EqualTo(test1.Evaluate()),"Failed at test1 (24)");
+            test1.CreateExpressionTree(expression1);
+            Assert.That(24, Is.EqualTo(test1.Evaluate()), "Failed at test1 (24)");
             test1.SetVariable("A1", 12);
             Assert.That(36, Is.EqualTo(test1.Evaluate()), "Failed at test1 (36)");
             test1.SetVariable("B1", 12);
             Assert.That(48, Is.EqualTo(test1.Evaluate()), "Failed at test1 (48)");
             string expression2 = "World-7+8+8";
             ExpressionTree test2 = new ExpressionTree(expression2);
-            test2.CreateExpressionTree();
+            test2.CreateExpressionTree(expression2);
             Assert.That(9, Is.EqualTo(test2.Evaluate()), "Failed at test2 (9)");
             test2.SetVariable("World", 12);
             Assert.That(21, Is.EqualTo(test2.Evaluate()), "Failed at test2 (21)");
