@@ -7,8 +7,8 @@ namespace HW5_ExpressionTreeTests
     using System;
     using System.Collections.Generic;
     using CptS321;
-    using static CptS321.ExpressionTree;
     using NUnit.Framework;
+    using static CptS321.ExpressionTree;
 
     /// <summary>
     /// This class will be responsible for testing the ExpressionTree class.
@@ -194,6 +194,58 @@ namespace HW5_ExpressionTreeTests
             Assert.That(postfix2, Is.EqualTo(ConvertExpressionToPostfix(expression2)), "Failed on postfix1");
             Assert.That(postfix3, Is.EqualTo(ConvertExpressionToPostfix(expression3)), "Failed on postfix1");
             Assert.That(postfix4, Is.EqualTo(ConvertExpressionToPostfix(expression4)), "Failed on postfix1");
+        }
+
+        /// <summary>
+        /// Will test the IsOperator method.
+        /// </summary>
+        [Test]
+        public void TestIsOperator()
+        {
+            string op1 = "+";
+            string op2 = "-";
+            string op3 = "*";
+            string op4 = "/";
+            string op5 = "1";
+            string op6 = string.Empty;
+
+            Assert.That(true, Is.EqualTo(IsOperator(op1)), "Failed at op1");
+            Assert.That(true, Is.EqualTo(IsOperator(op2)), "Failed at op2");
+            Assert.That(true, Is.EqualTo(IsOperator(op3)), "Failed at op3");
+            Assert.That(true, Is.EqualTo(IsOperator(op4)), "Failed at op4");
+            Assert.That(false, Is.EqualTo(IsOperator(op5)), "Failed at op5");
+            Assert.That(false, Is.EqualTo(IsOperator(op6)), "Failed at op6");
+         }
+
+        /// <summary>
+        /// Will test the IsVariable method.
+        /// </summary>
+        [Test]
+        public void TestIsVariable()
+        {
+            string var1 = "A1";
+            string var2 = "B1";
+            string var3 = "World";
+            string var4 = "Z";
+            string var5 = "abcde";
+            string var6 = "z";
+            string var7 = string.Empty;
+            string var8 = "@";
+            string var9 = "[";
+            string var10 = "`";
+            string var11 = "{";
+
+            Assert.That(true, Is.EqualTo(IsVariable(var1)), "Failed at var1");
+            Assert.That(true, Is.EqualTo(IsVariable(var2)), "Failed at var2");
+            Assert.That(true, Is.EqualTo(IsVariable(var3)), "Failed at var3");
+            Assert.That(true, Is.EqualTo(IsVariable(var4)), "Failed at var4");
+            Assert.That(true, Is.EqualTo(IsVariable(var5)), "Failed at var5");
+            Assert.That(true, Is.EqualTo(IsVariable(var6)), "Failed at var6");
+            Assert.That(false, Is.EqualTo(IsVariable(var7)), "Failed at var7");
+            Assert.That(false, Is.EqualTo(IsVariable(var8)), "Failed at var8");
+            Assert.That(false, Is.EqualTo(IsVariable(var9)), "Failed at var9");
+            Assert.That(false, Is.EqualTo(IsVariable(var10)), "Failed at var10");
+            Assert.That(false, Is.EqualTo(IsVariable(var11)), "Failed at var11");
         }
     }
 }

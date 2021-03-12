@@ -41,6 +41,52 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Returns true if the string is an operator.
+        /// </summary>
+        /// <param name="op">Operator of the string.</param>
+        /// <returns>True if the string is an operator and false otherwise.</returns>
+        public static bool IsOperator(string op)
+        {
+            if (op == string.Empty)
+            {
+                return false;
+            }
+
+            if (op == "+" || op == "/" ||
+                op == "*" || op == "-")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns true if the string is variable name.
+        /// </summary>
+        /// <param name="var">String that will be checked if it is a variable.</param>
+        /// <returns>True if the string is a variable name or false otherwise.</returns>
+        public static bool IsVariable(string var)
+        {
+            if (var == string.Empty)
+            {
+                return false;
+            }
+
+            char c = var[0];
+            int ascii = (int)c;
+
+            if ((ascii >= 65 && ascii <= 90) || (ascii >= 97 && ascii <= 122))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Converts an expression string into postfix format.
         /// </summary>
         /// /// <param name="expression">Expression the user inputted.</param>
@@ -108,6 +154,30 @@ namespace CptS321
             }
 
             return postfix; // Return postfix string list
+        }
+
+        /// <summary>
+        /// Will go through the postfix expression and create the ExpressionTree.
+        /// </summary>
+        /// <param name="expression">Expression string the user inputs.</param>
+        public void CreateExpressionTree(string expression)
+        {
+            List<string> postfix = ConvertExpressionToPostfix(expression);
+            Stack stack = new Stack();
+            string temp = string.Empty;
+
+            //for (int i = 0; i < postfix.Count; i++)
+            //{
+            //    if (!IsOperator(postfix[i]))
+            //    {
+            //        if (postfix[i].Substring(0, 1) == )
+            //        //stack.Push(); // If operand, push to stack
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
         }
 
         /// <summary>
