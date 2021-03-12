@@ -50,6 +50,7 @@
     <Compile Include="MinusOperatorNode.cs" />
     <Compile Include="MultiplyOperatorNode.cs" />
     <Compile Include="OperatorNode.cs" />
+    <Compile Include="OperatorNodeFactory.cs" />
     <Compile Include="PlusOperatorNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

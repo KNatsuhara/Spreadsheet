@@ -4,8 +4,10 @@
 
 namespace HW5_ExpressionTreeTests
 {
+    using System;
     using System.Collections.Generic;
     using CptS321;
+    using static CptS321.ExpressionTree;
     using NUnit.Framework;
 
     /// <summary>
@@ -171,6 +173,27 @@ namespace HW5_ExpressionTreeTests
             Assert.That(42, Is.EqualTo(mul2.Evaluate()), "Failed on mul2");
             Assert.That(-10.2, Is.EqualTo(mul3.Evaluate()), "Failed on mul3");
             Assert.That(() => mul4.Evaluate(), Throws.TypeOf<System.NullReferenceException>());
+        }
+
+        /// <summary>
+        /// Will test the ExpressionToPostfix method.
+        /// </summary>
+        [Test]
+        public void TestExpressionToPostfix()
+        {
+            string expression1 = "A1+B1+C1+D1";
+            string expression2 = "4+2-4-A1";
+            string expression3 = "A1+4";
+            string expression4 = "A1";
+            List<string> postfix1 = new List<string> { "A1", "B1", "+", "C1", "+", "D1", "+" };
+            List<string> postfix2 = new List<string> { "4", "2", "+", "4", "-", "A1", "-" };
+            List<string> postfix3 = new List<string> { "A1", "4", "+" };
+            List<string> postfix4 = new List<string> { "A1"};
+
+            Assert.That(postfix1, Is.EqualTo(ConvertExpressionToPostfix(expression1)), "Failed on postfix1");
+            Assert.That(postfix2, Is.EqualTo(ConvertExpressionToPostfix(expression2)), "Failed on postfix1");
+            Assert.That(postfix3, Is.EqualTo(ConvertExpressionToPostfix(expression3)), "Failed on postfix1");
+            Assert.That(postfix4, Is.EqualTo(ConvertExpressionToPostfix(expression4)), "Failed on postfix1");
         }
     }
 }
