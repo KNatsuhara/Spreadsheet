@@ -247,5 +247,27 @@ namespace HW5_ExpressionTreeTests
             Assert.That(false, Is.EqualTo(IsVariable(var10)), "Failed at var10");
             Assert.That(false, Is.EqualTo(IsVariable(var11)), "Failed at var11");
         }
+
+        /// <summary>
+        /// Will test the creation of the tree and evaluation of the tree.
+        /// </summary>
+        [Test]
+        public void TestEvaluateTree()
+        {
+            string expression1 = "A1+B1+12+12";
+            ExpressionTree test1 = new ExpressionTree(expression1);
+            test1.CreateExpressionTree();
+            Assert.That(24, Is.EqualTo(test1.Evaluate()),"Failed at test1 (24)");
+            test1.SetVariable("A1", 12);
+            Assert.That(36, Is.EqualTo(test1.Evaluate()), "Failed at test1 (36)");
+            test1.SetVariable("B1", 12);
+            Assert.That(48, Is.EqualTo(test1.Evaluate()), "Failed at test1 (48)");
+            string expression2 = "World-7+8+8";
+            ExpressionTree test2 = new ExpressionTree(expression2);
+            test2.CreateExpressionTree();
+            Assert.That(9, Is.EqualTo(test2.Evaluate()), "Failed at test2 (9)");
+            test2.SetVariable("World", 12);
+            Assert.That(21, Is.EqualTo(test2.Evaluate()), "Failed at test2 (21)");
+        }
     }
 }

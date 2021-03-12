@@ -32,6 +32,11 @@ namespace CptS321
         private string expression;
 
         /// <summary>
+        /// Creates all the operator nodes for the expression tree.
+        /// </summary>
+        private OperatorNodeFactory factory = new OperatorNodeFactory();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ExpressionTree"/> class.
         /// </summary>
         /// <param name="expression">Expression string.</param>
@@ -160,24 +165,38 @@ namespace CptS321
         /// Will go through the postfix expression and create the ExpressionTree.
         /// </summary>
         /// <param name="expression">Expression string the user inputs.</param>
-        public void CreateExpressionTree(string expression)
+        public void CreateExpressionTree()
         {
-            List<string> postfix = ConvertExpressionToPostfix(expression);
-            Stack stack = new Stack();
+            List<string> postfix = ConvertExpressionToPostfix(this.expression);
+            Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
+            OperatorNode current;
 
-            //for (int i = 0; i < postfix.Count; i++)
-            //{
-            //    if (!IsOperator(postfix[i]))
-            //    {
-            //        if (postfix[i].Substring(0, 1) == )
-            //        //stack.Push(); // If operand, push to stack
-            //    }
-            //    else
-            //    {
+            for (int i = 0; i < postfix.Count; i++)
+            {
+                if (!IsOperator(postfix[i]))
+                {
+                    if (IsVariable(postfix[i]))
+                    {
+                        stack.Push(new VariableNode(postfix[i], ref this.variables)); // If variable node, push to stack
+                    }
+                    else
+                    {
+                        stack.Push(new ConstantNode(Convert.ToDouble(postfix[i]))); // Else is a constant node, push to stack
+                    }
+                }
+                else
+                {
+                    current = this.factory.CreateOperatorNode(postfix[i]); // Create a new operator node based on the string operator
 
-            //    }
-            //}
+                    current.Right = stack.Pop(); // Pop out the first node and set it to the right of the operator node
+                    current.Left = stack.Pop(); // Pop out the second node and set it to the left of the operator node
+                    stack.Push(current); // Push the subexpression to the stack
+                }
+            }
+
+            // Only element left in the stack will be the root of the expression tree
+            this.root = stack.Pop(); // Set the root to the last element in the stack
         }
 
         /// <summary>
@@ -187,6 +206,14 @@ namespace CptS321
         /// <param name="variableValue">Value of the variable.</param>
         public void SetVariable(string variableName, double variableValue)
         {
+            if (this.variables.ContainsKey(variableName))
+            {
+                this.variables[variableName] = variableValue; // Change the current value of preexisting key
+            }
+            else
+            {
+                this.variables.Add(variableName, variableValue); // Create new variable
+            }
         }
 
         /// <summary>
@@ -195,7 +222,7 @@ namespace CptS321
         /// <returns>Value of the evaluated expression.</returns>
         public double Evaluate()
         {
-            return 0;
+            return this.root.Evaluate();
         }
     }
 }
