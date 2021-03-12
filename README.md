@@ -1,9 +1,12 @@
 # CptS321-HWs
 
-This console application is supposed to read a list of integers and insert those numbers into a binary search tree.
-The tree is then supposed to be able to sort the numbers from the least to greatest and traverse the nodes in order.
-The tree will have a count function, the number of levels in the tree and theoretical minimum number of levels that the
-tree could have.
+In this assignment you will create the ExpressionTree class in your logic engine DLL. You will 
+create a standalone console application as well, to demo its functionality. The ExpressionTree class will
+implement an arithmetic expression parser that builds a tree for the expression. This tree can then be
+used for evaluation of the expression. The parsing aspect of this assignment is simplified and you will
+extend the parser in the next homework. But the entire evaluation functionality, including setting
+variable values, will be implemented in this assignment.
+
 
 Name: Koji Natsuhara
 
