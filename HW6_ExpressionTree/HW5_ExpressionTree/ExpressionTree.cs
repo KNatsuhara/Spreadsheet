@@ -202,70 +202,73 @@ namespace CptS321
         }
 
         /// <summary>
-        /// Converts an expression string into postfix format.
+        /// Converts an infix string list into postfix format.
         /// </summary>
-        /// /// <param name="expression">Expression the user inputted.</param>
+        /// /// <param name="infix">Infix string list.</param>
         /// <returns>Postfix string list.</returns>
-        public static List<string> ConvertExpressionToPostfix(string expression)
+        public List<string> ConvertInfixToPostfix(List<string> infix)
         {
             List<string> postfix = new List<string>();
-            string[] words = expression.Split('+', '-', '/', '*'); // Separates the operators from the string and adds them to an array
-            Queue operators = new Queue(); // Inputs operators into this queue in order
-            List<string> infix = new List<string>(); // Will convert the expression into a list string.
             Stack<string> stack = new Stack<string>(); // Will hold the operators during the infix to postfix process
-
-            for (int i = 0; i < expression.Length; i++)
-            {
-                if (expression[i] == '+' || expression[i] == '/' ||
-                    expression[i] == '*' || expression[i] == '-')
-                {
-                    operators.Enqueue(expression[i]); // Adds operators to the queue FIFO
-                }
-            }
-
-            // Converts string to infix string list.
-            int length = words.Length + operators.Count;
-            int j = 0;
-            for (int i = 0; i < length; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    infix.Insert(i, words[j]); // Inserts string then operator every other time.
-                    j++;
-                }
-                else
-                {
-                    infix.Insert(i, operators.Dequeue().ToString());
-                }
-            }
+            string trash = string.Empty; // This will be a temporary string variable that will get rid of the "("
+            string op = string.Empty;
 
             // Converts infix to postfix.
             for (int i = 0; i < infix.Count; i++)
             {
-                if (infix[i] == "+" || infix[i] == "/" ||
-                    infix[i] == "*" || infix[i] == "-")
+                if (infix[i] == "(")
                 {
-                    if (stack.Count > 0)
+                    stack.Push(infix[i]); // If incoming symbol is "(" push to stack
+                }
+                else if (infix[i] == ")")
+                {
+                    while (stack.Peek() != "(")
                     {
-                        postfix.Add(stack.Pop()); // Pops out operator if stack already contains an operator
-                        stack.Push(infix[i]); // Will change this for precedence, for future HW.
+                        postfix.Add(stack.Pop()); // if incoming symbol is ")" pop stack symbols until encountering "("
                     }
-                    else
+
+                    trash = stack.Pop(); // Discard "("
+                }
+                else if (IsOperator(infix[i]))
+                {
+                    if (stack.Count == 0 || stack.Peek() == "(")
                     {
-                        stack.Push(infix[i]);
+                        stack.Push(infix[i]); // If the stack is empty or has "(" at the top of the stack
+                    }
+                    else if (this.IsHigherPrecedence(infix[i], stack.Peek()) ||
+                        (this.IsSamePrecedence(infix[i], stack.Peek()) && this.IsRightAssociative(infix[i])))
+                    {
+                        // If the incoming operator has a higher precendence, OR same precedence and right associative
+                        stack.Push(infix[i]); // Push operator to stack
+                    }
+                    else if (this.IsLowerPrecedence(infix[i], stack.Peek()) ||
+                        (this.IsSamePrecedence(infix[i], stack.Peek()) && this.IsLeftAssociative(infix[i])))
+                    {
+                        do
+                        {
+                            op = stack.Pop(); // Pop the stack until the incoming operator does not have a lower precedence
+                            postfix.Add(op); // Or the same precedence and is left associative.
+                        }
+                        while (stack.Count > 0 && (this.IsLowerPrecedence(op, stack.Peek()) ||
+                        (this.IsSamePrecedence(op, stack.Peek()) && this.IsLeftAssociative(op))));
+
+                        stack.Push(infix[i]); // Push operator to the stack
                     }
                 }
                 else
                 {
-                    postfix.Add(infix[i]); // If not an operator, add to postfix list
+                    postfix.Add(infix[i]); // If incoming symbol is an operand, output it
                 }
             }
 
-            j = stack.Count;
+            int j = stack.Count; // Stack Count
 
             for (int i = 0; i < j; i++)
             {
-                postfix.Add(stack.Pop()); // Empty the rest of the stack to the postfix list
+                if (stack.Peek() != "(")
+                {
+                    postfix.Add(stack.Pop()); // Empty the rest of the stack to the postfix list
+                }
             }
 
             return postfix; // Return postfix string list
@@ -285,6 +288,24 @@ namespace CptS321
             }
             else
             {
+                return false; // op > op2 (Precedence)
+            }
+        }
+
+        /// <summary>
+        /// Returns true if op has a lower precedence than op2.
+        /// </summary>
+        /// <param name="op">Operator.</param>
+        /// <param name="op2">Operator2.</param>
+        /// <returns>True if the op has lower precedence than op2.</returns>
+        public bool IsLowerPrecedence(string op, string op2)
+        {
+            if (this.factory.GetPrecedence(op) > this.factory.GetPrecedence(op2))
+            {
+                return true; // op < op2 (Precedence)
+            }
+            else
+            {
                 return false; // op < op2 (Precedence)
             }
         }
@@ -294,16 +315,16 @@ namespace CptS321
         /// </summary>
         /// <param name="op">Operator.</param>
         /// <param name="op2">Operator2.</param>
-        /// <returns>True if the op has higher precedence than op2.</returns>
+        /// <returns>True if the op has the same precedence as op2.</returns>
         public bool IsSamePrecedence(string op, string op2)
         {
             if (this.factory.GetPrecedence(op) == this.factory.GetPrecedence(op2))
             {
-                return true; // op > op2 (Precedence)
+                return true; // op == op2 (Precedence)
             }
             else
             {
-                return false; // op < op2 (Precedence)
+                return false; // op != op2 (Precedence)
             }
         }
 
@@ -347,7 +368,8 @@ namespace CptS321
         /// <param name="expression">Expression string the user inputs.</param>
         public void CreateExpressionTree(string expression)
         {
-            List<string> postfix = ConvertExpressionToPostfix(expression);
+            List<string> infix = ConvertExpressionToInfix(expression);
+            List<string> postfix = this.ConvertInfixToPostfix(infix);
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
             OperatorNode current;
