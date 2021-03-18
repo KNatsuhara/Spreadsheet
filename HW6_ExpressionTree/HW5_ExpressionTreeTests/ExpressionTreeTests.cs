@@ -273,17 +273,59 @@ namespace HW5_ExpressionTreeTests
         }
 
         /// <summary>
-        /// Will test the IsVariable method.
+        /// Will test the IsHigherPrecedence method.
         /// </summary>
         [Test]
         public void TestIsHigherPrecedence()
         {
             ExpressionTree test1 = new ExpressionTree("A1+B1");
-            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("*","+")), "Failed at * and +");
-            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("+","+")), "Failed at + and +");
-            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("-","*")), "Failed at - and *");
-            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/","-")), "Failed at / and -");
-            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/","+")), "Failed at / and +");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("*", "+")), "Failed at * and +");
+            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("+", "+")), "Failed at + and +");
+            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("-", "*")), "Failed at - and *");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/", "-")), "Failed at / and -");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/", "+")), "Failed at / and +");
+        }
+
+        /// <summary>
+        /// Will test the IsSamePrecedence method.
+        /// </summary>
+        [Test]
+        public void TestIsSamePrecedence()
+        {
+            ExpressionTree test1 = new ExpressionTree("A1+B1");
+            Assert.That(false, Is.EqualTo(test1.IsSamePrecedence("*", "+")), "Failed at * and +");
+            Assert.That(true, Is.EqualTo(test1.IsSamePrecedence("+", "+")), "Failed at + and +");
+            Assert.That(false, Is.EqualTo(test1.IsSamePrecedence("-", "*")), "Failed at - and *");
+            Assert.That(false, Is.EqualTo(test1.IsSamePrecedence("/", "-")), "Failed at / and -");
+            Assert.That(true, Is.EqualTo(test1.IsSamePrecedence("/", "/")), "Failed at / and +");
+            Assert.That(true, Is.EqualTo(test1.IsSamePrecedence("-", "-")), "Failed at - and -");
+            Assert.That(true, Is.EqualTo(test1.IsSamePrecedence("*", "*")), "Failed at * and *");
+        }
+
+        /// <summary>
+        /// Will test the IsRightAssociative method.
+        /// </summary>
+        [Test]
+        public void TestIsRightAssociative()
+        {
+            ExpressionTree test1 = new ExpressionTree("A1+B1");
+            Assert.That(false, Is.EqualTo(test1.IsRightAssociative("+")), "Failed at +");
+            Assert.That(false, Is.EqualTo(test1.IsRightAssociative("-")), "Failed at -");
+            Assert.That(false, Is.EqualTo(test1.IsRightAssociative("*")), "Failed at *");
+            Assert.That(false, Is.EqualTo(test1.IsRightAssociative("/")), "Failed at /");
+        }
+
+        /// <summary>
+        /// Will test the IsLeftAssociative method.
+        /// </summary>
+        [Test]
+        public void TestIsLeftAssociative()
+        {
+            ExpressionTree test1 = new ExpressionTree("A1+B1");
+            Assert.That(true, Is.EqualTo(test1.IsLeftAssociative("+")), "Failed at +");
+            Assert.That(true, Is.EqualTo(test1.IsLeftAssociative("-")), "Failed at -");
+            Assert.That(true, Is.EqualTo(test1.IsLeftAssociative("*")), "Failed at *");
+            Assert.That(true, Is.EqualTo(test1.IsLeftAssociative("/")), "Failed at /");
         }
 
         /// <summary>

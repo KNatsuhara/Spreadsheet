@@ -276,7 +276,7 @@ namespace CptS321
         /// </summary>
         /// <param name="op">Operator.</param>
         /// <param name="op2">Operator2.</param>
-        /// <returns>True if the op has higher precedence than op2</returns>
+        /// <returns>True if the op has higher precedence than op2.</returns>
         public bool IsHigherPrecedence(string op, string op2)
         {
             if (this.factory.GetPrecedence(op) < this.factory.GetPrecedence(op2))
@@ -286,6 +286,58 @@ namespace CptS321
             else
             {
                 return false; // op < op2 (Precedence)
+            }
+        }
+
+        /// <summary>
+        /// Returns true if op has the same precedence as op2.
+        /// </summary>
+        /// <param name="op">Operator.</param>
+        /// <param name="op2">Operator2.</param>
+        /// <returns>True if the op has higher precedence than op2.</returns>
+        public bool IsSamePrecedence(string op, string op2)
+        {
+            if (this.factory.GetPrecedence(op) == this.factory.GetPrecedence(op2))
+            {
+                return true; // op > op2 (Precedence)
+            }
+            else
+            {
+                return false; // op < op2 (Precedence)
+            }
+        }
+
+        /// <summary>
+        /// Checks if the operator is right associative.
+        /// </summary>
+        /// <param name="op">Operator.</param>
+        /// <returns>True if operator is right associative.</returns>
+        public bool IsRightAssociative(string op)
+        {
+            if (this.factory.GetAssociativity(op) == 0)
+            {
+                return true; // op is right associative
+            }
+            else
+            {
+                return false; // op is not right associative
+            }
+        }
+
+        /// <summary>
+        /// Checks if the operator is left associative.
+        /// </summary>
+        /// <param name="op">Operator.</param>
+        /// <returns>True if operator is left associative.</returns>
+        public bool IsLeftAssociative(string op)
+        {
+            if (this.factory.GetAssociativity(op) == 1)
+            {
+                return true; // op is left associative
+            }
+            else
+            {
+                return false; // op is not left associative
             }
         }
 
