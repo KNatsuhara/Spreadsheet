@@ -92,6 +92,82 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Converts an expression string into infix string list.
+        /// </summary>
+        /// /// <param name="expression">Expression the user inputted.</param>
+        /// <returns>Infix string list.</returns>
+        public static List<string> ConvertExpressionToInfix(string expression)
+        {
+            List<string> infix = new List<string>(); // List that return the infix expression
+            Queue operators = new Queue(); // Queue for operators
+
+            string[] words = expression.Split('+', '-', '/', '*'); // Splits all the variables and constants.
+
+            for (int i = 0; i < expression.Length; i++)
+            {
+                if (IsOperator(expression[i].ToString()))
+                {
+                    operators.Enqueue(expression[i]); // Adds operators to the queue FIFO
+                }
+            }
+
+            // Converts string to infix string list
+            int lengthLoop = words.Length + operators.Count;
+            int j = 0; // Index for the string array of words/constants
+            int k = 0; // Index for reading the amount of parenthesis in each word
+            int l = 0; // Used for the right parenthesis substring length
+            for (int i = 0; i < lengthLoop; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    if (words[j].StartsWith("("))
+                    {
+                        k = 0;
+                        string leftParenthesis = words[j];
+                        while (leftParenthesis[k] == '(')
+                        {
+                            infix.Add("("); // For every left parenthesis read, add to the list.
+                            k++;
+                        }
+
+                        string operand = words[j].Substring(k, words[j].Length - k); // Removes left parenthesis from the word/constant
+                        infix.Add(operand); // Adds word/constant to the infix list
+                    }
+                    else if (words[j].EndsWith(")"))
+                    {
+                        l = 0;
+                        k = words[j].Length - 1;
+                        string rightParenthesis = words[j];
+                        while (rightParenthesis[k] == ')')
+                        {
+                            k--;
+                            l++;
+                        }
+
+                        string rightOperand = words[j].Substring(0, words[j].Length - l); // Removes the right parenthesis from the word/constant
+                        infix.Add(rightOperand); // Adds word/constant to the infix list
+                        for (int x = 0; x < l; x++)
+                        {
+                            infix.Add(")"); // For every right parenthesis read, add to the list.
+                        }
+                    }
+                    else
+                    {
+                        infix.Add(words[j]); // If the word does not contain any parenthesis, add to the infix list
+                    }
+
+                    j++;
+                }
+                else
+                {
+                    infix.Add(operators.Dequeue().ToString()); // Add operator to the list
+                }
+            }
+
+            return infix;
+        }
+
+        /// <summary>
         /// Converts an expression string into postfix format.
         /// </summary>
         /// /// <param name="expression">Expression the user inputted.</param>

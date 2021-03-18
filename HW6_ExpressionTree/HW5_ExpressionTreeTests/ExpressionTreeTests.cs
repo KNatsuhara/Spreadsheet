@@ -176,6 +176,30 @@ namespace HW5_ExpressionTreeTests
         }
 
         /// <summary>
+        /// Will test the ExpressionToInfix method.
+        /// </summary>
+        [Test]
+        public void TestExpressionToInfix()
+        {
+            string expression1 = "(A1+B1)+C2+D2";
+            string expression2 = "(4+2-(4-A))";
+            string expression3 = "(Alpha+4)";
+            string expression4 = "Bravo";
+            string expression5 = string.Empty;
+            List<string> infix1 = new List<string> { "(", "A1", "+", "B1", ")", "+", "C2", "+", "D2" };
+            List<string> infix2 = new List<string> { "(", "4", "+", "2", "-", "(", "4", "-", "A", ")", ")" };
+            List<string> infix3 = new List<string> { "(", "Alpha", "+", "4", ")" };
+            List<string> infix4 = new List<string> { "Bravo" };
+            List<string> infix5 = new List<string> { string.Empty };
+
+            Assert.That(infix1, Is.EqualTo(ConvertExpressionToInfix(expression1)), "Failed on infix1");
+            Assert.That(infix2, Is.EqualTo(ConvertExpressionToInfix(expression2)), "Failed on infix2");
+            Assert.That(infix3, Is.EqualTo(ConvertExpressionToInfix(expression3)), "Failed on infix3");
+            Assert.That(infix4, Is.EqualTo(ConvertExpressionToInfix(expression4)), "Failed on infix4");
+            Assert.That(infix5, Is.EqualTo(ConvertExpressionToInfix(expression5)), "Failed on infix5");
+        }
+
+        /// <summary>
         /// Will test the ExpressionToPostfix method.
         /// </summary>
         [Test]
