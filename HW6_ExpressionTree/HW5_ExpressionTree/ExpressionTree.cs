@@ -92,6 +92,40 @@ namespace CptS321
         }
 
         /// <summary>
+        /// This function will identify if the string/char is a left parenthesis.
+        /// </summary>
+        /// <param name="c">c.</param>
+        /// <returns>True if left parenthesis.</returns>
+        public static bool IsLeftParenthesis(string c)
+        {
+            if (c == "(")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// This fucntion will identify if the string/char is a right parenthesis.
+        /// </summary>
+        /// <param name="c">c.</param>
+        /// <returns>True if right parenthesis.</returns>
+        public static bool IsRightParenthesis(string c)
+        {
+            if (c == ")")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Converts an expression string into infix string list.
         /// </summary>
         /// /// <param name="expression">Expression the user inputted.</param>
@@ -235,6 +269,24 @@ namespace CptS321
             }
 
             return postfix; // Return postfix string list
+        }
+
+        /// <summary>
+        /// Returns true if op has a higher precedence than op2.
+        /// </summary>
+        /// <param name="op">Operator.</param>
+        /// <param name="op2">Operator2.</param>
+        /// <returns>True if the op has higher precedence than op2</returns>
+        public bool IsHigherPrecedence(string op, string op2)
+        {
+            if (this.factory.GetPrecedence(op) < this.factory.GetPrecedence(op2))
+            {
+                return true; // op > op2 (Precedence)
+            }
+            else
+            {
+                return false; // op < op2 (Precedence)
+            }
         }
 
         /// <summary>

@@ -35,5 +35,55 @@ namespace CptS321
                 return new DivideOperatorNode();
             }
         }
+
+        /// <summary>
+        /// This function will return the precedence value of an operator.
+        /// </summary>
+        /// <param name="op">The operator needed to get the precedence.</param>
+        /// <returns>The precedence value of the operator.</returns>
+        public int GetPrecedence(string op)
+        {
+            if (op == "+")
+            {
+                return PlusOperatorNode.Precedence;
+            }
+            else if (op == "-")
+            {
+                return MinusOperatorNode.Precedence;
+            }
+            else if (op == "*")
+            {
+                return MultiplyOperatorNode.Precedence;
+            }
+            else
+            {
+                return DivideOperatorNode.Precedence;
+            }
+        }
+
+        /// <summary>
+        /// This function will return the associativity of an operator.
+        /// </summary>
+        /// <param name="op">The operator needed to get the associativity.</param>
+        /// <returns>The associativity of the operator.</returns>
+        public int GetAssociativity(string op)
+        {
+            if (op == "+")
+            {
+                return (int)PlusOperatorNode.Associativity;
+            }
+            else if (op == "-")
+            {
+                return (int)MinusOperatorNode.Associativity;
+            }
+            else if (op == "*")
+            {
+                return (int)MultiplyOperatorNode.Associativity;
+            }
+            else
+            {
+                return (int)DivideOperatorNode.Associativity;
+            }
+        }
     }
 }

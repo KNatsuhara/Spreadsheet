@@ -273,6 +273,20 @@ namespace HW5_ExpressionTreeTests
         }
 
         /// <summary>
+        /// Will test the IsVariable method.
+        /// </summary>
+        [Test]
+        public void TestIsHigherPrecedence()
+        {
+            ExpressionTree test1 = new ExpressionTree("A1+B1");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("*","+")), "Failed at * and +");
+            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("+","+")), "Failed at + and +");
+            Assert.That(false, Is.EqualTo(test1.IsHigherPrecedence("-","*")), "Failed at - and *");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/","-")), "Failed at / and -");
+            Assert.That(true, Is.EqualTo(test1.IsHigherPrecedence("/","+")), "Failed at / and +");
+        }
+
+        /// <summary>
         /// Will test the creation of the tree and evaluation of the tree.
         /// </summary>
         [Test]
