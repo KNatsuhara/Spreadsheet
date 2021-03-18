@@ -212,12 +212,14 @@ namespace HW5_ExpressionTreeTests
             List<string> infix4 = new List<string> { "(", "A", ")" };
             List<string> infix5 = new List<string> { "A", "+", "B", "*", "C", "/", "(", "E", "-", "F", ")" };
             List<string> infix6 = new List<string> { "(", "A", "+", "B", ")", "*", "(", "C", "/", "(", "E", "-", "F", ")", ")" };
+            List<string> infix7 = new List<string> { "7", "*", "(", "8", "*", "4", ")", "/", "(", "1", "-", "2", "-", "34", ")" };
             List<string> postfix1 = new List<string> { "A", "B", "+", "C", "+", "D", "+" };
             List<string> postfix2 = new List<string> { "4", "2", "+", "4", "A", "-", "-" };
             List<string> postfix3 = new List<string> { "A", "4", "+" };
             List<string> postfix4 = new List<string> { "A" };
             List<string> postfix5 = new List<string> { "A", "B", "C", "*", "E", "F", "-", "/", "+" };
             List<string> postfix6 = new List<string> { "A", "B", "+", "C", "E", "F", "-", "/", "*" };
+            List<string> postfix7 = new List<string> { "7", "8", "4", "*", "*", "1", "2", "-", "34", "-", "/" };
 
             Assert.That(postfix1, Is.EqualTo(tree1.ConvertInfixToPostfix(infix1)), "Failed on postfix1");
             Assert.That(postfix2, Is.EqualTo(tree1.ConvertInfixToPostfix(infix2)), "Failed on postfix2");
@@ -225,6 +227,7 @@ namespace HW5_ExpressionTreeTests
             Assert.That(postfix4, Is.EqualTo(tree1.ConvertInfixToPostfix(infix4)), "Failed on postfix4");
             Assert.That(postfix5, Is.EqualTo(tree1.ConvertInfixToPostfix(infix5)), "Failed on postfix5");
             Assert.That(postfix6, Is.EqualTo(tree1.ConvertInfixToPostfix(infix6)), "Failed on postfix6");
+            Assert.That(postfix7, Is.EqualTo(tree1.ConvertInfixToPostfix(infix7)), "Failed on postfix7");
         }
 
         /// <summary>
@@ -294,6 +297,20 @@ namespace HW5_ExpressionTreeTests
         }
 
         /// <summary>
+        /// Will test the IsLowerPrecedence method.
+        /// </summary>
+        [Test]
+        public void TestIsLowerPrecedence()
+        {
+            ExpressionTree test1 = new ExpressionTree("A1+B1");
+            Assert.That(false, Is.EqualTo(test1.IsLowerPrecedence("*", "+")), "Failed at * and +");
+            Assert.That(false, Is.EqualTo(test1.IsLowerPrecedence("+", "+")), "Failed at + and +");
+            Assert.That(true, Is.EqualTo(test1.IsLowerPrecedence("-", "*")), "Failed at - and *");
+            Assert.That(false, Is.EqualTo(test1.IsLowerPrecedence("/", "-")), "Failed at / and -");
+            Assert.That(false, Is.EqualTo(test1.IsLowerPrecedence("/", "+")), "Failed at / and +");
+        }
+
+        /// <summary>
         /// Will test the IsSamePrecedence method.
         /// </summary>
         [Test]
@@ -355,6 +372,10 @@ namespace HW5_ExpressionTreeTests
             Assert.That(9, Is.EqualTo(test2.Evaluate()), "Failed at test2 (9)");
             test2.SetVariable("World", 12);
             Assert.That(21, Is.EqualTo(test2.Evaluate()), "Failed at test2 (21)");
+            string expression3 = "7*(8*4)/(1-2-34)";
+            ExpressionTree test3 = new ExpressionTree(expression3);
+            test3.CreateExpressionTree(expression3);
+            Assert.That(-6.4, Is.EqualTo(test3.Evaluate()), "Failed at test3 (-6.4)");
         }
     }
 }

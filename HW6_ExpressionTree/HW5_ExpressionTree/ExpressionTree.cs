@@ -249,7 +249,7 @@ namespace CptS321
                             op = stack.Pop(); // Pop the stack until the incoming operator does not have a lower precedence
                             postfix.Add(op); // Or the same precedence and is left associative.
                         }
-                        while (stack.Count > 0 && (this.IsLowerPrecedence(op, stack.Peek()) ||
+                        while (stack.Count > 0 && !IsLeftParenthesis(stack.Peek()) && (this.IsLowerPrecedence(op, stack.Peek()) ||
                         (this.IsSamePrecedence(op, stack.Peek()) && this.IsLeftAssociative(op))));
 
                         stack.Push(infix[i]); // Push operator to the stack
@@ -373,6 +373,7 @@ namespace CptS321
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
             OperatorNode current;
+            this.variables.Clear(); // Variables are stored per expression, Clear out if the expression is CHANGED.
 
             for (int i = 0; i < postfix.Count; i++)
             {
@@ -380,6 +381,11 @@ namespace CptS321
                 {
                     if (IsVariable(postfix[i]))
                     {
+                        if (!this.variables.ContainsKey(postfix[i]))
+                        {
+                            this.SetVariable(postfix[i], 0); // If a new variable, add it to dictionary and set value to 0.
+                        }
+
                         stack.Push(new VariableNode(postfix[i], ref this.variables)); // If variable node, push to stack
                     }
                     else
