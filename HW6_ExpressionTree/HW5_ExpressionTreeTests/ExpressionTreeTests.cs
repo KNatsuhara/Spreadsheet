@@ -210,15 +210,21 @@ namespace HW5_ExpressionTreeTests
             List<string> infix2 = new List<string> { "4", "+", "2", "-", "(", "4", "-", "A", ")" };
             List<string> infix3 = new List<string> { "(", "A", "+", "4", ")" };
             List<string> infix4 = new List<string> { "(", "A", ")" };
+            List<string> infix5 = new List<string> { "A", "+", "B", "*", "C", "/", "(", "E", "-", "F", ")" };
+            List<string> infix6 = new List<string> { "(", "A", "+", "B", ")", "*", "(", "C", "/", "(", "E", "-", "F", ")", ")" };
             List<string> postfix1 = new List<string> { "A", "B", "+", "C", "+", "D", "+" };
             List<string> postfix2 = new List<string> { "4", "2", "+", "4", "A", "-", "-" };
             List<string> postfix3 = new List<string> { "A", "4", "+" };
             List<string> postfix4 = new List<string> { "A" };
+            List<string> postfix5 = new List<string> { "A", "B", "C", "*", "E", "F", "-", "/", "+" };
+            List<string> postfix6 = new List<string> { "A", "B", "+", "C", "E", "F", "-", "/", "*" };
 
             Assert.That(postfix1, Is.EqualTo(tree1.ConvertInfixToPostfix(infix1)), "Failed on postfix1");
             Assert.That(postfix2, Is.EqualTo(tree1.ConvertInfixToPostfix(infix2)), "Failed on postfix2");
             Assert.That(postfix3, Is.EqualTo(tree1.ConvertInfixToPostfix(infix3)), "Failed on postfix3");
             Assert.That(postfix4, Is.EqualTo(tree1.ConvertInfixToPostfix(infix4)), "Failed on postfix4");
+            Assert.That(postfix5, Is.EqualTo(tree1.ConvertInfixToPostfix(infix5)), "Failed on postfix5");
+            Assert.That(postfix6, Is.EqualTo(tree1.ConvertInfixToPostfix(infix6)), "Failed on postfix6");
         }
 
         /// <summary>
