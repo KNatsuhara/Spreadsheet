@@ -1,4 +1,4 @@
-﻿// <copyright file="PlusOperatorNode.cs" company="Koji Natsuhara (ID: 11666900)">
+﻿// <copyright file="MinusOperatorNode.cs" company="Koji Natsuhara (ID: 11666900)">
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 
@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace CptS321
 {
     /// <summary>
-    /// The addition operator node.
+    /// The subtraction operator node.
     /// </summary>
-    public class PlusOperatorNode : OperatorNode
+    internal class MinusOperatorNode : OperatorNode
     {
         /// <summary>
         /// Gets the character operator associated with this node.
         /// </summary>
-        public static char Operator => '+';
+        public static char Operator => '-';
 
         /// <summary>
         /// Gets the precedence level in the order of operations.
@@ -31,12 +31,12 @@ namespace CptS321
         public static Associative Associativity => Associative.Left;
 
         /// <summary>
-        /// This will add the left and right nodes and return the value.
+        /// This will substract the left and right nodes and return the value.
         /// </summary>
         /// <returns>Value as a double.</returns>
         public override double Evaluate()
         {
-            return this.Left.Evaluate() + this.Right.Evaluate();
+            return this.Left.Evaluate() - this.Right.Evaluate();
         }
     }
 }

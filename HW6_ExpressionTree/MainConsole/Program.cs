@@ -27,7 +27,7 @@ namespace MainConsole
         /// <param name="expression">Previous expression.</param>
         public static void PrintMainMenu(string expression)
         {
-            System.Console.WriteLine("Menu (current expression=\"" + expression + "\")");
+            System.Console.WriteLine("Menu (current expression = \"" + expression + "\")");
             System.Console.WriteLine("\t1 = Enter a new expression");
             System.Console.WriteLine("\t2 = Set a variable value");
             System.Console.WriteLine("\t3 = Evaluate tree");
@@ -57,36 +57,37 @@ namespace MainConsole
         public static void RunApplication()
         {
             int option = 0, exit = -1;
-            string expression = "A1-12-C1";
+            string expression = "A1-12-C1"; // Default expression
             string name = string.Empty;
             double value = 0;
-            ExpressionTree expTree = new ExpressionTree(expression);
+            ExpressionTree expTree = new ExpressionTree(expression); // Create main expression tree class
+            expTree.CreateExpressionTree(expression); // Create expression tree from default expression
 
             while (exit == -1)
             {
-                PrintMainMenu(expression);
-                option = GetOptionForMainMenu();
+                PrintMainMenu(expression); // Print main menu
+                option = GetOptionForMainMenu(); // Get option for main menu
 
                 switch (option)
                 {
                     case 1:
                         System.Console.Write("Enter a new expression: ");
                         expression = System.Console.ReadLine();
+                        expTree.CreateExpressionTree(expression); // Build a tree from new expression, this will clear the variables dictionary
                         break;
                     case 2:
                         System.Console.Write("Enter variable name: ");
-                        name = System.Console.ReadLine();
+                        name = System.Console.ReadLine(); // Get variable name
                         System.Console.Write("Enter variable value: ");
-                        value = Convert.ToDouble(System.Console.ReadLine());
-                        expTree.SetVariable(name, value);
+                        value = Convert.ToDouble(System.Console.ReadLine()); // Get variable value
+                        expTree.SetVariable(name, value); // Set variable in the dictionary for the expression tree
                         break;
                     case 3:
                         System.Console.Write("Evaluation of Tree: ");
-                        expTree.CreateExpressionTree(expression);
-                        System.Console.WriteLine(expTree.Evaluate());
+                        System.Console.WriteLine(expTree.Evaluate()); // Evaluates the expression tree
                         break;
                     case 4:
-                        System.Console.Write("Quit.");
+                        System.Console.WriteLine("Quit.");
                         exit = 1; // Leaves loop and ends application
                         break;
                 }

@@ -13,7 +13,7 @@ namespace CptS321
     /// <summary>
     /// The multiplication operator node.
     /// </summary>
-    public class MultiplyOperatorNode : OperatorNode
+    internal class MultiplyOperatorNode : OperatorNode
     {
         /// <summary>
         /// Gets the character operator associated with this node.
