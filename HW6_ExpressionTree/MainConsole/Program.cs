@@ -27,7 +27,7 @@ namespace MainConsole
         /// <param name="expression">Previous expression.</param>
         public static void PrintMainMenu(string expression)
         {
-            System.Console.WriteLine("Menu (current expression=\"" + expression + "\")");
+            System.Console.WriteLine("Menu (current expression = \"" + expression + "\")");
             System.Console.WriteLine("\t1 = Enter a new expression");
             System.Console.WriteLine("\t2 = Set a variable value");
             System.Console.WriteLine("\t3 = Evaluate tree");
@@ -76,7 +76,7 @@ namespace MainConsole
                         expTree.CreateExpressionTree(expression); // Build a tree from new expression, this will clear the variables dictionary
                         break;
                     case 2:
-                        System.Console.Write("Enter variable name: "); 
+                        System.Console.Write("Enter variable name: ");
                         name = System.Console.ReadLine(); // Get variable name
                         System.Console.Write("Enter variable value: ");
                         value = Convert.ToDouble(System.Console.ReadLine()); // Get variable value
@@ -87,7 +87,7 @@ namespace MainConsole
                         System.Console.WriteLine(expTree.Evaluate()); // Evaluates the expression tree
                         break;
                     case 4:
-                        System.Console.Write("Quit.");
+                        System.Console.WriteLine("Quit.");
                         exit = 1; // Leaves loop and ends application
                         break;
                 }

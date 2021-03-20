@@ -181,6 +181,7 @@ namespace HW5_ExpressionTreeTests
         [Test]
         public void TestExpressionToInfix()
         {
+            ExpressionTree tree1 = new ExpressionTree("A1+B1");
             string expression1 = "(A1+B1)+C2+D2";
             string expression2 = "(4+2-(4-A))";
             string expression3 = "(Alpha+4)";
@@ -192,11 +193,11 @@ namespace HW5_ExpressionTreeTests
             List<string> infix4 = new List<string> { "Bravo" };
             List<string> infix5 = new List<string> { string.Empty };
 
-            Assert.That(infix1, Is.EqualTo(ConvertExpressionToInfix(expression1)), "Failed on infix1");
-            Assert.That(infix2, Is.EqualTo(ConvertExpressionToInfix(expression2)), "Failed on infix2");
-            Assert.That(infix3, Is.EqualTo(ConvertExpressionToInfix(expression3)), "Failed on infix3");
-            Assert.That(infix4, Is.EqualTo(ConvertExpressionToInfix(expression4)), "Failed on infix4");
-            Assert.That(infix5, Is.EqualTo(ConvertExpressionToInfix(expression5)), "Failed on infix5");
+            Assert.That(infix1, Is.EqualTo(tree1.ConvertExpressionToInfix(expression1)), "Failed on infix1");
+            Assert.That(infix2, Is.EqualTo(tree1.ConvertExpressionToInfix(expression2)), "Failed on infix2");
+            Assert.That(infix3, Is.EqualTo(tree1.ConvertExpressionToInfix(expression3)), "Failed on infix3");
+            Assert.That(infix4, Is.EqualTo(tree1.ConvertExpressionToInfix(expression4)), "Failed on infix4");
+            Assert.That(infix5, Is.EqualTo(tree1.ConvertExpressionToInfix(expression5)), "Failed on infix5");
         }
 
         /// <summary>
@@ -236,6 +237,7 @@ namespace HW5_ExpressionTreeTests
         [Test]
         public void TestIsOperator()
         {
+            ExpressionTree tree1 = new ExpressionTree("A1+B1");
             string op1 = "+";
             string op2 = "-";
             string op3 = "*";
@@ -243,13 +245,13 @@ namespace HW5_ExpressionTreeTests
             string op5 = "1";
             string op6 = string.Empty;
 
-            Assert.That(true, Is.EqualTo(IsOperator(op1)), "Failed at op1");
-            Assert.That(true, Is.EqualTo(IsOperator(op2)), "Failed at op2");
-            Assert.That(true, Is.EqualTo(IsOperator(op3)), "Failed at op3");
-            Assert.That(true, Is.EqualTo(IsOperator(op4)), "Failed at op4");
-            Assert.That(false, Is.EqualTo(IsOperator(op5)), "Failed at op5");
-            Assert.That(false, Is.EqualTo(IsOperator(op6)), "Failed at op6");
-         }
+            Assert.That(true, Is.EqualTo(tree1.IsOperator(op1)), "Failed at op1");
+            Assert.That(true, Is.EqualTo(tree1.IsOperator(op2)), "Failed at op2");
+            Assert.That(true, Is.EqualTo(tree1.IsOperator(op3)), "Failed at op3");
+            Assert.That(true, Is.EqualTo(tree1.IsOperator(op4)), "Failed at op4");
+            Assert.That(false, Is.EqualTo(tree1.IsOperator(op5)), "Failed at op5");
+            Assert.That(() => tree1.IsOperator(op6), Throws.TypeOf<System.IndexOutOfRangeException>());
+        }
 
         /// <summary>
         /// Will test the IsVariable method.

@@ -46,27 +46,6 @@ namespace CptS321
         }
 
         /// <summary>
-        /// Returns true if the string is an operator.
-        /// </summary>
-        /// <param name="op">Operator of the string.</param>
-        /// <returns>True if the string is an operator and false otherwise.</returns>
-        public static bool IsOperator(string op)
-        {
-            if (op == string.Empty)
-            {
-                return false;
-            }
-
-            if (op == "+" || op == "/" ||
-                op == "*" || op == "-")
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Returns true if the string is variable name.
         /// </summary>
         /// <param name="var">String that will be checked if it is a variable.</param>
@@ -130,7 +109,7 @@ namespace CptS321
         /// </summary>
         /// /// <param name="expression">Expression the user inputted.</param>
         /// <returns>Infix string list.</returns>
-        public static List<string> ConvertExpressionToInfix(string expression)
+        public List<string> ConvertExpressionToInfix(string expression)
         {
             List<string> infix = new List<string>(); // List that return the infix expression
             Queue operators = new Queue(); // Queue for operators
@@ -139,7 +118,7 @@ namespace CptS321
 
             for (int i = 0; i < expression.Length; i++)
             {
-                if (IsOperator(expression[i].ToString()))
+                if (this.IsOperator(expression[i].ToString()))
                 {
                     operators.Enqueue(expression[i]); // Adds operators to the queue FIFO
                 }
@@ -229,7 +208,7 @@ namespace CptS321
 
                     trash = stack.Pop(); // Discard "("
                 }
-                else if (IsOperator(infix[i]))
+                else if (this.IsOperator(infix[i]))
                 {
                     if (stack.Count == 0 || stack.Peek() == "(")
                     {
@@ -277,11 +256,13 @@ namespace CptS321
         /// <summary>
         /// Returns true if op has a higher precedence than op2.
         /// </summary>
-        /// <param name="op">Operator.</param>
-        /// <param name="op2">Operator2.</param>
+        /// <param name="ops">Operator.</param>
+        /// <param name="ops2">Operator2.</param>
         /// <returns>True if the op has higher precedence than op2.</returns>
-        public bool IsHigherPrecedence(string op, string op2)
+        public bool IsHigherPrecedence(string ops, string ops2)
         {
+            char op = ops.ToCharArray()[0];
+            char op2 = ops2.ToCharArray()[0];
             if (this.factory.GetPrecedence(op) < this.factory.GetPrecedence(op2))
             {
                 return true; // op > op2 (Precedence)
@@ -295,11 +276,13 @@ namespace CptS321
         /// <summary>
         /// Returns true if op has a lower precedence than op2.
         /// </summary>
-        /// <param name="op">Operator.</param>
-        /// <param name="op2">Operator2.</param>
+        /// <param name="ops">Operator.</param>
+        /// <param name="ops2">Operator2.</param>
         /// <returns>True if the op has lower precedence than op2.</returns>
-        public bool IsLowerPrecedence(string op, string op2)
+        public bool IsLowerPrecedence(string ops, string ops2)
         {
+            char op = ops.ToCharArray()[0];
+            char op2 = ops2.ToCharArray()[0];
             if (this.factory.GetPrecedence(op) > this.factory.GetPrecedence(op2))
             {
                 return true; // op < op2 (Precedence)
@@ -313,11 +296,13 @@ namespace CptS321
         /// <summary>
         /// Returns true if op has the same precedence as op2.
         /// </summary>
-        /// <param name="op">Operator.</param>
-        /// <param name="op2">Operator2.</param>
+        /// <param name="ops">Operator.</param>
+        /// <param name="ops2">Operator2.</param>
         /// <returns>True if the op has the same precedence as op2.</returns>
-        public bool IsSamePrecedence(string op, string op2)
+        public bool IsSamePrecedence(string ops, string ops2)
         {
+            char op = ops.ToCharArray()[0];
+            char op2 = ops2.ToCharArray()[0];
             if (this.factory.GetPrecedence(op) == this.factory.GetPrecedence(op2))
             {
                 return true; // op == op2 (Precedence)
@@ -331,11 +316,12 @@ namespace CptS321
         /// <summary>
         /// Checks if the operator is right associative.
         /// </summary>
-        /// <param name="op">Operator.</param>
+        /// <param name="ops">Operator.</param>
         /// <returns>True if operator is right associative.</returns>
-        public bool IsRightAssociative(string op)
+        public bool IsRightAssociative(string ops)
         {
-            if (this.factory.GetAssociativity(op) == 0)
+            char op = ops.ToCharArray()[0];
+            if (this.factory.GetAssociative(op) == OperatorNode.Associative.Right)
             {
                 return true; // op is right associative
             }
@@ -348,11 +334,12 @@ namespace CptS321
         /// <summary>
         /// Checks if the operator is left associative.
         /// </summary>
-        /// <param name="op">Operator.</param>
+        /// <param name="ops">Operator.</param>
         /// <returns>True if operator is left associative.</returns>
-        public bool IsLeftAssociative(string op)
+        public bool IsLeftAssociative(string ops)
         {
-            if (this.factory.GetAssociativity(op) == 1)
+            char op = ops.ToCharArray()[0];
+            if (this.factory.GetAssociative(op) == OperatorNode.Associative.Left)
             {
                 return true; // op is left associative
             }
@@ -363,12 +350,23 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Returns true if the string is an operator.
+        /// </summary>
+        /// <param name="ops">Operator of the string.</param>
+        /// <returns>True if the string is an operator and false otherwise.</returns>
+        public bool IsOperator(string ops)
+        {
+            char op = ops.ToCharArray()[0];
+            return this.factory.IsOperator(op);
+        }
+
+        /// <summary>
         /// Will go through the postfix expression and create the ExpressionTree.
         /// </summary>
         /// <param name="expression">Expression string the user inputs.</param>
         public void CreateExpressionTree(string expression)
         {
-            List<string> infix = ConvertExpressionToInfix(expression);
+            List<string> infix = this.ConvertExpressionToInfix(expression);
             List<string> postfix = this.ConvertInfixToPostfix(infix);
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
@@ -377,7 +375,7 @@ namespace CptS321
 
             for (int i = 0; i < postfix.Count; i++)
             {
-                if (!IsOperator(postfix[i]))
+                if (!this.IsOperator(postfix[i]))
                 {
                     if (IsVariable(postfix[i]))
                     {
@@ -395,7 +393,8 @@ namespace CptS321
                 }
                 else
                 {
-                    current = this.factory.CreateOperatorNode(postfix[i]); // Create a new operator node based on the string operator
+                    char op = postfix[i].ToCharArray()[0];
+                    current = this.factory.CreateOperatorNode(op); // Create a new operator node based on the string operator
 
                     current.Right = stack.Pop(); // Pop out the first node and set it to the right of the operator node
                     current.Left = stack.Pop(); // Pop out the second node and set it to the left of the operator node
