@@ -13,7 +13,7 @@ namespace CptS321
     /// <summary>
     /// The subtraction operator node.
     /// </summary>
-    public class MinusOperatorNode : OperatorNode
+    internal class MinusOperatorNode : OperatorNode
     {
         /// <summary>
         /// Gets the character operator associated with this node.

@@ -13,7 +13,7 @@ namespace CptS321
     /// <summary>
     /// The division operator node.
     /// </summary>
-    public class DivideOperatorNode : OperatorNode
+    internal class DivideOperatorNode : OperatorNode
     {
         /// <summary>
         /// Gets the character operator associated with this node.

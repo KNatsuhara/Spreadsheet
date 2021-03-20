@@ -13,7 +13,7 @@ namespace CptS321
     /// <summary>
     /// The addition operator node.
     /// </summary>
-    public class PlusOperatorNode : OperatorNode
+    internal class PlusOperatorNode : OperatorNode
     {
         /// <summary>
         /// Gets the character operator associated with this node.
