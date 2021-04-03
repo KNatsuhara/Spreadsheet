@@ -196,8 +196,8 @@ namespace CptS321
         /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
         /// will be set equal to the text.
         /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">E.</param>
+        /// <param name="sender.">Spreadsheet.</param>
+        /// <param name="e">Cell argument.</param>
         private void SpreadsheetCellValue_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Text")
@@ -209,15 +209,14 @@ namespace CptS321
 
                 if (CheckText(evalutedText))
                 {
-                    string sub = evalutedText.Substring(2, evalutedText.Length - 2);
-                    char colSymbol = evalutedText[1];
-                    int row = int.Parse(sub) - 1;
-                    int col = (int)colSymbol - 'A';
-                    cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
-
-                    // string newValue = this.EvaluateText(cell.Text);
-                    // cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
-                    // this.expressiontree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
+                    // string sub = evalutedText.Substring(2, evalutedText.Length - 2);
+                    // char colSymbol = evalutedText[1];
+                    // int row = int.Parse(sub) - 1;
+                    // int col = (int)colSymbol - 'A';
+                    // cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
+                    string newValue = this.EvaluateText(cell.Text);
+                    cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
+                    this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
             }
                 else
                 {
