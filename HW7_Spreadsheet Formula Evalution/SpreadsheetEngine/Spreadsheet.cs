@@ -102,6 +102,17 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Sets the cell text in the cell grid.
+        /// </summary>
+        /// <param name="row">Row.</param>
+        /// <param name="col">Column.</param>
+        /// <param name="text">Text.</param>
+        public void SetCellText(int row, int col, string text)
+        {
+            this.cellGrid[row, col].Text = text;
+        }
+
+        /// <summary>
         /// Gets the rowCount.
         /// </summary>
         /// <returns>Integer.</returns>

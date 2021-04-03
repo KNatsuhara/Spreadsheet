@@ -35,6 +35,9 @@ namespace Spreadsheet_Koji_Natsuhara
 
             this.mainSpreadSheet.PropertyChangedValue += this.MainSpreadSheet_PropertyChangedValue;
 
+            this.dataGridView1.CellBeginEdit += this.DataGridView1_CellBeginEdit;
+            this.dataGridView1.CellEndEdit += this.DataGridView1_CellEndEdit;
+
             this.SetupGridColumns();
             this.SetupGridRows();
         }
@@ -52,6 +55,35 @@ namespace Spreadsheet_Koji_Natsuhara
 
                 this.dataGridView1[cell.ColumnIndex, cell.RowIndex].Value = cell.Value;
             }
+        }
+
+        /// <summary>
+        /// Handles an event to reflect that the current DataGridViewCell is being editied. When the user starts to edit the cell,
+        /// the cell value should change to the Text property of the cell.
+        /// </summary>
+        /// <param name="sender">Data Grid View.</param>
+        /// <param name="e">Event Argument.</param>
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            int row = e.RowIndex;
+            int col = e.ColumnIndex;
+            DataGridViewCell cell = this.dataGridView1[col, row];
+            cell.Value = this.mainSpreadSheet.GetCell(row, col).Text;
+        }
+
+        /// <summary>
+        /// CellEndEdit event occurs only when the user finishes editing the cell, it must go back to the Value.
+        /// </summary>
+        /// <param name="sender">The Data Grid View.</param>
+        /// <param name="e">The event args holding the cell information.</param>
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int row = e.RowIndex;
+            int col = e.ColumnIndex;
+            DataGridViewCell cell = this.dataGridView1[col, row];
+
+            this.mainSpreadSheet.SetCellText(row, col, cell.Value.ToString());
+            cell.Value = this.mainSpreadSheet.GetCell(row, col).Value;
         }
 
         /// <summary>
