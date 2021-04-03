@@ -18,14 +18,14 @@ namespace NUnit.Tests1
         /// Will test the EvaluateText and return true if the string begins with an "=" or false otherwise.
         /// </summary>
         [Test]
-        public void TestEvaluateText()
+        public void TestCheckText()
         {
-            Assert.That(true, Is.EqualTo(EvaluateText("=test")), "Did not identify =test");
-            Assert.That(false, Is.EqualTo(EvaluateText("test")), "Did not identify test");
-            Assert.That(true, Is.EqualTo(EvaluateText("=A1")), "Did not identify =A1");
-            Assert.That(false, Is.EqualTo(EvaluateText(string.Empty)), "Did not identify string.Empty");
-            Assert.That(false, Is.EqualTo(EvaluateText(" ")), "Did not identify whitespace");
-            Assert.That(false, Is.EqualTo(EvaluateText(" =A1")), "Did not identify ' '=A1");
+            Assert.That(true, Is.EqualTo(CheckText("=test")), "Did not identify =test");
+            Assert.That(false, Is.EqualTo(CheckText("test")), "Did not identify test");
+            Assert.That(true, Is.EqualTo(CheckText("=A1")), "Did not identify =A1");
+            Assert.That(false, Is.EqualTo(CheckText(string.Empty)), "Did not identify string.Empty");
+            Assert.That(false, Is.EqualTo(CheckText(" ")), "Did not identify whitespace");
+            Assert.That(false, Is.EqualTo(CheckText(" =A1")), "Did not identify ' '=A1");
         }
 
         /// <summary>

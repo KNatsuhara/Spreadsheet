@@ -424,6 +424,15 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Returns a dictionary of variables and their values.
+        /// </summary>
+        /// <returns>The dictionary of variables.</returns>
+        public Dictionary<string, double> GetVariables()
+        {
+            return this.variables;
+        }
+
+        /// <summary>
         /// Evaluates the expression to a double value.
         /// </summary>
         /// <returns>Value of the evaluated expression.</returns>

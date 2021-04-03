@@ -32,6 +32,11 @@ namespace CptS321
         private int columnCount;
 
         /// <summary>
+        /// Expression tree which evaluates the cells text.
+        /// </summary>
+        private ExpressionTree expressionTree = new ExpressionTree(string.Empty);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
         /// </summary>
         /// <param name="numRows">Set number of rows in spreadsheet.</param>
@@ -64,7 +69,7 @@ namespace CptS321
         /// </summary>
         /// <param name="text">Text.</param>
         /// <returns>True if the text starts with "=" or false otherwise.</returns>
-        public static bool EvaluateText(string text)
+        public static bool CheckText(string text)
         {
             if (text == string.Empty)
             {
@@ -81,6 +86,19 @@ namespace CptS321
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// This function will evaluate the text in the cell and return the value of the cell. This is assuming
+        /// that the text starts with and "=".
+        /// </summary>
+        /// <param name="cellText">Cell text.</param>
+        /// <returns>String of the evaluated text.</returns>
+        public string EvaluateText(string cellText)
+        {
+            string text = cellText.Substring(1, cellText.Length - 1);
+            this.expressionTree.CreateExpressionTree(text);
+            return this.expressionTree.Evaluate().ToString();
         }
 
         /// <summary>
@@ -186,18 +204,34 @@ namespace CptS321
             {
                 SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
                 string evalutedText = cell.Text;
+                char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
+                string cellName = columnCharacter.ToString().ToUpper() + cell.RowIndex.ToString(); // Converts cell location to a cellName
 
-                if (EvaluateText(evalutedText))
+                if (CheckText(evalutedText))
                 {
                     string sub = evalutedText.Substring(2, evalutedText.Length - 2);
                     char colSymbol = evalutedText[1];
                     int row = int.Parse(sub) - 1;
                     int col = (int)colSymbol - 'A';
                     cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
-                }
+
+                    // string newValue = this.EvaluateText(cell.Text);
+                    // cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
+                    // this.expressiontree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
+            }
                 else
                 {
                     cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
+
+                    double number;
+                    if (double.TryParse(cell.Value, out number))
+                    {
+                        this.expressionTree.SetVariable(cellName, number); // If cell value can be parsed to double, set cellName, double
+                    }
+                    else
+                    {
+                      this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
+                    }
                 }
             }
 
