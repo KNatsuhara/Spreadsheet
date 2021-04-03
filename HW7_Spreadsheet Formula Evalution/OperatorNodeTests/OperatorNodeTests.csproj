@@ -47,9 +47,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExpressionTree\ExpressionTree.csproj">
-      <Project>{4fd1b761-c22a-40ea-9021-eafecfd68c9e}</Project>
-      <Name>ExpressionTree</Name>
+    <ProjectReference Include="..\SpreadsheetEngine\SpreadsheetEngine.csproj">
+      <Project>{5064d8e7-a0d9-4972-b141-ac28cc13d680}</Project>
+      <Name>SpreadsheetEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
