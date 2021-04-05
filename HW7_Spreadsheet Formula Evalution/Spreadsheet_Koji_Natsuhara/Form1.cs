@@ -52,7 +52,6 @@ namespace Spreadsheet_Koji_Natsuhara
             if (e.PropertyName == "Value")
             {
                 SpreadsheetCell cell = (SpreadsheetCell)sender;
-
                 this.dataGridView1[cell.ColumnIndex, cell.RowIndex].Value = cell.Value;
             }
         }

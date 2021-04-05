@@ -78,7 +78,7 @@ namespace CptS321
 
             char eq = text[0]; // Will check the first character in the string.
 
-            if (eq == '=')
+            if (eq == '=' && text.Length > 1)
             {
                 return true;
             }
@@ -205,7 +205,7 @@ namespace CptS321
                 SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
                 string evalutedText = cell.Text;
                 char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
-                string cellName = columnCharacter.ToString().ToUpper() + cell.RowIndex.ToString(); // Converts cell location to a cellName
+                string cellName = columnCharacter.ToString().ToUpper() + (cell.RowIndex + 1).ToString(); // Converts cell location to a cellName
 
                 if (CheckText(evalutedText))
                 {
@@ -215,11 +215,13 @@ namespace CptS321
                     // int col = (int)colSymbol - 'A';
                     // cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
                     string newValue = this.EvaluateText(cell.Text);
+                    this.SetCellText(cell.RowIndex, cell.ColumnIndex, evalutedText);
                     cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
             }
                 else
                 {
+                    this.SetCellText(cell.RowIndex, cell.ColumnIndex, cell.Text);
                     cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
 
                     double number;
