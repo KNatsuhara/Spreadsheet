@@ -48,13 +48,149 @@ namespace SpreadsheetEngine
         private Stack<SpreadsheetCell> mCurCell = new Stack<SpreadsheetCell>();
 
         /// <summary>
-        /// Gets the message on what Undo/Redo action will be performed.
+        /// Gets or Sets the message on what Undo/Redo action will be performed.
         /// </summary>
         public string Task
         {
             get
             {
                 return this.mTask;
+            }
+
+            set
+            {
+                if (this.mTask == value)
+                {
+                    return;
+                }
+
+                this.mTask = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the PrevCellText stack.
+        /// </summary>
+        public Stack<string> PrevCellText
+        {
+            get
+            {
+                return this.mPrevCellText;
+            }
+
+            set
+            {
+                if (this.mPrevCellText == value)
+                {
+                    return;
+                }
+
+                this.mPrevCellText = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the CurCellText stack.
+        /// </summary>
+        public Stack<string> CurCellText
+        {
+            get
+            {
+                return this.mCurCellText;
+            }
+
+            set
+            {
+                if (this.mCurCellText == value)
+                {
+                    return;
+                }
+
+                this.mCurCellText = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the PrevCellColor stack.
+        /// </summary>
+        public Stack<uint> PrevCellColor
+        {
+            get
+            {
+                return this.mPrevCellColor;
+            }
+
+            set
+            {
+                if (this.mPrevCellColor == value)
+                {
+                    return;
+                }
+
+                this.mPrevCellColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the CurCellColor stack.
+        /// </summary>
+        public Stack<uint> CurCellColor
+        {
+            get
+            {
+                return this.mCurCellColor;
+            }
+
+            set
+            {
+                if (this.mCurCellColor == value)
+                {
+                    return;
+                }
+
+                this.mCurCellColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the PrevCell stack.
+        /// </summary>
+        public Stack<SpreadsheetCell> PrevCell
+        {
+            get
+            {
+                return this.mPrevCell;
+            }
+
+            set
+            {
+                if (this.mPrevCell == value)
+                {
+                    return;
+                }
+
+                this.mPrevCell = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the CurCell stack.
+        /// </summary>
+        public Stack<SpreadsheetCell> CurCell
+        {
+            get
+            {
+                return this.mCurCell;
+            }
+
+            set
+            {
+                if (this.mCurCell == value)
+                {
+                    return;
+                }
+
+                this.mCurCell = value;
             }
         }
 
