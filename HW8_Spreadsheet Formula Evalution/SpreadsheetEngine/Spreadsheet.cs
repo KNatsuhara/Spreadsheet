@@ -218,7 +218,7 @@ namespace CptS321
                     this.SetCellText(cell.RowIndex, cell.ColumnIndex, evalutedText);
                     cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
-            }
+                }
                 else
                 {
                     this.SetCellText(cell.RowIndex, cell.ColumnIndex, cell.Text);
@@ -234,9 +234,13 @@ namespace CptS321
                       this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
                     }
                 }
-            }
 
-            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
+                this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
+            }
+            else if (e.PropertyName == "BGColor")
+            {
+                this.PropertyChangedValue(sender, new PropertyChangedEventArgs("BGColor")); // Fire off property changed event for color.
+            }
         }
     }
 }

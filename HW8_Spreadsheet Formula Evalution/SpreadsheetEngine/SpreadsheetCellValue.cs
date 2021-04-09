@@ -54,6 +54,28 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Gets or Sets the BGcolor value and invokes a property changeed event if the value is changed.
+        /// </summary>
+        public uint BGColor
+        {
+            get
+            {
+                return this.bgColor;
+            }
+
+            set
+            {
+                if (value == this.bgColor)
+                {
+                    return;
+                }
+
+                this.bgColor = value;
+                this.PropertyChanged(this, new PropertyChangedEventArgs("BGColor"));
+            }
+        }
+
+        /// <summary>
         /// Gets or Sets the value member in the cell class.
         /// </summary>
         public string Value

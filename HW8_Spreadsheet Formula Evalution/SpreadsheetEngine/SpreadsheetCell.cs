@@ -27,6 +27,11 @@ namespace CptS321
         protected string value;
 
         /// <summary>
+        /// The value containing the background color of the cell.
+        /// </summary>
+        protected uint bgColor;
+
+        /// <summary>
         /// Contains the row index of the cell.
         /// </summary>
         private readonly int rowIndex;
@@ -45,6 +50,7 @@ namespace CptS321
         {
             this.rowIndex = rowIndex;
             this.columnIndex = columnIndex;
+            this.bgColor = 0xFFFFFFFF; // Default background color of the cell is white
         }
 
         /// <summary>
@@ -87,6 +93,28 @@ namespace CptS321
 
                 this.text = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the BGcolor value and invokes a property changeed event if the value is changed.
+        /// </summary>
+        public uint BGColor
+        {
+            get
+            {
+                return this.bgColor;
+            }
+
+            set
+            {
+                if (value == this.bgColor)
+                {
+                    return;
+                }
+
+                this.bgColor = value;
+                this.PropertyChanged(this, new PropertyChangedEventArgs("BGColor"));
             }
         }
 
