@@ -167,6 +167,7 @@ namespace Spreadsheet_Koji_Natsuhara
             {
                 SpreadsheetCell dataCell = this.mainSpreadSheet.GetCell(gridCell.RowIndex, gridCell.ColumnIndex);
                 dataCell.BGColor = (uint)myDialog.Color.ToArgb();
+                gridCell.Style.BackColor = Color.FromArgb((int)dataCell.BGColor);
             }
         }
     }

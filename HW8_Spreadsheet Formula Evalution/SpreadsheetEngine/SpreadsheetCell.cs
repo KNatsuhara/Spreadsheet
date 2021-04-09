@@ -50,7 +50,7 @@ namespace CptS321
         {
             this.rowIndex = rowIndex;
             this.columnIndex = columnIndex;
-            this.bgColor = 0xFFFFFFFF; // Default background color of the cell is white
+            this.bgColor = 0; // 0xFFFFFFFF; // Default background color of the cell is white
         }
 
         /// <summary>
