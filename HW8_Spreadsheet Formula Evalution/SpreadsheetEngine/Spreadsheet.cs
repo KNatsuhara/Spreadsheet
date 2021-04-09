@@ -131,6 +131,17 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Sets the cell color in the cell grid.
+        /// </summary>
+        /// <param name="row">Row.</param>
+        /// <param name="col">Col.</param>
+        /// <param name="bgColor">Uint.</param>
+        public void SetCellColor(int row, int col, uint bgColor)
+        {
+            this.cellGrid[row, col].BGColor = bgColor;
+        }
+
+        /// <summary>
         /// Gets the rowCount.
         /// </summary>
         /// <returns>Integer.</returns>

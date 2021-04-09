@@ -170,5 +170,36 @@ namespace Spreadsheet_Koji_Natsuhara
                 gridCell.Style.BackColor = Color.FromArgb((int)dataCell.BGColor);
             }
         }
+
+        /// <summary>
+        /// Turns on or off the Undo and Redo button depending if the there are any Undo or Redo tasks in the stack.
+        /// </summary>
+        /// <param name="sender">DataGridCells.</param>
+        /// <param name="e">Event argument.</param>
+        private void EditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.undoToolStripMenuItem.Enabled = true; // Turn button on
+            this.redoToolStripMenuItem.Enabled = false; // Turn button off
+        }
+
+        /// <summary>
+        /// Will undo the most recent change in the UI.
+        /// </summary>
+        /// <param name="sender">SpreadsheetCell</param>
+        /// <param name="e">Undo Button press.</param>
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Will redo the most latest change in the UI.
+        /// </summary>
+        /// <param name="sender">SpreadsheetCell.</param>
+        /// <param name="e">Redo Button press.</param>
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
