@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Spreadsheet_Koji_Natsuhara
+namespace CptS321
 {
     /// <summary>
     /// This class will run the main method that will start the application.

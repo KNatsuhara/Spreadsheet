@@ -12,8 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CptS321;
+using SpreadsheetEngine;
 
-namespace Spreadsheet_Koji_Natsuhara
+namespace CptS321
 {
     /// <summary>
     /// This class will intitalize the winform application.
@@ -86,10 +87,30 @@ namespace Spreadsheet_Koji_Natsuhara
         {
             int row = e.RowIndex;
             int col = e.ColumnIndex;
-            DataGridViewCell cell = this.dataGridView1[col, row];
+            DataGridViewCell dataGridCell = this.dataGridView1[col, row];
+            this.mainSpreadSheet.SetCellText(row, col, dataGridCell.Value.ToString());
+            string s = this.mainSpreadSheet.GetCell(row, col).Text;
 
-            this.mainSpreadSheet.SetCellText(row, col, cell.Value.ToString());
-            cell.Value = this.mainSpreadSheet.GetCell(row, col).Value;
+            Stack<SpreadsheetCell> currentCells = new Stack<SpreadsheetCell>(); // holds data for updated cells
+            Stack<SpreadsheetCell> prevCells = new Stack<SpreadsheetCell>(); // holds old data in case of undo
+
+            Stack<string> currText = new Stack<string>();
+            Stack<string> prevText = new Stack<string>();
+
+            SpreadsheetCell cell = this.mainSpreadSheet.GetCell(e.RowIndex, e.ColumnIndex);
+
+            prevText.Push(s); // pushes old text onto stack
+
+            currentCells.Push(cell); // pushs cell onto stack
+            prevCells.Push(cell);
+
+            currText.Push(cell.Text);
+
+            // Create new UndoRedoText command
+            UndoRedoText command = new UndoRedoText("Text Change", prevText, currText, prevCells, currentCells); // constructor
+            this.mainSpreadSheet.AddUndo(command); // add command to spreadsheets inner undo stack
+
+            dataGridCell.Value = this.mainSpreadSheet.GetCell(row, col).Value;
         }
 
         /// <summary>
@@ -165,9 +186,11 @@ namespace Spreadsheet_Koji_Natsuhara
             foreach (DataGridViewCell gridCell in this.dataGridView1.SelectedCells)
             {
                 SpreadsheetCell dataCell = this.mainSpreadSheet.GetCell(gridCell.RowIndex, gridCell.ColumnIndex);
-                dataCell.BGColor = (uint)myDialog.Color.ToArgb();
-                gridCell.Style.BackColor = Color.FromArgb((int)dataCell.BGColor);
+
+                this.mainSpreadSheet.SetCellColor(gridCell.RowIndex, gridCell.ColumnIndex, (uint)myDialog.Color.ToArgb());
             }
+
+            this.dataGridView1.ClearSelection(); // Clears off user highlighted cells.
         }
 
         /// <summary>
@@ -177,8 +200,27 @@ namespace Spreadsheet_Koji_Natsuhara
         /// <param name="e">Event argument.</param>
         private void EditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.undoToolStripMenuItem.Enabled = true; // Turn button on
-            this.redoToolStripMenuItem.Enabled = false; // Turn button off
+            if (this.mainSpreadSheet.CanUndo() == false)
+            {
+                this.undoToolStripMenuItem.Enabled = false; // Disable button if there are no undos.
+            }
+            else
+            {
+                this.undoToolStripMenuItem.Enabled = true; // turn on button
+                this.undoToolStripMenuItem.Text = "Undo";
+                this.undoToolStripMenuItem.Text += " " + this.mainSpreadSheet.GetUndoTask(); // show user what the undo task is
+            }
+
+            if (this.mainSpreadSheet.CanRedo() == false)
+            {
+                this.redoToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                this.redoToolStripMenuItem.Enabled = true;
+                this.redoToolStripMenuItem.Text = "Redo";
+                this.redoToolStripMenuItem.Text += " " + this.mainSpreadSheet.GetRedoTask(); // show user redo task
+            }
         }
 
         /// <summary>
@@ -188,6 +230,14 @@ namespace Spreadsheet_Koji_Natsuhara
         /// <param name="e">Undo Button press.</param>
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.mainSpreadSheet.CanUndo() == true)
+            {
+                this.mainSpreadSheet.Undo(); // Run Undo command.
+            }
+            else
+            {
+                return; // If no undo command available then return.
+            }
         }
 
         /// <summary>
@@ -197,6 +247,14 @@ namespace Spreadsheet_Koji_Natsuhara
         /// <param name="e">Redo Button press.</param>
         private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (this.mainSpreadSheet.CanRedo() == true)
+            {
+                this.mainSpreadSheet.Redo(); // Run Redo Command.
+            }
+            else
+            {
+                return; // If no redo command available then return.
+            }
         }
     }
 }

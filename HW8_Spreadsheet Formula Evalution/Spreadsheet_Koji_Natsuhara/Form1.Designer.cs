@@ -1,5 +1,5 @@
 ﻿
-namespace Spreadsheet_Koji_Natsuhara
+namespace CptS321
 {
     partial class Form1
     {
