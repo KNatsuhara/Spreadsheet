@@ -26,6 +26,8 @@ namespace CptS321
         /// </summary>
         private Spreadsheet mainSpreadSheet;
 
+        private string cellValue;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
         /// </summary>
@@ -76,6 +78,14 @@ namespace CptS321
             int col = e.ColumnIndex;
             DataGridViewCell cell = this.dataGridView1[col, row];
             cell.Value = this.mainSpreadSheet.GetCell(row, col).Text;
+            if (cell.Value == null)
+            {
+                this.cellValue = string.Empty;
+            }
+            else
+            {
+                this.cellValue = cell.Value.ToString();
+            }
         }
 
         /// <summary>
@@ -88,27 +98,10 @@ namespace CptS321
             int row = e.RowIndex;
             int col = e.ColumnIndex;
             DataGridViewCell dataGridCell = this.dataGridView1[col, row];
-            this.mainSpreadSheet.SetCellText(row, col, dataGridCell.Value.ToString());
-            string s = this.mainSpreadSheet.GetCell(row, col).Text;
-
-            Stack<SpreadsheetCell> currentCells = new Stack<SpreadsheetCell>(); // holds data for updated cells
-            Stack<SpreadsheetCell> prevCells = new Stack<SpreadsheetCell>(); // holds old data in case of undo
-
-            Stack<string> currText = new Stack<string>();
-            Stack<string> prevText = new Stack<string>();
-
-            SpreadsheetCell cell = this.mainSpreadSheet.GetCell(e.RowIndex, e.ColumnIndex);
-
-            prevText.Push(s); // pushes old text onto stack
-
-            currentCells.Push(cell); // pushs cell onto stack
-            prevCells.Push(cell);
-
-            currText.Push(cell.Text);
-
-            // Create new UndoRedoText command
-            UndoRedoText command = new UndoRedoText("Text Change", prevText, currText, prevCells, currentCells); // constructor
-            this.mainSpreadSheet.AddUndo(command); // add command to spreadsheets inner undo stack
+            if (dataGridCell.Value.ToString() != this.cellValue.ToString())
+            {
+                this.mainSpreadSheet.SetCellText(row, col, dataGridCell.Value.ToString());
+            }
 
             dataGridCell.Value = this.mainSpreadSheet.GetCell(row, col).Value;
         }
@@ -186,7 +179,6 @@ namespace CptS321
             foreach (DataGridViewCell gridCell in this.dataGridView1.SelectedCells)
             {
                 SpreadsheetCell dataCell = this.mainSpreadSheet.GetCell(gridCell.RowIndex, gridCell.ColumnIndex);
-
                 this.mainSpreadSheet.SetCellColor(gridCell.RowIndex, gridCell.ColumnIndex, (uint)myDialog.Color.ToArgb());
             }
 

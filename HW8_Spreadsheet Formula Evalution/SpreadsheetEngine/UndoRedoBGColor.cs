@@ -1,4 +1,4 @@
-﻿// <copyright file="UndoRedoText.cs" company="Koji Natsuhara (ID: 11666900)">
+﻿// <copyright file="UndoRedoBGColor.cs" company="Koji Natsuhara (ID: 11666900)">
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 
@@ -14,17 +14,17 @@ namespace SpreadsheetEngine
     /// <summary>
     /// Will perform all the Undo/Redo actions for the Cell Text property.
     /// </summary>
-    internal class UndoRedoText : IUndoRedoCollection
+    internal class UndoRedoBGColor : IUndoRedoCollection
     {
         /// <summary>
-        /// Previous Text of the cell.
+        /// Previous color of the cell.
         /// </summary>
-        private string prevText;
+        private uint prevColor;
 
         /// <summary>
-        /// Current text of the cell.
+        /// New color of the cell.
         /// </summary>
-        private string newText;
+        private uint newColor;
 
         /// <summary>
         /// Reference to the spreadsheetcell.
@@ -32,15 +32,15 @@ namespace SpreadsheetEngine
         private SpreadsheetCellValue refCell;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UndoRedoText"/> class.
+        /// Initializes a new instance of the <see cref="UndoRedoBGColor"/> class.
         /// </summary>
-        /// <param name="prevText">Prev Text.</param>
-        /// <param name="newText">Cur Text.</param>
+        /// <param name="prevColor">Prev Color.</param>
+        /// <param name="newColor">Cur Color.</param>
         /// <param name="refCell">Reference Cell.</param>
-        public UndoRedoText(string prevText, string newText, ref SpreadsheetCellValue refCell)
+        public UndoRedoBGColor(uint prevColor, uint newColor, ref SpreadsheetCellValue refCell)
         {
-            this.prevText = prevText;
-            this.newText = newText;
+            this.prevColor = prevColor;
+            this.newColor = newColor;
             this.refCell = refCell;
         }
 
@@ -49,7 +49,7 @@ namespace SpreadsheetEngine
         /// </summary>
         public void Execute()
         {
-            this.refCell.Text = this.newText;
+            this.refCell.BGColor = this.newColor;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace SpreadsheetEngine
         /// </summary>
         public void Undo()
         {
-            this.refCell.Text = this.prevText;
+            this.refCell.BGColor = this.prevColor;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace SpreadsheetEngine
         /// <returns>Text Change.</returns>
         public string TextMessage()
         {
-            return "Text Change";
+            return "Cell Background Color";
         }
     }
 }

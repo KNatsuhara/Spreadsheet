@@ -38,9 +38,14 @@ namespace CptS321
         private ExpressionTree expressionTree = new ExpressionTree(string.Empty);
 
         /// <summary>
-        /// The UndoRedo class object that will hold all the cell changes and allow set the Spreadsheet cell values if Undo/Redo command is used.
+        /// Stack that holds all the undo commands.
         /// </summary>
-        private UndoRedo mUndoRedo = new UndoRedo();
+        private Stack<IUndoRedoCollection> undo = new Stack<IUndoRedoCollection>();
+
+        /// <summary>
+        /// Stack that holds all the redo commands.
+        /// </summary>
+        private Stack<IUndoRedoCollection> redo = new Stack<IUndoRedoCollection>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
@@ -133,6 +138,28 @@ namespace CptS321
         /// <param name="text">Text.</param>
         public void SetCellText(int row, int col, string text)
         {
+            string newText;
+            if (text == null)
+            {
+                newText = string.Empty;
+            }
+            else
+            {
+                newText = text;
+            }
+
+            string oldText;
+            if (this.cellGrid[row, col].Text == null)
+            {
+                oldText = string.Empty;
+            }
+            else
+            {
+                oldText = this.cellGrid[row, col].Text;
+            }
+
+            UndoRedoText newCmd = new UndoRedoText(oldText, newText, ref this.cellGrid[row, col]);
+            this.undo.Push(newCmd);
             this.cellGrid[row, col].Text = text;
         }
 
@@ -144,6 +171,8 @@ namespace CptS321
         /// <param name="bgColor">Uint.</param>
         public void SetCellColor(int row, int col, uint bgColor)
         {
+            UndoRedoBGColor newCmd = new UndoRedoBGColor(this.cellGrid[row, col].BGColor, bgColor, ref this.cellGrid[row, col]);
+            this.undo.Push(newCmd);
             this.cellGrid[row, col].BGColor = bgColor;
         }
 
@@ -209,74 +238,69 @@ namespace CptS321
         }
 
         /// <summary>
-        /// Adds an Undo command to the Undo stack.
-        /// </summary>
-        /// <param name="item">UndoRedoCollection command.</param>
-        public void AddUndo(UndoRedoCollection item)
-        {
-            this.mUndoRedo.AddUndo(item);
-        }
-
-        /// <summary>
-        /// Performs an Undo command from mUndoRedo.
+        /// Performs an Undo command off the Undo stack.
         /// </summary>
         public void Undo()
         {
-            this.mUndoRedo.PerformUndo().Undo(); // perform undo of item at top of undo stack
+            IUndoRedoCollection command = this.undo.Pop();
+            command.Undo();
+            this.redo.Push(command);
         }
 
         /// <summary>
-        /// Performs a Redo command from mUndoRedo.
+        /// Performs a Redo command off the Redo stack.
         /// </summary>
         public void Redo()
         {
-            this.mUndoRedo.PerformRedo().Redo(); // perform redo of item at top of redo stack
+            IUndoRedoCollection command = this.redo.Pop();
+            command.Execute();
+            this.undo.Push(command);
         }
 
         /// <summary>
-        /// Checks if the mUndoRedo can perform an Undo command.
+        /// Checks if the undo stack is empty.
         /// </summary>
-        /// <returns>True if the Undo stack can Undo, false otherwise.</returns>
+        /// <returns>Return true if undo stack is not empty.</returns>
         public bool CanUndo()
         {
-            if (this.mUndoRedo.IsUndoEmpty() == true)
+            if (this.undo.Count == 0)
             {
                 return false;
             }
 
-            return true; // not empty
+            return true;
         }
 
         /// <summary>
-        /// Checks if the mUndoRedo can perform a Redo command.
+        /// Checks if the redo stack is empty.
         /// </summary>
-        /// <returns>True if the Redo stack can redo, false otherwise.</returns>
+        /// <returns>Return true if redo stack is not empty.</returns>
         public bool CanRedo()
         {
-            if (this.mUndoRedo.IsRedoEmpty() == true)
+            if (this.redo.Count == 0)
             {
                 return false;
             }
 
-            return true; // not empty
+            return true;
         }
 
         /// <summary>
-        /// Returns the specific undo task performed.
+        /// Returns string of which task was performed from Undo stack.
         /// </summary>
-        /// <returns>String message of task performed.</returns>
+        /// <returns>Return true if redo stack is not empty.</returns>
         public string GetUndoTask()
         {
-            return this.mUndoRedo.GetUndoMessage();
+            return this.undo.Peek().TextMessage();
         }
 
         /// <summary>
-        /// Returns the specific redo task performed.
+        /// Returns string of which command was performed from Redo stack.
         /// </summary>
-        /// <returns>String message of task performed.</returns>
+        /// <returns>Return true if redo stack is not empty.</returns>
         public string GetRedoTask()
         {
-            return this.mUndoRedo.GetRedoMessage();
+            return this.redo.Peek().TextMessage();
         }
 
         /// <summary>
@@ -303,13 +327,14 @@ namespace CptS321
                     // int col = (int)colSymbol - 'A';
                     // cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
                     string newValue = this.EvaluateText(cell.Text);
-                    this.SetCellText(cell.RowIndex, cell.ColumnIndex, evalutedText);
+
+                    // this.SetCellText(cell.RowIndex, cell.ColumnIndex, evalutedText);
                     cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
                 }
                 else
                 {
-                    this.SetCellText(cell.RowIndex, cell.ColumnIndex, cell.Text);
+                    // this.SetCellText(cell.RowIndex, cell.ColumnIndex, cell.Text);
                     cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
 
                     double number;
