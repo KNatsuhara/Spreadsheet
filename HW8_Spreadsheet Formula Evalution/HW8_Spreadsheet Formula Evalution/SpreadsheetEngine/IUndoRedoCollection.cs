@@ -1,4 +1,4 @@
-﻿// <copyright file="UndoRedoCollection.cs" company="Koji Natsuhara (ID: 11666900)">
+﻿// <copyright file="IUndoRedoCollection.cs" company="Koji Natsuhara (ID: 11666900)">
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 

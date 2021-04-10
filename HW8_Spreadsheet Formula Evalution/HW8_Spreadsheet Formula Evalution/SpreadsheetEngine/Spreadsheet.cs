@@ -325,6 +325,7 @@ namespace CptS321
                     // int col = (int)colSymbol - 'A';
                     // cell.Value = this.cellGrid[row, col].Value; // If the string has 3 characters, this assumes it is in the format "=A#"
                     string newValue = this.EvaluateText(cell.Text);
+
                     // this.SetCellText(cell.RowIndex, cell.ColumnIndex, evalutedText);
                     cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
@@ -344,6 +345,7 @@ namespace CptS321
                       this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
                     }
                 }
+
                 this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
             }
             else if (e.PropertyName == "BGColor")
