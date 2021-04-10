@@ -2,8 +2,10 @@
 // Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
 // </copyright>
 
+using System.Collections.Generic;
 using CptS321;
 using NUnit.Framework;
+using SpreadsheetEngine;
 using static CptS321.Spreadsheet;
 
 namespace NUnit.Tests1
@@ -61,6 +63,48 @@ namespace NUnit.Tests1
             Assert.That("=Test", Is.EqualTo(testSheet.GetCell(1, 1).Value), "Did not get =Test");
             Assert.That("=A1", Is.EqualTo(testSheet.GetCell(3, 3).Value), "Did not get =A1");
             Assert.That("=B33", Is.EqualTo(testSheet.GetCell(10, 10).Value), "Did not get =B33");
+        }
+
+        /// <summary>
+        /// Will test the add UndoRedoText constructor.
+        /// </summary>
+        [Test]
+        public void TestUndoRedoText()
+        {
+            Stack<SpreadsheetCell> currentCells = new Stack<SpreadsheetCell>();
+            Stack<SpreadsheetCell> prevCells = new Stack<SpreadsheetCell>();
+            Stack<string> currText = new Stack<string>();
+            Stack<string> prevText = new Stack<string>();
+
+            UndoRedoText testCommandText = new UndoRedoText("Text Change", prevText, currText, prevCells, currentCells);
+            Assert.That("Text Change", Is.EqualTo(testCommandText.Task), "Task Message are not the same!");
+        }
+
+        /// <summary>
+        /// Will test the add Undo/Redo command and check if Undo/Redo stack is empty.
+        /// </summary>
+        [Test]
+        public void TestUndoRedoEmpty()
+        {
+            Stack<SpreadsheetCell> currentCells = new Stack<SpreadsheetCell>();
+            Stack<SpreadsheetCell> prevCells = new Stack<SpreadsheetCell>();
+            Stack<string> currText = new Stack<string>();
+            Stack<string> prevText = new Stack<string>();
+
+            UndoRedoText testCommandText = new UndoRedoText("Text Change", prevText, currText, prevCells, currentCells);
+
+            UndoRedo testUndoRedo = new UndoRedo();
+
+            Assert.That(true, Is.EqualTo(testUndoRedo.IsUndoEmpty()), "The Undo Stack is not empty!");
+            Assert.That(true, Is.EqualTo(testUndoRedo.IsRedoEmpty()), "The Redo Stack is not empty!");
+
+            testUndoRedo.AddUndo(testCommandText);
+
+            Assert.That(false, Is.EqualTo(testUndoRedo.IsUndoEmpty()), "The Undo Stack is empty!");
+            Assert.That(true, Is.EqualTo(testUndoRedo.IsRedoEmpty()), "The Redo Stack is not empty!");
+
+            UndoRedoCollection testUndoRedoCollect = testUndoRedo.PerformUndo();
+            Assert.That(false, Is.EqualTo(testUndoRedo.IsRedoEmpty()), "The Redo Stack is empty!");
         }
     }
 }

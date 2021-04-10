@@ -55,6 +55,7 @@
     <Compile Include="SpreadsheetCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpreadsheetCellValue.cs" />
+    <Compile Include="UndoRedo.cs" />
     <Compile Include="UndoRedoCollection.cs" />
     <Compile Include="UndoRedoText.cs" />
     <Compile Include="VariableNode.cs" />

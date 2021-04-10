@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="UndoRedoText.cs" company="Koji Natsuhara (ID: 11666900)">
+// Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

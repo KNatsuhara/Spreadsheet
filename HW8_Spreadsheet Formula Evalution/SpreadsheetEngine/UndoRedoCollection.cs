@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="UndoRedoCollection.cs" company="Koji Natsuhara (ID: 11666900)">
+// Copyright (c) Koji Natsuhara (ID: 11666900). All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -197,11 +201,15 @@ namespace SpreadsheetEngine
         /// <summary>
         ///  Virtual Undo method that all UndoRedo child classes will override.
         /// </summary>
-        public virtual void Undo() { }
+        public virtual void Undo()
+        {
+        }
 
         /// <summary>
         /// Virtual Redo method that all UndoRedo child classes will override.
         /// </summary>
-        public virtual void Redo() { }
+        public virtual void Redo()
+        {
+        }
     }
 }

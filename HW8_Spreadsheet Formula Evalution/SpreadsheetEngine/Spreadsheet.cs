@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpreadsheetEngine;
 
 namespace CptS321
 {
@@ -35,6 +36,11 @@ namespace CptS321
         /// Expression tree which evaluates the cells text.
         /// </summary>
         private ExpressionTree expressionTree = new ExpressionTree(string.Empty);
+
+        /// <summary>
+        /// The UndoRedo class object that will hold all the cell changes and allow set the Spreadsheet cell values if Undo/Redo command is used.
+        /// </summary>
+        private UndoRedo mUndoRedo = new UndoRedo();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
