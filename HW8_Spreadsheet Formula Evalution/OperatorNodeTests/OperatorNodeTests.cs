@@ -16,7 +16,7 @@ namespace OperatorNodeTests
         [Test, Order(1)]
         public void AddingNewOperatorInDifferentAssembly()
         {
-            Assembly.Load("HW5_ExpressionTree");
+            Assembly.Load("SpreadsheetEngine");
 
             OperatorNodeFactory factory = new OperatorNodeFactory();
             List<char> expectedOperators = new List<char> { '+', '-', '*', '/' };
@@ -44,3 +44,4 @@ namespace OperatorNodeTests
         }
     }
 }
+

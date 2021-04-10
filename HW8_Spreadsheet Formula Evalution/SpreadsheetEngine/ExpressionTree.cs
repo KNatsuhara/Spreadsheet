@@ -371,7 +371,6 @@ namespace CptS321
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
             OperatorNode current;
-            this.variables.Clear(); // Variables are stored per expression, Clear out if the expression is CHANGED.
 
             for (int i = 0; i < postfix.Count; i++)
             {
@@ -421,6 +420,15 @@ namespace CptS321
             {
                 this.variables.Add(variableName, variableValue); // Create new variable
             }
+        }
+
+        /// <summary>
+        /// Returns a dictionary of variables and their values.
+        /// </summary>
+        /// <returns>The dictionary of variables.</returns>
+        public Dictionary<string, double> GetVariables()
+        {
+            return this.variables;
         }
 
         /// <summary>

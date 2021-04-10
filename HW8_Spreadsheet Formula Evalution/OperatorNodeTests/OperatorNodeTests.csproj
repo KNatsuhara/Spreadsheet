@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
+    <ProjectGuid>{23C794C4-E307-4001-B5F4-14C7A9468708}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HW5_ExpressionTreeTests</RootNamespace>
-    <AssemblyName>HW5_ExpressionTreeTests</AssemblyName>
+    <RootNamespace>OperatorNodeTests</RootNamespace>
+    <AssemblyName>OperatorNodeTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -41,24 +41,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExpressionTreeTests.cs" />
+    <Compile Include="OperatorNodeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HW5_ExpressionTree\HW5_ExpressionTree.csproj">
-      <Project>{9d1689b3-bea2-4ab4-a2e3-2c34ac33ff01}</Project>
-      <Name>HW5_ExpressionTree</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MainConsole\MainConsole.csproj">
-      <Project>{26166b73-ec57-4176-8c79-a3f7bf5a329d}</Project>
-      <Name>MainConsole</Name>
+    <ProjectReference Include="..\SpreadsheetEngine\SpreadsheetEngine.csproj">
+      <Project>{5064d8e7-a0d9-4972-b141-ac28cc13d680}</Project>
+      <Name>SpreadsheetEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

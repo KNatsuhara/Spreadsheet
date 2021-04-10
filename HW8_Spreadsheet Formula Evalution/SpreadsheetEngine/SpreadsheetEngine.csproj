@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{26166B73-EC57-4176-8C79-A3F7BF5A329D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MainConsole</RootNamespace>
-    <AssemblyName>MainConsole</AssemblyName>
+    <ProjectGuid>{5064D8E7-A0D9-4972-B141-AC28CC13D680}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpreadsheetEngine</RootNamespace>
+    <AssemblyName>SpreadsheetEngine</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,16 +23,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>MainConsole.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,19 +41,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ConstantNode.cs" />
+    <Compile Include="DivideOperatorNode.cs" />
+    <Compile Include="ExpressionTree.cs" />
+    <Compile Include="ExpressionTreeNode.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="MinusOperatorNode.cs" />
+    <Compile Include="MultiplyOperatorNode.cs" />
+    <Compile Include="OperatorNode.cs" />
+    <Compile Include="OperatorNodeFactory.cs" />
+    <Compile Include="PlusOperatorNode.cs" />
+    <Compile Include="Spreadsheet.cs" />
+    <Compile Include="SpreadsheetCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpreadsheetCellValue.cs" />
+    <Compile Include="IUndoRedoCollection.cs" />
+    <Compile Include="UndoRedoBGColor.cs" />
+    <Compile Include="UndoRedoText.cs" />
+    <Compile Include="VariableNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
     <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HW5_ExpressionTree\HW5_ExpressionTree.csproj">
-      <Project>{9d1689b3-bea2-4ab4-a2e3-2c34ac33ff01}</Project>
-      <Name>HW5_ExpressionTree</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

@@ -9,11 +9,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HW5_ExpressionTree")]
+[assembly: AssemblyTitle("Spreadsheet_Koji_Natsuhara")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HW5_ExpressionTree")]
+[assembly: AssemblyProduct("Spreadsheet_Koji_Natsuhara")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9d1689b3-bea2-4ab4-a2e3-2c34ac33ff01")]
+[assembly: Guid("31a8d3bb-9ccc-473f-bef4-587588053941")]
 
 // Version information for an assembly consists of the following four values:
 //

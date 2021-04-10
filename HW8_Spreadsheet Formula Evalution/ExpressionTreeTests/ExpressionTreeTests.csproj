@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{616DBF38-8254-43CB-9639-87633C068B9A}</ProjectGuid>
+    <ProjectGuid>{442EB802-BE86-4653-9B77-AE3331855954}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OperatorNodeTests</RootNamespace>
-    <AssemblyName>OperatorNodeTests</AssemblyName>
+    <RootNamespace>ExpressionTreeTests</RootNamespace>
+    <AssemblyName>ExpressionTreeTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -41,15 +41,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OperatorNodeTests.cs" />
+    <Compile Include="ExpressionTreeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HW5_ExpressionTree\HW5_ExpressionTree.csproj">
-      <Project>{9d1689b3-bea2-4ab4-a2e3-2c34ac33ff01}</Project>
-      <Name>HW5_ExpressionTree</Name>
+    <ProjectReference Include="..\SpreadsheetEngine\SpreadsheetEngine.csproj">
+      <Project>{5064d8e7-a0d9-4972-b141-ac28cc13d680}</Project>
+      <Name>SpreadsheetEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

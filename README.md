@@ -1,11 +1,8 @@
 # CptS321-HWs
 
-In this assignment you will create the ExpressionTree class in your logic engine DLL. You will 
-create a standalone console application as well, to demo its functionality. The ExpressionTree class will
-implement an arithmetic expression parser that builds a tree for the expression. This tree can then be
-used for evaluation of the expression. The parsing aspect of this assignment is simplified and you will
-extend the parser in the next homework. But the entire evaluation functionality, including setting
-variable values, will be implemented in this assignment.
+In this assignment, you will combine work from several previous homework assignments and build new
+features on top of that. You will link your arithmetic expression evaluator with the spreadsheet
+application.
 
 
 Name: Koji Natsuhara
