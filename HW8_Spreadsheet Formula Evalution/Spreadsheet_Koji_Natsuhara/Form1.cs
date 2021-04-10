@@ -148,10 +148,9 @@ namespace Spreadsheet_Koji_Natsuhara
         private void ChangeBackgToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog myDialog = new ColorDialog();
-            // myDialog.ShowDialog();
 
             // Keeps the user from selecting a custom color.
-            myDialog.AllowFullOpen = false;
+            myDialog.AllowFullOpen = true;
 
             // Allows the user to get help. (The default is false.)
             myDialog.ShowHelp = true;
@@ -185,11 +184,10 @@ namespace Spreadsheet_Koji_Natsuhara
         /// <summary>
         /// Will undo the most recent change in the UI.
         /// </summary>
-        /// <param name="sender">SpreadsheetCell</param>
+        /// <param name="sender">SpreadsheetCell.</param>
         /// <param name="e">Undo Button press.</param>
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -199,7 +197,6 @@ namespace Spreadsheet_Koji_Natsuhara
         /// <param name="e">Redo Button press.</param>
         private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -112,6 +112,7 @@ namespace CptS321
                 {
                     return;
                 }
+
                 this.bgColor = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("BGColor"));
             }

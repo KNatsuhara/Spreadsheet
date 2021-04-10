@@ -371,7 +371,6 @@ namespace CptS321
             Stack<ExpressionTreeNode> stack = new Stack<ExpressionTreeNode>();
             string temp = string.Empty;
             OperatorNode current;
-            // this.variables.Clear(); // Variables are stored per expression, Clear out if the expression is CHANGED.
 
             for (int i = 0; i < postfix.Count; i++)
             {

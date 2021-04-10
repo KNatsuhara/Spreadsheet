@@ -209,6 +209,77 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Adds an Undo command to the Undo stack.
+        /// </summary>
+        /// <param name="item">UndoRedoCollection command.</param>
+        public void AddUndo(UndoRedoCollection item)
+        {
+            this.mUndoRedo.AddUndo(item);
+        }
+
+        /// <summary>
+        /// Performs an Undo command from mUndoRedo.
+        /// </summary>
+        public void Undo()
+        {
+            this.mUndoRedo.PerformUndo().Undo(); // perform undo of item at top of undo stack
+        }
+
+        /// <summary>
+        /// Performs a Redo command from mUndoRedo.
+        /// </summary>
+        public void Redo()
+        {
+            this.mUndoRedo.PerformRedo().Redo(); // perform redo of item at top of redo stack
+        }
+
+        /// <summary>
+        /// Checks if the mUndoRedo can perform an Undo command.
+        /// </summary>
+        /// <returns>True if the Undo stack can Undo, false otherwise.</returns>
+        public bool CanUndo()
+        {
+            if (this.mUndoRedo.IsUndoEmpty() == true)
+            {
+                return false;
+            }
+
+            return true; // not empty
+        }
+
+        /// <summary>
+        /// Checks if the mUndoRedo can perform a Redo command.
+        /// </summary>
+        /// <returns>True if the Redo stack can redo, false otherwise.</returns>
+        public bool CanRedo()
+        {
+            if (this.mUndoRedo.IsRedoEmpty() == true)
+            {
+                return false;
+            }
+
+            return true; // not empty
+        }
+
+        /// <summary>
+        /// Returns the specific undo task performed.
+        /// </summary>
+        /// <returns>String message of task performed.</returns>
+        public string GetUndoTask()
+        {
+            return this.mUndoRedo.GetUndoMessage();
+        }
+
+        /// <summary>
+        /// Returns the specific redo task performed.
+        /// </summary>
+        /// <returns>String message of task performed.</returns>
+        public string GetRedoTask()
+        {
+            return this.mUndoRedo.GetRedoMessage();
+        }
+
+        /// <summary>
         /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
         /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
         /// will be set equal to the text.
