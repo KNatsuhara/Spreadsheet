@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spreadsheet_Koji_Natsuhara", "Spreadsheet_Koji_Natsuhara\Spreadsheet_Koji_Natsuhara.csproj", "{31A8D3BB-9CCC-473F-BEF4-587588053941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spreadsheet_NUnitTests", "NUnit.Tests1\Spreadsheet_NUnitTests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetEngine", "SpreadsheetEngine\SpreadsheetEngine.csproj", "{5064D8E7-A0D9-4972-B141-AC28CC13D680}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{137BF035-D32A-40B3-82E6-4ED200F56F6A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressionTreeTests", "ExpressionTreeTests\ExpressionTreeTests.csproj", "{442EB802-BE86-4653-9B77-AE3331855954}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperatorNodeTests", "OperatorNodeTests\OperatorNodeTests.csproj", "{23C794C4-E307-4001-B5F4-14C7A9468708}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31A8D3BB-9CCC-473F-BEF4-587588053941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A8D3BB-9CCC-473F-BEF4-587588053941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A8D3BB-9CCC-473F-BEF4-587588053941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A8D3BB-9CCC-473F-BEF4-587588053941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5064D8E7-A0D9-4972-B141-AC28CC13D680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5064D8E7-A0D9-4972-B141-AC28CC13D680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5064D8E7-A0D9-4972-B141-AC28CC13D680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5064D8E7-A0D9-4972-B141-AC28CC13D680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{442EB802-BE86-4653-9B77-AE3331855954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{442EB802-BE86-4653-9B77-AE3331855954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{442EB802-BE86-4653-9B77-AE3331855954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{442EB802-BE86-4653-9B77-AE3331855954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C794C4-E307-4001-B5F4-14C7A9468708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C794C4-E307-4001-B5F4-14C7A9468708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C794C4-E307-4001-B5F4-14C7A9468708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C794C4-E307-4001-B5F4-14C7A9468708}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1ADBC65-2242-44DF-A8D2-683924B15AB7}
+	EndGlobalSection
+EndGlobal
