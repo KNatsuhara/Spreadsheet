@@ -64,5 +64,19 @@ namespace NUnit.Tests1
             Assert.That("=A1", Is.EqualTo(testSheet.GetCell(3, 3).Value), "Did not get =A1");
             Assert.That("=B33", Is.EqualTo(testSheet.GetCell(10, 10).Value), "Did not get =B33");
         }
+
+        /// <summary>
+        /// Will test the CheckIfLetter method and return true if the string begins with a letter or false otherwise.
+        /// </summary>
+        [Test]
+        public void TestCheckIsLetter()
+        {
+            Assert.That(true, Is.EqualTo(CheckIfLetter("A1")), "Did not identify A1");
+            Assert.That(true, Is.EqualTo(CheckIfLetter("B1")), "Did not identify B1");
+            Assert.That(false, Is.EqualTo(CheckIfLetter("12")), "Did not identify 12");
+            Assert.That(false, Is.EqualTo(CheckIfLetter(string.Empty)), "Did not identify string.Empty");
+            Assert.That(false, Is.EqualTo(CheckIfLetter(" ")), "Did not identify whitespace");
+            Assert.That(false, Is.EqualTo(CheckIfLetter("=A1")), "Did not identify ' '=A1");
+        }
     }
 }

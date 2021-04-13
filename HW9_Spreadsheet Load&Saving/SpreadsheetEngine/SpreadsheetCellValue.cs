@@ -113,5 +113,14 @@ namespace CptS321
         {
             return new SpreadsheetCellValue(rowIndex, columnIndex);
         }
+
+        /// <summary>
+        /// This function will allow the cell to subscribe to a referenced cell dependency.
+        /// </summary>
+        /// <param name="cell">Refereneced cell that this.cell will subscribe to.</param>
+        public void SubscribeToCell(ref SpreadsheetCellValue cell)
+        {
+            this.DependencyChanged += cell.DependencyChanged;
+        }
     }
 }

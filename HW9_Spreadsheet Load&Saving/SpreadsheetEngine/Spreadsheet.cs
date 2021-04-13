@@ -100,6 +100,30 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Checks if the first letter in a string is a letter in the alphabet.
+        /// </summary>
+        /// <param name="word">Word that needs to be checked.</param>
+        /// <returns>True if the word starts with a letter, otherwise returns false.</returns>
+        public static bool CheckIfLetter(string word)
+        {
+            if (word.Length <= 0)
+            {
+                return false;
+            }
+
+            char letter = word.ToUpper()[0];
+
+            if (letter >= 65 && letter <= 90)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// This function will evaluate the text in the cell and return the value of the cell. This is assuming
         /// that the text starts with and "=".
         /// </summary>
@@ -339,15 +363,28 @@ namespace CptS321
                     }
                 }
 
-                this.cellGrid[cell.RowIndex + 1, cell.ColumnIndex].DependencyChanged += this.SpreadsheetCellValue_PropertyChanged; // Subscribe to Dependency Changed Event.
                 this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
             }
             else if (e.PropertyName == "BGColor")
             {
                 this.PropertyChangedValue(sender, new PropertyChangedEventArgs("BGColor")); // Fire off property changed event for color.
             }
-            else if (e.PropertyName == "ReEvaluate")
+        }
+
+        /// <summary>
+        /// If a cell has been changed that another cell has been subscribed to, then that cell will be reevaulated with their new value.
+        /// </summary>
+        /// <param name="sender">Spreadsheet Cell.</param>
+        /// <param name="e">DependencyChangedValue.</param>
+        private void SpreadsheetCellValue_DependencyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ReEvaluate")
             {
+                SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
+                string evalutedText = cell.Text;
+                char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
+                string cellName = columnCharacter.ToString().ToUpper() + (cell.RowIndex + 1).ToString(); // Converts cell location to a cellName
+
                 // ReEvaluate all the cells that are subscribed to the dependency changed event.
                 if (CheckText(evalutedText))
                 {
@@ -369,8 +406,32 @@ namespace CptS321
                         this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
                     }
                 }
+            }
 
-                this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value")); // Update the new cell's value based on its depedencies.
+            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value")); // Update the new cell's value based on its depedencies.
+        }
+
+        /// <summary>
+        /// Will read a text's formula and then subscribe to all the referenced cell's in the formula.
+        /// </summary>
+        /// <param name="cell">Cell that uses other cells.</param>
+        private void SubscribeCellDependency(SpreadsheetCellValue cell)
+        {
+            string cellText = cell.Text;
+
+            string[] words = cellText.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
+            int lengthLoop = words.Length;
+            for (int i = 0; i < lengthLoop; i++)
+            {
+                if (CheckIfLetter(words[i]))
+                {
+                    string cellCoordinate = words[i]; // Set the A1,B1... to a string variable
+                    char letter = words[i][0];
+                    int rowIndex = Convert.ToInt32(letter);
+                    string numCol = words[i].Substring(1, words[i].Length - 1);
+                    int colIndex = Convert.ToInt32(numCol) - 1;
+                    cell.SubscribeToCell(ref this.cellGrid[rowIndex, colIndex]); // Subscribe to Dependency Changed Event.
+                }
             }
         }
     }
