@@ -1,8 +1,8 @@
 # CptS321-HWs
 
-In this assignment, you will combine work from several previous homework assignments and build new
-features on top of that. You will link your arithmetic expression evaluator with the spreadsheet
-application.
+In this assignment, you will add loading and saving capabilities to your spreadsheet application. If you
+created a Workbook class for the previous assignment (or would like to create one for this assignment)
+then add Load and Save methods to it. Otherwise you can add these methods to your Spreadsheet class.
 
 
 Name: Koji Natsuhara
