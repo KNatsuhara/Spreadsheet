@@ -55,7 +55,6 @@ namespace CptS321
 
                 this.text = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
-                this.DependencyChanged(this, new PropertyChangedEventArgs("ReEvalutate"));
             }
         }
 
@@ -100,6 +99,7 @@ namespace CptS321
 
                 this.value = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                this.DependencyChanged(this, new PropertyChangedEventArgs("ReEvalutate"));
             }
         }
 
@@ -120,7 +120,17 @@ namespace CptS321
         /// <param name="cell">Refereneced cell that this.cell will subscribe to.</param>
         public void SubscribeToCell(ref SpreadsheetCellValue cell)
         {
-            this.DependencyChanged += cell.DependencyChanged;
+            cell.DependencyChanged += this.SpreadsheetCellValue_DependencyChanged;
+        }
+
+        /// <summary>
+        /// This will fire the property changed event.
+        /// </summary>
+        /// <param name="sender">Spreadsheet Cell.</param>
+        /// <param name="e">Dependency Changed Event.</param>
+        private void SpreadsheetCellValue_DependencyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace CptS321
         /// </summary>
         private Spreadsheet mainSpreadSheet;
 
+        /// <summary>
+        /// Checks the intital values of a datagridcell when the user inputs.
+        /// </summary>
         private string cellValue;
 
         /// <summary>
@@ -103,7 +107,6 @@ namespace CptS321
             int row = e.RowIndex;
             int col = e.ColumnIndex;
             DataGridViewCell dataGridCell = this.dataGridView1[col, row];
-
 
             if (dataGridCell.Value == null)
             {
@@ -259,6 +262,33 @@ namespace CptS321
             {
                 return; // If no redo command available then return.
             }
+        }
+
+        /// <summary>
+        /// This button will save the current spreadsheet as an XML file.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sf = new SaveFileDialog();
+
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                FileStream saveFile = new FileStream(sf.FileName, FileMode.Create, FileAccess.Write);
+                this.mainSpreadSheet.Save(saveFile);
+                saveFile.Close();
+                saveFile.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// This function will load an XML file and create a new spreadsheet from that data.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
     }
 }

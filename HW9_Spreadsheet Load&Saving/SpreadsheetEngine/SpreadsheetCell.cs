@@ -51,6 +51,8 @@ namespace CptS321
             this.rowIndex = rowIndex;
             this.columnIndex = columnIndex;
             this.bgColor = 0xFFFFFFFF; // Default background color of the cell is white
+            this.text = string.Empty;
+            this.value = string.Empty;
         }
 
         /// <summary>

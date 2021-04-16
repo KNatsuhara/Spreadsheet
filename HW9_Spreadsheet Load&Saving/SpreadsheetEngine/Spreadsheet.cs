@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using SpreadsheetEngine;
 
 namespace CptS321
@@ -328,6 +330,37 @@ namespace CptS321
         }
 
         /// <summary>
+        /// This function will read the spreadsheet cells and save the spreadsheet cell values/data into an XML file.
+        /// </summary>
+        /// <param name="destination">Address of where the XML file will be saved.</param>
+        public void Save(Stream destination)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            XmlWriter xml = XmlWriter.Create(destination, settings);
+            xml.WriteStartDocument();
+            xml.WriteStartElement("Spreadsheet");
+
+            foreach (SpreadsheetCell cell in this.cellGrid)
+            {
+                if (cell.BGColor != 0xFFFFFFFF || cell.Value != string.Empty || cell.Text != string.Empty)
+                {
+                    xml.WriteStartElement("Cell"); // creates starting element tag, Cell for start
+                    xml.WriteElementString("Value", cell.Value.ToString()); // save value
+                    xml.WriteElementString("Text", cell.Text.ToString()); // save text
+                    xml.WriteElementString("BGColor", cell.BGColor.ToString()); // text bg color
+                    xml.WriteElementString("Column", cell.ColumnIndex.ToString()); // save column
+                    xml.WriteElementString("Row", cell.RowIndex.ToString()); // save row
+                    xml.WriteEndElement(); // end
+                }
+            }
+
+            xml.WriteEndElement();
+            xml.Close();
+        }
+
+        /// <summary>
         /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
         /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
         /// will be set equal to the text.
@@ -345,15 +378,15 @@ namespace CptS321
                 if (CheckText(evalutedText))
                 {
                     string newValue = this.EvaluateText(cell.Text);
-                    cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
+                    cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                 }
                 else
                 {
-                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
+                    string cellValue = cell.Text;
 
                     double number;
-                    if (double.TryParse(cell.Value, out number))
+                    if (double.TryParse(cellValue, out number))
                     {
                         this.expressionTree.SetVariable(cellName, number); // If cell value can be parsed to double, set cellName, double
                     }
@@ -361,8 +394,11 @@ namespace CptS321
                     {
                       this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
                     }
+
+                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
                 }
 
+                this.SubscribeCellDependency(cell);
                 this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value"));
             }
             else if (e.PropertyName == "BGColor")
@@ -372,52 +408,17 @@ namespace CptS321
         }
 
         /// <summary>
-        /// If a cell has been changed that another cell has been subscribed to, then that cell will be reevaulated with their new value.
-        /// </summary>
-        /// <param name="sender">Spreadsheet Cell.</param>
-        /// <param name="e">DependencyChangedValue.</param>
-        private void SpreadsheetCellValue_DependencyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "ReEvaluate")
-            {
-                SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
-                string evalutedText = cell.Text;
-                char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
-                string cellName = columnCharacter.ToString().ToUpper() + (cell.RowIndex + 1).ToString(); // Converts cell location to a cellName
-
-                // ReEvaluate all the cells that are subscribed to the dependency changed event.
-                if (CheckText(evalutedText))
-                {
-                    string newValue = this.EvaluateText(cell.Text);
-                    cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
-                    this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
-                }
-                else
-                {
-                    cell.Value = cell.Text; // If the string does not start with "=" then the string value will be set to the text of the cell.
-
-                    double number;
-                    if (double.TryParse(cell.Value, out number))
-                    {
-                        this.expressionTree.SetVariable(cellName, number); // If cell value can be parsed to double, set cellName, double
-                    }
-                    else
-                    {
-                        this.expressionTree.SetVariable(cellName, 0); // If cell value cannot be parsed to double, set cellName, 0 (default)
-                    }
-                }
-            }
-
-            this.PropertyChangedValue(sender, new PropertyChangedEventArgs("Value")); // Update the new cell's value based on its depedencies.
-        }
-
-        /// <summary>
         /// Will read a text's formula and then subscribe to all the referenced cell's in the formula.
         /// </summary>
         /// <param name="cell">Cell that uses other cells.</param>
         private void SubscribeCellDependency(SpreadsheetCellValue cell)
         {
-            string cellText = cell.Text;
+            if (cell.Text == string.Empty || !cell.Text.StartsWith("="))
+            {
+                return; // Subscribe to nothing if the cell text is empty.
+            }
+
+            string cellText = cell.Text.Substring(1, cell.Text.Length - 1);
 
             string[] words = cellText.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
             int lengthLoop = words.Length;
@@ -427,10 +428,10 @@ namespace CptS321
                 {
                     string cellCoordinate = words[i]; // Set the A1,B1... to a string variable
                     char letter = words[i][0];
-                    int rowIndex = Convert.ToInt32(letter);
+                    int rowIndex = Convert.ToInt32(letter) - 65;
                     string numCol = words[i].Substring(1, words[i].Length - 1);
                     int colIndex = Convert.ToInt32(numCol) - 1;
-                    cell.SubscribeToCell(ref this.cellGrid[rowIndex, colIndex]); // Subscribe to Dependency Changed Event.
+                    cell.SubscribeToCell(ref this.cellGrid[colIndex, rowIndex]); // Subscribe to Dependency Changed Event.
                 }
             }
         }
