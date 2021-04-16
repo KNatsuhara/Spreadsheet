@@ -432,6 +432,14 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Removes all the variables from the expression tree.
+        /// </summary>
+        public void ClearVariables()
+        {
+            this.variables.Clear();
+        }
+
+        /// <summary>
         /// Evaluates the expression to a double value.
         /// </summary>
         /// <returns>Value of the evaluated expression.</returns>

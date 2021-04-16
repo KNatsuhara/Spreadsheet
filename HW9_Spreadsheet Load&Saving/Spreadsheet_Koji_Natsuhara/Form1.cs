@@ -276,7 +276,7 @@ namespace CptS321
             if (sf.ShowDialog() == DialogResult.OK)
             {
                 FileStream saveFile = new FileStream(sf.FileName, FileMode.Create, FileAccess.Write);
-                this.mainSpreadSheet.Save(saveFile);
+                this.mainSpreadSheet.SaveXML(saveFile);
                 saveFile.Close();
                 saveFile.Dispose();
             }
@@ -289,6 +289,34 @@ namespace CptS321
         /// <param name="e">E.</param>
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OpenFileDialog menu = new OpenFileDialog();
+
+            if (menu.ShowDialog() == DialogResult.OK)
+            {
+                this.ClearDataGridView();
+                this.mainSpreadSheet.ClearSpreadsheet();
+
+                FileStream openFile = new FileStream(menu.FileName, FileMode.Open, FileAccess.Read);
+                this.mainSpreadSheet.LoadXML(openFile);
+
+                openFile.Close();
+                openFile.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Clears all cell values from the data grid.
+        /// </summary>
+        private void ClearDataGridView()
+        {
+            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    cell.Value = string.Empty;
+                    cell.Style.BackColor = Color.FromArgb(Convert.ToInt32(0xFFFFFFFF));
+                }
+            }
         }
     }
 }

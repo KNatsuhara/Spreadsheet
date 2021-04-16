@@ -333,7 +333,7 @@ namespace CptS321
         /// This function will read the spreadsheet cells and save the spreadsheet cell values/data into an XML file.
         /// </summary>
         /// <param name="destination">Address of where the XML file will be saved.</param>
-        public void Save(Stream destination)
+        public void SaveXML(Stream destination)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -358,6 +358,30 @@ namespace CptS321
 
             xml.WriteEndElement();
             xml.Close();
+        }
+
+        /// <summary>
+        /// This function will load an XML file selected by the user and replace the existing spreadsheet with the XML file spreadsheet.
+        /// </summary>
+        /// <param name="destination">Address of where the XML file is located.</param>
+        public void LoadXML(Stream destination)
+        {
+
+        }
+
+        /// <summary>
+        /// This function will clear the data from all the spreadsheet cell values and the stacks.
+        /// </summary>
+        public void ClearSpreadsheet()
+        {
+            foreach (SpreadsheetCell cell in this.cellGrid)
+            {
+                cell.Text = string.Empty; // Set cell text to empty
+                cell.BGColor = 0xFFFFFFFF; // Set default cell color
+                this.undo.Clear(); // Clear command stacks
+                this.redo.Clear(); // Clear command stacks
+                this.expressionTree.ClearVariables(); // Clear expression tree variables
+            }
         }
 
         /// <summary>
