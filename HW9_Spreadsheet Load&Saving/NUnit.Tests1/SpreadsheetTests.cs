@@ -78,5 +78,23 @@ namespace NUnit.Tests1
             Assert.That(false, Is.EqualTo(CheckIfLetter(" ")), "Did not identify whitespace");
             Assert.That(false, Is.EqualTo(CheckIfLetter("=A1")), "Did not identify ' '=A1");
         }
+
+        /// <summary>
+        /// This function will test if the ExpressionTree variables are cleared from the dictionary.
+        /// </summary>
+        [Test]
+        public void TestClearVariables()
+        {
+            ExpressionTree testTree = new ExpressionTree("A1+2");
+            testTree.SetVariable("A1", 32);
+            testTree.SetVariable("B2", -3);
+            testTree.SetVariable("C3", 2);
+            Dictionary<string, double> variables = testTree.GetVariables();
+            Assert.That(3, Is.EqualTo(variables.Count), "Did not set variables in the expressionTree.");
+            testTree.ClearVariables();
+            Assert.That(0, Is.EqualTo(variables.Count), "Did not clear variables in the expressionTree.");
+        }
+
+
     }
 }

@@ -314,7 +314,7 @@ namespace CptS321
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     cell.Value = string.Empty;
-                    cell.Style.BackColor = Color.FromArgb(Convert.ToInt32(0xFFFFFFFF));
+                    cell.Style.BackColor = Color.FromArgb(-1);
                 }
             }
         }

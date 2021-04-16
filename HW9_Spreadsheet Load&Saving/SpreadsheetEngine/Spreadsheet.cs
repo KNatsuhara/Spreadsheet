@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using SpreadsheetEngine;
 
 namespace CptS321
@@ -335,7 +336,7 @@ namespace CptS321
         /// <param name="destination">Address of where the XML file will be saved.</param>
         public void SaveXML(Stream destination)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
+            XmlWriterSettings settings = new XmlWriterSettings(); // Create XMLWriterSettings
             settings.Indent = true;
             settings.IndentChars = "\t";
             XmlWriter xml = XmlWriter.Create(destination, settings);
@@ -344,15 +345,15 @@ namespace CptS321
 
             foreach (SpreadsheetCell cell in this.cellGrid)
             {
-                if (cell.BGColor != 0xFFFFFFFF || cell.Value != string.Empty || cell.Text != string.Empty)
+                if (cell.BGColor != 0xFFFFFFFF || cell.Text != string.Empty)
                 {
-                    xml.WriteStartElement("Cell"); // creates starting element tag, Cell for start
-                    xml.WriteElementString("Value", cell.Value.ToString()); // save value
-                    xml.WriteElementString("Text", cell.Text.ToString()); // save text
-                    xml.WriteElementString("BGColor", cell.BGColor.ToString()); // text bg color
-                    xml.WriteElementString("Column", cell.ColumnIndex.ToString()); // save column
-                    xml.WriteElementString("Row", cell.RowIndex.ToString()); // save row
-                    xml.WriteEndElement(); // end
+                    xml.WriteStartElement("Cell"); // Element Tag "Cell"
+                    xml.WriteElementString("Value", cell.Value.ToString()); // Store Value
+                    xml.WriteElementString("Text", cell.Text.ToString()); // Store Text
+                    xml.WriteElementString("BGColor", cell.BGColor.ToString()); // Store Cell Color
+                    xml.WriteElementString("Column", cell.ColumnIndex.ToString()); // Store cell coordinates
+                    xml.WriteElementString("Row", cell.RowIndex.ToString());
+                    xml.WriteEndElement();
                 }
             }
 
@@ -366,7 +367,19 @@ namespace CptS321
         /// <param name="destination">Address of where the XML file is located.</param>
         public void LoadXML(Stream destination)
         {
+            XDocument doc = XDocument.Load(destination);
+            int indexRow = 0;
+            int indexCol = 0;
 
+            foreach (XElement element in doc.Root.Elements("Cell"))
+            {
+                indexRow = int.Parse(element.Element("Row").Value.ToString()); // Get cell coordinates
+                indexCol = int.Parse(element.Element("Column").Value.ToString());
+                string cellText = element.Element("Text").Value.ToString(); // Get Cell Text
+                uint cellColor = uint.Parse(element.Element("BGColor").Value.ToString()); // Get Cell Color
+                this.SetCellText(indexRow, indexCol, cellText); // Set Cell Text
+                this.SetCellColor(indexRow, indexCol, cellColor); // Set Cell Color
+            }
         }
 
         /// <summary>
