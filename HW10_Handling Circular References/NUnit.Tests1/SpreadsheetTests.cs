@@ -140,5 +140,32 @@ namespace NUnit.Tests1
             Assert.That(true, Is.EqualTo(CheckSelfReference(cellText3, "R3")), "Did not pass R3");
             Assert.That(false, Is.EqualTo(CheckSelfReference(cellText4, "C2")), "Did not pass C2");
         }
+
+        /// <summary>
+        /// Will test the CreateCellVariableList.
+        /// </summary>
+        [Test]
+        public void TestCreateCellVariableList()
+        {
+            string cellText1 = "=A1";
+            string cellText2 = "=A1+C1*C3+(A5+C4)";
+            string cellText3 = "=A1+D1+B1*67+R3";
+            string cellText4 = "=34*45";
+
+            List<string> cellList1 = CreateCellVariableList(cellText1);
+            List<string> cellList2 = CreateCellVariableList(cellText2);
+            List<string> cellList3 = CreateCellVariableList(cellText3);
+            List<string> cellList4 = CreateCellVariableList(cellText4);
+
+            List<string> expectedList1 = new List<string> { "A1" };
+            List<string> expectedList2 = new List<string> { "A1", "C1", "C3", "A5", "C4" };
+            List<string> expectedList3 = new List<string> { "A1", "D1", "B1", "R3" };
+            List<string> expectedList4 = new List<string> { };
+
+            CollectionAssert.AreEquivalent(expectedList1, cellList1);
+            CollectionAssert.AreEquivalent(expectedList2, cellList2);
+            CollectionAssert.AreEquivalent(expectedList3, cellList3);
+            CollectionAssert.AreEquivalent(expectedList4, cellList4);
+        }
     }
 }

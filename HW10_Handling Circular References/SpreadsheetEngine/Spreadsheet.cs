@@ -51,6 +51,11 @@ namespace CptS321
         private Stack<IUndoRedoCollection> redo = new Stack<IUndoRedoCollection>();
 
         /// <summary>
+        /// Contains the cellName as a value and a string list of all the referenced cells that cell references.
+        /// </summary>
+        private Dictionary<string, List<string>> cellDependencies = new Dictionary<string, List<string>>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Spreadsheet"/> class.
         /// </summary>
         /// <param name="numRows">Set number of rows in spreadsheet.</param>
@@ -214,6 +219,17 @@ namespace CptS321
                         }
                     }
                 }
+                else
+                {
+                    try
+                    {
+                        double testValidDouble = Convert.ToDouble(words[i]);
+                    }
+                    catch
+                    {
+                        return true; // The number cannot be converted to a double.
+                    }
+                }
             }
 
             return false; // Passed all cell name reference checks.
@@ -241,6 +257,42 @@ namespace CptS321
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Will check if there is a circular reference among the cells and will return true if there is
+        /// a circular reference or false otherwise.
+        /// </summary>
+        /// <param name="mainCell">The Cell that we are checking.</param>
+        /// <param name="refCell">The Cell that the mainCell references.</param>
+        /// <returns>True if CircularReference or false otherwise.</returns>
+        public static bool CheckCircleReference(string mainCell, string refCell)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Will run through a Cell text that has an assignment operator and create a list of a cellNames that cell references.
+        /// </summary>
+        /// <param name="evaluatedText">Example: "=A1+B2+C3+34".</param>
+        /// <returns>[A1, B2, C3].</returns>
+        public static List<string> CreateCellVariableList(string evaluatedText)
+        {
+            string removedEqualsSign = evaluatedText.Substring(1, evaluatedText.Length - 1); // Removed equals sign
+            string[] wordArray = removedEqualsSign.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
+            List<string> words = wordArray.ToList(); // Set the array to a List<string>
+            List<string> variables = new List<string>();
+            words.RemoveAll(str => string.IsNullOrEmpty(str)); // Remove all whitespace from the List<string>
+            int lengthLoop = words.Count;
+            for (int i = 0; i < lengthLoop; i++)
+            {
+                if (CheckIfLetter(words[i]))
+                {
+                    variables.Add(words[i]); // Add if variable name exists.
+                }
+            }
+
+            return variables;
         }
 
         /// <summary>
@@ -524,7 +576,7 @@ namespace CptS321
         private void SpreadsheetCellValue_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             SpreadsheetCellValue cell = (SpreadsheetCellValue)sender;
-            string evalutedText = cell.Text;
+            string evalutedText = cell.Text.ToUpper();
             char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
             string cellName = columnCharacter.ToString().ToUpper() + (cell.RowIndex + 1).ToString(); // Converts cell location to a cellName
             if (e.PropertyName == "Text")
@@ -541,7 +593,8 @@ namespace CptS321
                     }
                     else
                     {
-                        string newValue = this.EvaluateText(cell.Text);
+                        this.cellDependencies[cellName] = CreateCellVariableList(evalutedText); // Add cell variables to cellName list.
+                        string newValue = this.EvaluateText(evalutedText);
                         this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
                         cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
                     }
