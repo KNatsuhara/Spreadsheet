@@ -127,6 +127,73 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Checks if the first letter in a string is a letter in the alphabet.
+        /// </summary>
+        /// <param name="letter">Letter that needs to be checked.</param>
+        /// <returns>True if the word starts with a letter, otherwise returns false.</returns>
+        public static bool CheckIfLetterCharacter(char letter)
+        {
+            if (letter >= 65 && letter <= 90)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// This function will return true if the cell contains a cell that cannot be found within the spreadsheet.
+        /// </summary>
+        /// <param name="cellAssignmentText">Cell text.</param>
+        /// <returns>True if the cell text is a bad reference otherwise false.</returns>
+        public static bool CheckBadReference(string cellAssignmentText)
+        {
+            string removedEqualsSign = cellAssignmentText.Substring(1, cellAssignmentText.Length - 1); // Removed equals sign
+            string[] words = removedEqualsSign.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
+            int lengthLoop = words.Length;
+            for (int i = 0; i < lengthLoop; i++)
+            {
+                if (CheckIfLetter(words[i]))
+                {
+                    if (words[i].Length > 3)
+                    {
+                        return true; // If the cell reference contains more than 3 characters return false.
+                    }
+                    else if (words[i].Length == 2 && CheckIfLetterCharacter(words[i][1]))
+                    {
+                        return true; // Cannot have more than 1 letter in a cell name
+                    }
+                    else if (words[i].Length == 3)
+                    {
+                        if (CheckIfLetterCharacter(words[i][2]))
+                        {
+                            return true; // Cannot have more than 1 letter in a cell name.
+                        }
+
+                        int tensColumn = Convert.ToInt32(words[i].Substring(1, 1));
+                        if (tensColumn > 5)
+                        {
+                            return true; // Cell reference cannot be greater than 50
+                        }
+
+                        if (tensColumn == 5)
+                        {
+                            int onesColumn = Convert.ToInt32(words[i].Substring(2, 1));
+                            if (onesColumn > 0)
+                            {
+                                return true; // Cell reference cannot be greater than 50
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false; // Passed all cell name reference checks.
+        }
+
+        /// <summary>
         /// This function will evaluate the text in the cell and return the value of the cell. This is assuming
         /// that the text starts with and "=".
         /// </summary>
@@ -463,10 +530,10 @@ namespace CptS321
             {
                 if (CheckIfLetter(words[i]))
                 {
-                    string cellCoordinate = words[i]; // Set the A1,B1... to a string variable
-                    char letter = words[i][0];
+                    string cellCoordinate = words[i].ToUpper(); // Set the A1,B1... to a string variable
+                    char letter = cellCoordinate[0];
                     int rowIndex = Convert.ToInt32(letter) - 65;
-                    string numCol = words[i].Substring(1, words[i].Length - 1);
+                    string numCol = cellCoordinate.Substring(1, cellCoordinate.Length - 1);
                     int colIndex = Convert.ToInt32(numCol) - 1;
                     cell.SubscribeToCell(ref this.cellGrid[colIndex, rowIndex]); // Subscribe to Dependency Changed Event.
                 }

@@ -95,6 +95,27 @@ namespace NUnit.Tests1
             Assert.That(0, Is.EqualTo(variables.Count), "Did not clear variables in the expressionTree.");
         }
 
+        /// <summary>
+        /// Will test the CheckBadReference method.
+        /// </summary>
+        [Test]
+        public void TestCheckBadReference()
+        {
+            string cellText1 = "=asdf";
+            string cellText2 = "=A1+B2";
+            string cellText3 = "=ASD";
+            string cellText4 = "=A51";
+            string cellText5 = "=Z50";
+            string cellText6 = "=34+54566-554+A1+B2*C3+(45-A44)+B9-FF";
+            string cellText7 = "=34+54566-554+A1+B2*C3+(45-A44)+B9";
 
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText1)), "Did not pass asdf");
+            Assert.That(false, Is.EqualTo(CheckBadReference(cellText2)), "Did not pass A1+B2");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText3)), "Did not pass ASD");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText4)), "Did not pass A51");
+            Assert.That(false, Is.EqualTo(CheckBadReference(cellText5)), "Did not pass Z50");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText6)), "Did not pass (45-A44)+B9-FF");
+            Assert.That(false, Is.EqualTo(CheckBadReference(cellText7)), "Did not pass (45-A44)+B9");
+        }
     }
 }
