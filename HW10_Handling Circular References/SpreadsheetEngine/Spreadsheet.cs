@@ -577,6 +577,11 @@ namespace CptS321
 
             foreach (string cellName in this.cellDependencies[refCell])
             {
+                if (this.cellDependencies[refCell].Contains(refCell))
+                {
+                    return false;
+                }
+
                 return this.CheckCircleReference(mainCell, cellName);
             }
 
