@@ -123,5 +123,22 @@ namespace NUnit.Tests1
             Assert.That(true, Is.EqualTo(CheckBadReference(cellText9)), "Did not pass as");
             Assert.That(true, Is.EqualTo(CheckBadReference(cellText10)), "Did not pass a!");
         }
+
+        /// <summary>
+        /// Will test the CheckSelfReference method.
+        /// </summary>
+        [Test]
+        public void TestCheckSelfReference()
+        {
+            string cellText1 = "=A1";
+            string cellText2 = "=A1+C1*C3+(A5+C4)";
+            string cellText3 = "=A1+D1+B1*67+R3";
+            string cellText4 = "=A1+D1+B1*67+R3";
+
+            Assert.That(true, Is.EqualTo(CheckSelfReference(cellText1, "A1")), "Did not pass A1");
+            Assert.That(true, Is.EqualTo(CheckSelfReference(cellText2, "A5")), "Did not pass A5");
+            Assert.That(true, Is.EqualTo(CheckSelfReference(cellText3, "R3")), "Did not pass R3");
+            Assert.That(false, Is.EqualTo(CheckSelfReference(cellText4, "C2")), "Did not pass C2");
+        }
     }
 }

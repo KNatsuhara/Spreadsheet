@@ -220,6 +220,30 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Returns true if a cell references itself, false otherwise.
+        /// </summary>
+        /// <param name="cellAssignmentText">Cell Text.</param>
+        /// <param name="cellName">Cell Name.</param>
+        /// <returns>Return true if a cell references itself, false otherwise.</returns>
+        public static bool CheckSelfReference(string cellAssignmentText, string cellName)
+        {
+            string removedEqualsSign = cellAssignmentText.Substring(1, cellAssignmentText.Length - 1); // Removed equals sign
+            string[] wordArray = removedEqualsSign.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
+            List<string> words = wordArray.ToList();
+            words.RemoveAll(str => string.IsNullOrEmpty(str));
+            int lengthLoop = words.Count;
+            for (int i = 0; i < lengthLoop; i++)
+            {
+                if (words[i] == cellName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// This function will evaluate the text in the cell and return the value of the cell. This is assuming
         /// that the text starts with and "=".
         /// </summary>
@@ -511,6 +535,10 @@ namespace CptS321
                     {
                         cell.Value = "!(bad reference)";
                     }
+                    else if (CheckSelfReference(evalutedText, cellName))
+                    {
+                        cell.Value = "!(self reference)";
+                    }
                     else
                     {
                         string newValue = this.EvaluateText(cell.Text);
@@ -550,7 +578,8 @@ namespace CptS321
         /// <param name="cell">Cell that uses other cells.</param>
         private void SubscribeCellDependency(SpreadsheetCellValue cell)
         {
-            if (cell.Text == string.Empty || !cell.Text.StartsWith("=") || cell.Value == "!(bad reference)")
+            if (cell.Text == string.Empty || !cell.Text.StartsWith("=") ||
+                cell.Value == "!(bad reference)" || cell.Value == "!(self reference)")
             {
                 return; // Subscribe to nothing if the cell text is empty.
             }
