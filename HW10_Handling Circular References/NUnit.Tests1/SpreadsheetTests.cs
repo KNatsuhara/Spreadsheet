@@ -108,6 +108,9 @@ namespace NUnit.Tests1
             string cellText5 = "=Z50";
             string cellText6 = "=34+54566-554+A1+B2*C3+(45-A44)+B9-FF";
             string cellText7 = "=34+54566-554+A1+B2*C3+(45-A44)+B9";
+            string cellText8 = "=asd";
+            string cellText9 = "=as";
+            string cellText10 = "=a!";
 
             Assert.That(true, Is.EqualTo(CheckBadReference(cellText1)), "Did not pass asdf");
             Assert.That(false, Is.EqualTo(CheckBadReference(cellText2)), "Did not pass A1+B2");
@@ -116,6 +119,9 @@ namespace NUnit.Tests1
             Assert.That(false, Is.EqualTo(CheckBadReference(cellText5)), "Did not pass Z50");
             Assert.That(true, Is.EqualTo(CheckBadReference(cellText6)), "Did not pass (45-A44)+B9-FF");
             Assert.That(false, Is.EqualTo(CheckBadReference(cellText7)), "Did not pass (45-A44)+B9");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText8)), "Did not pass asd");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText9)), "Did not pass as");
+            Assert.That(true, Is.EqualTo(CheckBadReference(cellText10)), "Did not pass a!");
         }
     }
 }

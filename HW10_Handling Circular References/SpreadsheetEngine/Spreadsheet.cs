@@ -133,7 +133,25 @@ namespace CptS321
         /// <returns>True if the word starts with a letter, otherwise returns false.</returns>
         public static bool CheckIfLetterCharacter(char letter)
         {
-            if (letter >= 65 && letter <= 90)
+            if ((letter >= 65 && letter <= 90) || (letter >= 97 && letter <= 122))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Will return true if the character is a special character (Not a number or letter).
+        /// </summary>
+        /// <param name="special">Character that will be checked.</param>
+        /// <returns>True if the character is a special character, false otherwise.</returns>
+        public static bool CheckIfSpecialCharacter(char special)
+        {
+            if ((special >= 32 && special <= 47) || (special >= 58 && special <= 64) ||
+                (special >= 91 && special <= 96) || (special >= 123 && special <= 127))
             {
                 return true;
             }
@@ -151,23 +169,31 @@ namespace CptS321
         public static bool CheckBadReference(string cellAssignmentText)
         {
             string removedEqualsSign = cellAssignmentText.Substring(1, cellAssignmentText.Length - 1); // Removed equals sign
-            string[] words = removedEqualsSign.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
-            int lengthLoop = words.Length;
+            string[] wordArray = removedEqualsSign.Split('+', '-', '/', '*', '(', ')'); // Splits all the variables and constants.
+            List<string> words = wordArray.ToList();
+            words.RemoveAll(str => string.IsNullOrEmpty(str));
+            int lengthLoop = words.Count;
             for (int i = 0; i < lengthLoop; i++)
             {
+                if (CheckIfSpecialCharacter(words[i][0]))
+                {
+                    return true; // If the cell name uses a special character return true.
+                }
+
                 if (CheckIfLetter(words[i]))
                 {
-                    if (words[i].Length > 3)
+                    if (words[i].Length > 3 || words[i].Length == 1)
                     {
-                        return true; // If the cell reference contains more than 3 characters return false.
+                        return true; // If the cell reference contains more than 3 characters or only 1 character return true.
                     }
-                    else if (words[i].Length == 2 && CheckIfLetterCharacter(words[i][1]))
+                    else if (words[i].Length >= 2 && (CheckIfLetterCharacter(words[i][1]) ||
+                        CheckIfSpecialCharacter(words[i][1])))
                     {
                         return true; // Cannot have more than 1 letter in a cell name
                     }
                     else if (words[i].Length == 3)
                     {
-                        if (CheckIfLetterCharacter(words[i][2]))
+                        if (CheckIfLetterCharacter(words[i][2]) || CheckIfSpecialCharacter(words[i][2]))
                         {
                             return true; // Cannot have more than 1 letter in a cell name.
                         }
@@ -481,9 +507,16 @@ namespace CptS321
             {
                 if (CheckText(evalutedText))
                 {
-                    string newValue = this.EvaluateText(cell.Text);
-                    this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
-                    cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
+                    if (CheckBadReference(evalutedText))
+                    {
+                        cell.Value = "!(bad reference)";
+                    }
+                    else
+                    {
+                        string newValue = this.EvaluateText(cell.Text);
+                        this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
+                        cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
+                    }
                 }
                 else
                 {
@@ -517,7 +550,7 @@ namespace CptS321
         /// <param name="cell">Cell that uses other cells.</param>
         private void SubscribeCellDependency(SpreadsheetCellValue cell)
         {
-            if (cell.Text == string.Empty || !cell.Text.StartsWith("="))
+            if (cell.Text == string.Empty || !cell.Text.StartsWith("=") || cell.Value == "!(bad reference)")
             {
                 return; // Subscribe to nothing if the cell text is empty.
             }
