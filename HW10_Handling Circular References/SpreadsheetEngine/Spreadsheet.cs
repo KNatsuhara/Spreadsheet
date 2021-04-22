@@ -260,18 +260,6 @@ namespace CptS321
         }
 
         /// <summary>
-        /// Will check if there is a circular reference among the cells and will return true if there is
-        /// a circular reference or false otherwise.
-        /// </summary>
-        /// <param name="mainCell">The Cell that we are checking.</param>
-        /// <param name="refCell">The Cell that the mainCell references.</param>
-        /// <returns>True if CircularReference or false otherwise.</returns>
-        public static bool CheckCircleReference(string mainCell, string refCell)
-        {
-            return true;
-        }
-
-        /// <summary>
         /// Will run through a Cell text that has an assignment operator and create a list of a cellNames that cell references.
         /// </summary>
         /// <param name="evaluatedText">Example: "=A1+B2+C3+34".</param>
@@ -567,6 +555,35 @@ namespace CptS321
         }
 
         /// <summary>
+        /// Will check if there is a circular reference among the cells and will return true if there is
+        /// a circular reference or false otherwise.
+        /// </summary>
+        /// <param name="mainCell">The Cell that we are checking.</param>
+        /// <param name="refCell">The Cell that the mainCell references.</param>
+        /// <returns>True if CircularReference or false otherwise.</returns>
+        private bool CheckCircleReference(string mainCell, string refCell)
+        {
+            try
+            {
+                if (this.cellDependencies[refCell].Contains(mainCell))
+                {
+                    return true; // Referenced cell contains mainCell name.
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            foreach (string cellName in this.cellDependencies[refCell])
+            {
+                return this.CheckCircleReference(mainCell, cellName);
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// This will identify the text of a cell and depending if the text string starts with "=" will update the value of the cell.
         /// If the string starts with "=" this will set the value of the cell to equal another cell's value. Otherwise, the value
         /// will be set equal to the text.
@@ -579,6 +596,14 @@ namespace CptS321
             string evalutedText = cell.Text.ToUpper();
             char columnCharacter = Convert.ToChar(cell.ColumnIndex + 65);
             string cellName = columnCharacter.ToString().ToUpper() + (cell.RowIndex + 1).ToString(); // Converts cell location to a cellName
+            try
+            {
+                this.cellDependencies[cellName] = CreateCellVariableList(evalutedText); // Add cell variables to cellName list.
+            }
+            catch
+            {
+            }
+
             if (e.PropertyName == "Text")
             {
                 if (CheckText(evalutedText))
@@ -591,9 +616,12 @@ namespace CptS321
                     {
                         cell.Value = "!(self reference)";
                     }
+                    else if (this.CheckCircleReference(cellName, cellName))
+                    {
+                        cell.Value = "!(circular reference)";
+                    }
                     else
                     {
-                        this.cellDependencies[cellName] = CreateCellVariableList(evalutedText); // Add cell variables to cellName list.
                         string newValue = this.EvaluateText(evalutedText);
                         this.expressionTree.SetVariable(cellName, Convert.ToDouble(newValue)); // This is assuming that the user inputs the formula without errors and adds the cell value to the dictionary
                         cell.Value = newValue; // Evaluates the cell text if it starts with "=" and returns the double as a string
@@ -632,7 +660,8 @@ namespace CptS321
         private void SubscribeCellDependency(SpreadsheetCellValue cell)
         {
             if (cell.Text == string.Empty || !cell.Text.StartsWith("=") ||
-                cell.Value == "!(bad reference)" || cell.Value == "!(self reference)")
+                cell.Value == "!(bad reference)" || cell.Value == "!(self reference)"
+               || cell.Value == "!(circular reference)")
             {
                 return; // Subscribe to nothing if the cell text is empty.
             }
