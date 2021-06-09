@@ -1,8 +1,8 @@
 # CptS321-HWs
 
-In this assignment, you will combine work from several previous homework assignments and build new
-features on top of that. You will link your arithmetic expression evaluator with the spreadsheet
-application.
+In this assignment you will give your spreadsheet application the ability to deal with problematic
+references in formulas. This may require some significant adjustments to your existing spreadsheet code
+BEFORE you add the new capabilities (i.e., perform some refactoring).
 
 
 Name: Koji Natsuhara

@@ -32,6 +32,11 @@ namespace CptS321
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         /// <summary>
+        /// Sets the dependency of the cell.
+        /// </summary>
+        public event PropertyChangedEventHandler DependencyChanged = delegate { };
+
+        /// <summary>
         /// Gets or Sets the text member in the cell class.
         /// </summary>
         public string Text
@@ -94,6 +99,7 @@ namespace CptS321
 
                 this.value = value;
                 this.PropertyChanged(this, new PropertyChangedEventArgs("Value"));
+                this.DependencyChanged(this, new PropertyChangedEventArgs("ReEvalutate"));
             }
         }
 
@@ -106,6 +112,25 @@ namespace CptS321
         public static SpreadsheetCellValue CreateCell(int rowIndex, int columnIndex)
         {
             return new SpreadsheetCellValue(rowIndex, columnIndex);
+        }
+
+        /// <summary>
+        /// This function will allow the cell to subscribe to a referenced cell dependency.
+        /// </summary>
+        /// <param name="cell">Refereneced cell that this.cell will subscribe to.</param>
+        public void SubscribeToCell(ref SpreadsheetCellValue cell)
+        {
+            cell.DependencyChanged += this.SpreadsheetCellValue_DependencyChanged;
+        }
+
+        /// <summary>
+        /// This will fire the property changed event.
+        /// </summary>
+        /// <param name="sender">Spreadsheet Cell.</param>
+        /// <param name="e">Dependency Changed Event.</param>
+        private void SpreadsheetCellValue_DependencyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.PropertyChanged(this, new PropertyChangedEventArgs("Text"));
         }
     }
 }

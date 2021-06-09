@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace CptS321
         /// </summary>
         private Spreadsheet mainSpreadSheet;
 
+        /// <summary>
+        /// Checks the intital values of a datagridcell when the user inputs.
+        /// </summary>
         private string cellValue;
 
         /// <summary>
@@ -95,9 +99,20 @@ namespace CptS321
         /// <param name="e">The event args holding the cell information.</param>
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (this.mainSpreadSheet == null)
+            {
+                return;
+            }
+
             int row = e.RowIndex;
             int col = e.ColumnIndex;
             DataGridViewCell dataGridCell = this.dataGridView1[col, row];
+
+            if (dataGridCell.Value == null)
+            {
+                return;
+            }
+
             if (dataGridCell.Value.ToString() != this.cellValue.ToString())
             {
                 this.mainSpreadSheet.SetCellText(row, col, dataGridCell.Value.ToString());
@@ -246,6 +261,61 @@ namespace CptS321
             else
             {
                 return; // If no redo command available then return.
+            }
+        }
+
+        /// <summary>
+        /// This button will save the current spreadsheet as an XML file.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sf = new SaveFileDialog();
+
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                FileStream saveFile = new FileStream(sf.FileName, FileMode.Create, FileAccess.Write);
+                this.mainSpreadSheet.SaveXML(saveFile);
+                saveFile.Close();
+                saveFile.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// This function will load an XML file and create a new spreadsheet from that data.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog menu = new OpenFileDialog();
+
+            if (menu.ShowDialog() == DialogResult.OK)
+            {
+                this.ClearDataGridView();
+                this.mainSpreadSheet.ClearSpreadsheet();
+
+                FileStream openFile = new FileStream(menu.FileName, FileMode.Open, FileAccess.Read);
+                this.mainSpreadSheet.LoadXML(openFile);
+
+                openFile.Close();
+                openFile.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Clears all cell values from the data grid.
+        /// </summary>
+        private void ClearDataGridView()
+        {
+            foreach (DataGridViewRow row in this.dataGridView1.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    cell.Value = string.Empty;
+                    cell.Style.BackColor = Color.FromArgb(-1);
+                }
             }
         }
     }
